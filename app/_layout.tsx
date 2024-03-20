@@ -28,6 +28,8 @@ export default function RootLayout() {
   const [loaded, error] = useFonts({
     Satoshi: require("../assets/fonts/Satoshi-Regular.otf"),
     SatoshiBold: require("../assets/fonts/Satoshi-Bold.otf"),
+    Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
+    Jost: require("../assets/fonts/Jost-Regular.ttf"),
     ...FontAwesome.font,
   });
 

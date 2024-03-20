@@ -10,6 +10,14 @@ export function BoldText(props: TextProps) {
   );
 }
 
+export function PoppinsText(props: TextProps) {
+  return <Text {...props} style={[props.style, { fontFamily: "Poppins" }]} />;
+}
+
+export function JostText(props: TextProps) {
+  return <Text {...props} style={[props.style, { fontFamily: "Jost" }]} />;
+}
+
 export function H1Bold(props: TextProps) {
   return <BoldText {...props} style={[props.style, { fontSize: 80 }]} />;
 }
