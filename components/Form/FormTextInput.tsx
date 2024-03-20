@@ -22,7 +22,7 @@ interface TextInputWithFocusProps extends TextInputProps {
   control: any;
   placeholder: string;
   containerStyle: ViewStyle;
-  icon?: keyof typeof IconMapper;
+  leftIcon?: keyof typeof IconMapper;
 }
 
 const TextInputWithFocus: React.FC<TextInputWithFocusProps> = ({
@@ -30,6 +30,7 @@ const TextInputWithFocus: React.FC<TextInputWithFocusProps> = ({
   control,
   placeholder,
   containerStyle,
+  leftIcon,
   ...rest
 }) => {
   const textColor = useThemeColor({}, "text");
@@ -44,6 +45,8 @@ const TextInputWithFocus: React.FC<TextInputWithFocusProps> = ({
     setIsFocused(false);
   };
 
+  const LeftIcon = leftIcon ? IconMapper[leftIcon] : undefined;
+
   return (
     <Controller
       control={control}
@@ -51,25 +54,33 @@ const TextInputWithFocus: React.FC<TextInputWithFocusProps> = ({
         field: { onChange, onBlur, value },
         fieldState: { error },
       }) => (
-        <TextInput
+        <View
           style={[
-            styles.inputBase,
-            isFocused && styles.inputFocused,
-            { color: textColor },
+            styles.inputContainer,
+            isFocused && styles.inputContainerFocused,
             containerStyle,
           ]}
-          onFocus={() => {
-            localOnFocus();
-          }}
-          onBlur={() => {
-            onBlur();
-            localOnBlur();
-          }}
-          onChangeText={onChange}
-          value={value}
-          placeholder={placeholder}
-          {...rest}
-        />
+        >
+          {LeftIcon ? (
+            <View style={styles.iconContainer}>
+              <LeftIcon />
+            </View>
+          ) : null}
+          <TextInput
+            style={[styles.input, { color: textColor }]}
+            onFocus={() => {
+              localOnFocus();
+            }}
+            onBlur={() => {
+              onBlur();
+              localOnBlur();
+            }}
+            onChangeText={onChange}
+            value={value}
+            placeholder={placeholder}
+            {...rest}
+          />
+        </View>
       )}
       name={name}
       {...rest}
@@ -78,15 +89,30 @@ const TextInputWithFocus: React.FC<TextInputWithFocusProps> = ({
 };
 
 const styles = StyleSheet.create({
-  inputBase: {
-    height: 56,
+  inputContainer: {
     borderColor: gray[500],
     borderWidth: 1,
     width: "100%",
     paddingHorizontal: 20,
+    justifyContent: "center",
+    flexDirection: "row",
+    position: "relative",
   },
-  inputFocused: {
+  input: {
+    height: 56,
+    alignSelf: "stretch",
+  },
+  inputContainerFocused: {
     borderColor: primary[500],
+  },
+  inputWithIcon: {
+    paddingLeft: 20 + 24 + 20, //icon spacing + icon width + icon distance
+  },
+  iconContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    left: 20,
   },
 });
 
