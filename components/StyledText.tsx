@@ -1,5 +1,11 @@
 import { Text, TextProps } from "./Themed";
 
-export function MonoText(props: TextProps) {
+export function RegularText(props: TextProps) {
   return <Text {...props} style={[props.style, { fontFamily: "Satoshi" }]} />;
+}
+
+export function BoldText(props: TextProps) {
+  return (
+    <Text {...props} style={[props.style, { fontFamily: "SatoshiBold" }]} />
+  );
 }
