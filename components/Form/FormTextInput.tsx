@@ -1,14 +1,28 @@
 import React, { useState } from "react";
-import { TextInput, StyleSheet, TextInputProps, ViewStyle } from "react-native";
+import {
+  TextInput,
+  StyleSheet,
+  TextInputProps,
+  ViewStyle,
+  View,
+} from "react-native";
 import { Controller } from "react-hook-form";
 import { primary, gray } from "@/constants/Colors";
 import { useThemeColor } from "../Themed";
+
+//TODO: add the icons
+
+const IconMapper = {
+  test: () => <View />,
+  test2: () => <View />,
+};
 
 interface TextInputWithFocusProps extends TextInputProps {
   name: string;
   control: any;
   placeholder: string;
   containerStyle: ViewStyle;
+  icon?: keyof typeof IconMapper;
 }
 
 const TextInputWithFocus: React.FC<TextInputWithFocusProps> = ({
@@ -33,7 +47,10 @@ const TextInputWithFocus: React.FC<TextInputWithFocusProps> = ({
   return (
     <Controller
       control={control}
-      render={({ field: { onChange, onBlur, value } }) => (
+      render={({
+        field: { onChange, onBlur, value },
+        fieldState: { error },
+      }) => (
         <TextInput
           style={[
             styles.inputBase,

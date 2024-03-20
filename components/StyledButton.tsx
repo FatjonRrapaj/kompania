@@ -12,6 +12,8 @@ export type ButtonSize = "giant" | "large" | "medium" | "small";
 
 export type ButtonArrangement = "iconFirst" | "iconLast";
 
+//TODO: add the icons
+
 const IconMapper = {
   test: () => <View />,
   test2: () => <View />,
@@ -54,9 +56,11 @@ export function GiantButton({
         style,
       ]}
     >
-      <View style={[iconContainerStyle, styles.iconContainerGiant]}>
-        {Icon ? <Icon /> : null}
-      </View>
+      {Icon ? (
+        <View style={[iconContainerStyle, styles.iconContainerGiant]}>
+          <Icon />
+        </View>
+      ) : null}
 
       <PoppinsText style={[styles.textBase, { fontSize: 16 }, textStyle]}>
         {title}
@@ -100,9 +104,11 @@ export function MediumButton({
         style,
       ]}
     >
-      <View style={[iconContainerStyle, styles.iconContainerMedium]}>
-        {Icon ? <Icon /> : null}
-      </View>
+      {Icon ? (
+        <View style={[iconContainerStyle, styles.iconContainerMedium]}>
+          <Icon />
+        </View>
+      ) : null}
       <JostText style={[styles.textBase, { fontSize: 14 }, textStyle]}>
         {title}
       </JostText>
