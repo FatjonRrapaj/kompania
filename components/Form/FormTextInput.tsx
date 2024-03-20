@@ -9,6 +9,7 @@ import {
 import { Controller } from "react-hook-form";
 import { primary, gray } from "@/constants/Colors";
 import { useThemeColor } from "../Themed";
+import { Label } from "../StyledText";
 
 //TODO: add the icons
 
@@ -80,6 +81,7 @@ const TextInputWithFocus: React.FC<TextInputWithFocusProps> = ({
             placeholder={placeholder}
             {...rest}
           />
+          {error?.message ? <Label>{error?.message}</Label> : null}
         </View>
       )}
       name={name}
@@ -97,6 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     position: "relative",
+    alignSelf: "stretch",
   },
   input: {
     height: 56,
@@ -113,6 +116,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     left: 20,
+  },
+  label: {
+    marginTop: 4,
+    alignSelf: "flex-end",
+    color: "red",
   },
 });
 
