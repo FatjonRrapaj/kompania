@@ -35,7 +35,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="(packages)"
+        name="packages"
         options={{
           title: "",
           headerShown: false,
@@ -43,7 +43,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="(settings)"
+        name="settings"
         options={{
           title: "",
           headerShown: false,
