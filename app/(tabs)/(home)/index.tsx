@@ -1,11 +1,17 @@
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 import { Text, View } from "@/components/Themed";
+import { Link } from "expo-router";
 
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab One</Text>
+      <Link asChild href={"/(tabs)/(home)/createPackage"}>
+        <Pressable>
+          <Text>Create Package</Text>
+        </Pressable>
+      </Link>
       <View
         style={styles.separator}
         lightColor="#eee"
