@@ -12,6 +12,11 @@ export default function TabOneScreen() {
           <Text>Create Package</Text>
         </Pressable>
       </Link>
+      <Link asChild href={"/(tabs)/(home)/999"}>
+        <Pressable>
+          <Text>Go to 999</Text>
+        </Pressable>
+      </Link>
       <View
         style={styles.separator}
         lightColor="#eee"

@@ -1,6 +1,7 @@
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 import { Text, View } from "@/components/Themed";
+import { Link } from "expo-router";
 
 export default function TabTwoScreen() {
   return (
@@ -11,6 +12,11 @@ export default function TabTwoScreen() {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
+      <Link asChild href={"/(tabs)/packages/123"}>
+        <Pressable>
+          <Text>Go to 123</Text>
+        </Pressable>
+      </Link>
     </View>
   );
 }

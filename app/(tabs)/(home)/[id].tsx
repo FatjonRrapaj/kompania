@@ -1,24 +1,26 @@
-import { Link, useNavigation } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import * as React from "react";
 import { Text, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-interface CreatePackageProps {}
+interface PackageProps {}
 
-const CreatePackage = (props: CreatePackageProps) => {
+const Package = (props: PackageProps) => {
   const { goBack } = useNavigation();
 
+  const { id } = useLocalSearchParams<{ id: string }>();
   return (
     <SafeAreaView style={styles.container}>
-      <Text>CreatePackage</Text>
-      <Pressable onPress={goBack}>
-        <Text>Go home</Text>
+      <Text>Hi: {id}</Text>
+
+      <Pressable onPress={() => goBack()}>
+        <Text>Back</Text>
       </Pressable>
     </SafeAreaView>
   );
 };
 
-export default CreatePackage;
+export default Package;
 
 const styles = StyleSheet.create({
   container: {},
