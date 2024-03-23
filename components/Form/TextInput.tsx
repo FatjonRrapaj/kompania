@@ -5,13 +5,14 @@ import {
   TextInputProps as DefaultTextInputProps,
   ViewStyle,
   View,
-  Pressable,
 } from "react-native";
 import { Controller, Control, ValidationRule } from "react-hook-form";
 import { primary, gray, dark } from "@/constants/Colors";
 import { useThemeColor } from "../Themed";
 import { Label } from "../StyledText";
 import IconConfig from "@/assets/svg/IconConfig";
+
+import Pressable from "../Pressable";
 
 interface PasswordVisibilityProps {
   isVisible?: boolean;
@@ -102,6 +103,7 @@ const TextInput = forwardRef(
             <DefaultTextInput
               ref={ref}
               onSubmitEditing={() => (nextRef as any)?.current?.focus()}
+              secureTextEntry={inputSecured}
               style={[styles.input, { color: textColor }]}
               onFocus={() => {
                 localOnFocus();

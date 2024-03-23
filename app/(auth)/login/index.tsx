@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { useForm } from "react-hook-form";
 import { FontAwesome } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -40,6 +40,7 @@ const Login = () => {
           key={index}
         />
       ))}
+      <Pressable style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]} />
     </View>
   );
 };
