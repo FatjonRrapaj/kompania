@@ -15,6 +15,7 @@ const IndexPage = (props: IndexPageProps) => {
       }
     }, 2000);
   }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <ActivityIndicator />

@@ -5,23 +5,21 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Slot, Stack } from "expo-router";
+import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+export { ErrorBoundary } from "expo-router";
+import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useColorScheme } from "@/components/useColorScheme";
-
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+import "@/translations/translations";
+import Storage from "@/constants/Storage";
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: "(auth)",
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -32,6 +30,18 @@ export default function RootLayout() {
     Jost: require("../assets/fonts/Jost-Regular.ttf"),
     ...FontAwesome.font,
   });
+
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    async function setSavedLanguage() {
+      const savedLanguage = await AsyncStorage.getItem(Storage.language);
+      if (savedLanguage) {
+        i18n.changeLanguage(savedLanguage);
+      }
+    }
+    setSavedLanguage();
+  }, [i18n]);
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
