@@ -6,7 +6,7 @@ import {
   ViewStyle,
 } from "react-native";
 
-interface PressableProps extends DefaultPressableProps {}
+export interface PressableProps extends DefaultPressableProps {}
 
 const Pressable = ({ style, ...rest }: PressableProps) => {
   return (

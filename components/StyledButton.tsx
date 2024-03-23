@@ -1,33 +1,26 @@
-import { primary, white } from "@/constants/Colors";
+import { gray, primary, white } from "@/constants/Colors";
 import {
-  TouchableOpacity,
   StyleSheet,
   View,
   TextStyle,
   ViewStyle,
+  StyleProp,
 } from "react-native";
 import { JostText, PoppinsText } from "./StyledText";
+import Pressable, { PressableProps } from "./Pressable";
+import IconConfig from "@/assets/svg/IconConfig";
 
 export type ButtonSize = "giant" | "large" | "medium" | "small";
 
 export type ButtonArrangement = "iconFirst" | "iconLast";
 
-//TODO: add the icons
-
-const IconMapper = {
-  test: () => <View />,
-  test2: () => <View />,
-};
-
-type ViewProps = View["props"];
-
-interface StyledButtonProps extends ViewProps {
+interface StyledButtonProps extends PressableProps {
   title?: string;
-  icon?: keyof typeof IconMapper;
+  icon?: keyof typeof IconConfig;
   onPress: () => void;
   arrangement?: ButtonArrangement;
-  textStyle: TextStyle;
-  iconContainerStyle: ViewStyle;
+  textStyle?: TextStyle;
+  iconContainerStyle?: ViewStyle;
 }
 
 export function GiantButton({
@@ -37,23 +30,25 @@ export function GiantButton({
   arrangement = "iconFirst",
   textStyle,
   iconContainerStyle,
+  disabled,
   ...rest
 }: StyledButtonProps) {
   const { style } = rest;
 
-  const Icon = icon ? IconMapper[icon] : undefined;
+  const Icon = icon ? IconConfig[icon] : undefined;
 
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={onPress}
-      activeOpacity={0.7}
       style={[
+        styles.base,
         styles.giant,
         {
           flexDirection:
             arrangement === "iconFirst" ? "column" : "column-reverse",
         },
-        style,
+        disabled && styles.disabled,
+        style as StyleProp<ViewStyle>,
       ]}
     >
       {Icon ? (
@@ -62,10 +57,17 @@ export function GiantButton({
         </View>
       ) : null}
 
-      <PoppinsText style={[styles.textBase, { fontSize: 16 }, textStyle]}>
+      <PoppinsText
+        style={[
+          styles.textBase,
+          { fontSize: 16 },
+          disabled && styles.disabledText,
+          textStyle,
+        ]}
+      >
         {title}
       </PoppinsText>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
@@ -86,22 +88,24 @@ export function MediumButton({
   arrangement = "iconFirst",
   textStyle,
   iconContainerStyle,
+  disabled,
   ...rest
 }: StyledButtonProps) {
   const { style } = rest;
-  const Icon = icon ? IconMapper[icon] : undefined;
+  const Icon = icon ? IconConfig[icon] : undefined;
 
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={onPress}
-      activeOpacity={0.7}
       style={[
+        styles.base,
         styles.medium,
         {
           flexDirection:
             arrangement === "iconFirst" ? "column" : "column-reverse",
         },
-        style,
+        disabled && styles.disabled,
+        style as StyleProp<ViewStyle>,
       ]}
     >
       {Icon ? (
@@ -109,10 +113,17 @@ export function MediumButton({
           <Icon />
         </View>
       ) : null}
-      <JostText style={[styles.textBase, { fontSize: 14 }, textStyle]}>
+      <JostText
+        style={[
+          styles.textBase,
+          { fontSize: 14 },
+          disabled && styles.disabledText,
+          textStyle,
+        ]}
+      >
         {title}
       </JostText>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
@@ -155,4 +166,6 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   small: { paddingHorizontal: 8, paddingVertical: 10, gap: 8 },
+  disabled: { backgroundColor: gray[20] },
+  disabledText: { color: gray[500] },
 });

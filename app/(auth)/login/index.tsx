@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useForm } from "react-hook-form";
 import { FontAwesome } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -13,6 +13,8 @@ import en from "@/translations/en";
 import TextInput from "@/components/Form/TextInput";
 
 import SMS from "@/assets/svg/sms.svg";
+import Pressable from "@/components/Pressable";
+import { GiantButton } from "@/components/StyledButton";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -40,7 +42,16 @@ const Login = () => {
           key={index}
         />
       ))}
-      <Pressable style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]} />
+      <Pressable style={styles.forgotPassword}>
+        <Body2 style={styles.forgotPasswordText}>
+          {translate("forgotPassword")}
+        </Body2>
+      </Pressable>
+      <GiantButton
+        disabled={!isValid}
+        title={translate("login")}
+        onPress={() => {}}
+      />
     </View>
   );
 };
@@ -51,10 +62,17 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 30,
   },
-  textInput: { marginBottom: 16 },
   description: {
     color: gray[500],
     marginTop: 2,
     marginBottom: 30,
+  },
+  textInput: { marginBottom: 16 },
+  forgotPassword: {
+    alignSelf: "flex-end",
+    marginBottom: 30,
+  },
+  forgotPasswordText: {
+    color: primary[500],
   },
 });
