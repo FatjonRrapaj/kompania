@@ -5,7 +5,7 @@ import TextInput, { TextInputType } from "@/components/Form/TextInput";
 import { useRef } from "react";
 import en from "@/translations/en";
 
-function useSignInFields(): Array<TextInputType> {
+function useLoginFields(): Array<TextInputType> {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.login) => t(`signIn:${key}`);
   const passwordRef = useRef(null);
@@ -42,4 +42,4 @@ function useSignInFields(): Array<TextInputType> {
   ];
 }
 
-export default useSignInFields;
+export default useLoginFields;

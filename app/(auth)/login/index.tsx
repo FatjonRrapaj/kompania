@@ -1,24 +1,38 @@
-import { Link } from "expo-router";
 import * as React from "react";
-import { StyleSheet, Pressable } from "react-native";
-import { View } from "@/components/Themed";
-import { Body2, H5, H5Bold } from "@/components/StyledText";
-
+import { StyleSheet, KeyboardAvoidingView } from "react-native";
 import { useForm } from "react-hook-form";
+import { FontAwesome } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
-interface LoginProps {}
+import { View } from "@/components/Themed";
+import { Body1Bold, Body2, H5Bold } from "@/components/StyledText";
+import globalStyles from "@/components/globalStyles";
+import { gray, primary } from "@/constants/Colors";
+import useLoginFields from "./useLoginFields";
+import en from "@/translations/en";
+import TextInput from "@/components/Form/TextInput";
 
-const Login = (props: LoginProps) => {
+const Login = () => {
+  const { t } = useTranslation();
+  const translate = (key: keyof typeof en.login) => t(`login:${key}`);
+
   const {
     control,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm();
 
+  const loginFields = useLoginFields();
+
   return (
-    <View style={styles.container}>
-      <H5Bold>Logohuni</H5Bold>
-      <Body2>Vendosni informacionin e nevojshëm poshtë</Body2>
+    <View style={globalStyles.screenContainer}>
+      <FontAwesome name="truck" size={60} color={primary[500]} />
+      <Body1Bold>Kompania</Body1Bold>
+      <H5Bold style={styles.title}>{translate("loginTitle")}</H5Bold>
+      <Body2 style={styles.description}>{translate("enterInfo")}</Body2>
+      {loginFields.map((field, index) => (
+        <TextInput {...field} control={control} key={index} />
+      ))}
     </View>
   );
 };
@@ -26,9 +40,12 @@ const Login = (props: LoginProps) => {
 export default Login;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingVertical: 32,
-    paddingHorizontal: 24,
+  title: {
+    marginTop: 30,
+  },
+  description: {
+    color: gray[500],
+    marginTop: 2,
+    marginBottom: 30,
   },
 });
