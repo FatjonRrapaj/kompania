@@ -12,7 +12,6 @@ import useLoginFields from "./useLoginFields";
 import en from "@/translations/en";
 import TextInput from "@/components/Form/TextInput";
 
-import SMS from "@/assets/svg/sms.svg";
 import Pressable from "@/components/Pressable";
 import { GiantButton } from "@/components/StyledButton";
 
