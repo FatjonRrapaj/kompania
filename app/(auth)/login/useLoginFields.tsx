@@ -34,7 +34,6 @@ function useLoginFields(): Array<TextInputType> {
       required: true,
       containerStyle: { marginBottom: 10 },
       leftIcon: "lock",
-      rightIcon: "eyeSlash",
       validate: validateField({
         fieldName: translate("password"),
         required: true,

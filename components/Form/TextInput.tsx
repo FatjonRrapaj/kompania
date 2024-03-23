@@ -122,8 +122,10 @@ const TextInput = forwardRef(
               </View>
             ) : secureTextEntry !== undefined ? (
               <PasswordVisibility
-                onChange={() => {}}
-                isVisible={inputSecured}
+                onChange={() => {
+                  setInputSecured((old) => !old);
+                }}
+                isVisible={!inputSecured}
               />
             ) : null}
             {error?.message ? <Label>{error?.message}</Label> : null}
@@ -178,7 +180,6 @@ const styles = StyleSheet.create({
     right: 20,
     top: 0,
     bottom: 0,
-    backgroundColor: "yellow",
   },
   label: {
     marginTop: 4,
