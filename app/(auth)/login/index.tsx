@@ -25,7 +25,15 @@ const Login = () => {
     formState: { errors, isValid },
   } = useForm();
 
+  console.log("errors: ", errors);
+
   const loginFields = useLoginFields();
+
+  const onSubmit = (data: any) => {
+    if (isValid) {
+      console.log("data: ", data);
+    }
+  };
 
   return (
     <View style={globalStyles.screenContainer}>
@@ -44,7 +52,7 @@ const Login = () => {
       <GiantButton
         inactive={!isValid}
         title={translate("login")}
-        onPress={() => {}}
+        onPress={handleSubmit(onSubmit)}
       />
     </View>
   );

@@ -86,53 +86,64 @@ const TextInput = forwardRef(
         render={({
           field: { onChange, onBlur, value },
           fieldState: { error },
-        }) => (
-          <View
-            style={[
-              styles.inputContainer,
-              (isFocused || value) && styles.inputContainerFocused,
-              LeftIcon && styles.inputWithIcon,
-              containerStyle,
-            ]}
-          >
-            {LeftIcon ? (
-              <View style={styles.iconContainer}>
-                <LeftIcon fill={isFocused || value ? dark[500] : gray[500]} />
-              </View>
-            ) : null}
-            <DefaultTextInput
-              ref={ref}
-              onSubmitEditing={() => (nextRef as any)?.current?.focus()}
-              secureTextEntry={inputSecured}
-              style={[styles.input, { color: textColor }]}
-              onFocus={() => {
-                localOnFocus();
-              }}
-              onBlur={() => {
-                onBlur();
-                localOnBlur();
-              }}
-              onChangeText={onChange}
-              value={value}
-              placeholder={placeholder}
-              {...rest}
-            />
+        }) => {
+          console.log("error: ", error);
 
-            {RightIcon ? (
-              <View style={styles.iconContainerRight}>
-                <RightIcon fill={isFocused || value ? dark[500] : gray[500]} />
+          return (
+            <View style={containerStyle}>
+              <View
+                style={[
+                  styles.inputContainer,
+                  (isFocused || value) && styles.inputContainerFocused,
+                  LeftIcon && styles.inputWithIcon,
+                ]}
+              >
+                {LeftIcon ? (
+                  <View style={styles.iconContainer}>
+                    <LeftIcon
+                      fill={isFocused || value ? dark[500] : gray[500]}
+                    />
+                  </View>
+                ) : null}
+                <DefaultTextInput
+                  ref={ref}
+                  onSubmitEditing={() => (nextRef as any)?.current?.focus()}
+                  secureTextEntry={inputSecured}
+                  style={[styles.input, { color: textColor }]}
+                  onFocus={() => {
+                    localOnFocus();
+                  }}
+                  onBlur={() => {
+                    onBlur();
+                    localOnBlur();
+                  }}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholder={placeholder}
+                  {...rest}
+                />
+
+                {RightIcon ? (
+                  <View style={styles.iconContainerRight}>
+                    <RightIcon
+                      fill={isFocused || value ? dark[500] : gray[500]}
+                    />
+                  </View>
+                ) : secureTextEntry !== undefined ? (
+                  <PasswordVisibility
+                    onChange={() => {
+                      setInputSecured((old) => !old);
+                    }}
+                    isVisible={!inputSecured}
+                  />
+                ) : null}
               </View>
-            ) : secureTextEntry !== undefined ? (
-              <PasswordVisibility
-                onChange={() => {
-                  setInputSecured((old) => !old);
-                }}
-                isVisible={!inputSecured}
-              />
-            ) : null}
-            {error?.message ? <Label>{error?.message}</Label> : null}
-          </View>
-        )}
+              {error?.message ? (
+                <Label style={styles.label}>{error?.message}</Label>
+              ) : null}
+            </View>
+          );
+        }}
         name={elementKey}
         {...rest}
       />
@@ -184,7 +195,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   label: {
-    marginTop: 4,
+    marginTop: 2,
     alignSelf: "flex-end",
     color: "red",
   },
