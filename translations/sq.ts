@@ -19,7 +19,7 @@ export default {
     enterEmail: "Vendos E-mailin",
     enterPassword: "Vendos Fjalëkalimin",
     email: "E-maili",
-    password: "Passwordi",
+    password: "Fjalëkalimi",
     forgotPassword: "Harrove Fjalëkalimin?",
     login: "Hyr",
     orLoginWith: "Ose hyr me",

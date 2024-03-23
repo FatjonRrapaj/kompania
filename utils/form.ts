@@ -61,10 +61,10 @@ const validateField = ({
       !!patternTypes[patternType] &&
       !patternTypes[patternType].test(value)
     ) {
-      return `${fieldName.toLowerCase()} ${i18next.t("form:isInvalid")}`;
+      return `${fieldName} ${i18next.t("form:isInvalid")}`;
     }
     if (required && value && !!pattern && !pattern?.test(value)) {
-      return `${fieldName.toLowerCase()} ${i18next.t("form:isInvalid")}`;
+      return `${fieldName} ${i18next.t("form:isInvalid")}`;
     }
   };
 };
