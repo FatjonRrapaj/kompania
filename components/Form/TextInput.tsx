@@ -5,12 +5,30 @@ import {
   TextInputProps as DefaultTextInputProps,
   ViewStyle,
   View,
+  Pressable,
 } from "react-native";
 import { Controller, Control, ValidationRule } from "react-hook-form";
 import { primary, gray, dark } from "@/constants/Colors";
 import { useThemeColor } from "../Themed";
 import { Label } from "../StyledText";
 import IconConfig from "@/assets/svg/IconConfig";
+
+interface PasswordVisibilityProps {
+  isVisible?: boolean;
+  onChange: () => void;
+}
+
+function PasswordVisibility({
+  isVisible,
+  onChange,
+}: PasswordVisibilityProps): JSX.Element {
+  const Icon = isVisible ? IconConfig["eye"] : IconConfig["eyeSlash"];
+  return (
+    <Pressable style={styles.iconContainerRight} onPress={onChange}>
+      <Icon fill={dark[500]} />
+    </Pressable>
+  );
+}
 
 interface TextInputProps extends DefaultTextInputProps {
   control: Control;
@@ -34,7 +52,7 @@ const TextInput = forwardRef(
       rightIcon,
       elementKey,
       nextRef,
-
+      secureTextEntry,
       required,
       validate,
       ...rest
@@ -44,6 +62,7 @@ const TextInput = forwardRef(
     const textColor = useThemeColor({}, "text");
 
     const [isFocused, setIsFocused] = useState(false);
+    const [inputSecured, setInputSecured] = useState(secureTextEntry);
 
     const localOnFocus = () => {
       setIsFocused(true);
@@ -96,10 +115,16 @@ const TextInput = forwardRef(
               placeholder={placeholder}
               {...rest}
             />
+
             {RightIcon ? (
               <View style={styles.iconContainerRight}>
                 <RightIcon fill={isFocused || value ? dark[500] : gray[500]} />
               </View>
+            ) : secureTextEntry !== undefined ? (
+              <PasswordVisibility
+                onChange={() => {}}
+                isVisible={inputSecured}
+              />
             ) : null}
             {error?.message ? <Label>{error?.message}</Label> : null}
           </View>
@@ -153,6 +178,7 @@ const styles = StyleSheet.create({
     right: 20,
     top: 0,
     bottom: 0,
+    backgroundColor: "yellow",
   },
   label: {
     marginTop: 4,
