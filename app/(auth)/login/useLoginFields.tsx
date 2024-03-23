@@ -3,10 +3,11 @@ import { useTranslation } from "react-i18next";
 import validateField from "@/utils/form";
 import TextInput, { TextInputType } from "@/components/Form/TextInput";
 import { useRef } from "react";
+import en from "@/translations/en";
 
 function useSignInFields(): Array<TextInputType> {
   const { t } = useTranslation();
-  const translate = (key: keyof typeof en.signIn) => t(`signIn:${key}`);
+  const translate = (key: keyof typeof en.login) => t(`signIn:${key}`);
   const passwordRef = useRef(null);
 
   return [
@@ -14,11 +15,11 @@ function useSignInFields(): Array<TextInputType> {
       nextRef: passwordRef,
       elementKey: "email",
       keyboardType: "email-address",
-      placeholder: translate("emailAddress"),
+      placeholder: translate("enterEmail"),
       required: true,
       containerStyle: { marginBottom: 10 },
       validate: validateField({
-        fieldName: translate("emailAddress"),
+        fieldName: translate("email"),
         patternType: "email",
         required: true,
       }),
@@ -27,12 +28,12 @@ function useSignInFields(): Array<TextInputType> {
       ref: passwordRef,
       elementKey: "password",
       keyboardType: "default",
-      placeholder: translate("passwordPlaceholder"),
+      placeholder: translate("enterPassword"),
       secureTextEntry: true,
       required: true,
       containerStyle: { marginBottom: 10 },
       validate: validateField({
-        fieldName: translate("passwordPlaceholder"),
+        fieldName: translate("password"),
         required: true,
         min: 6,
         max: 16,
