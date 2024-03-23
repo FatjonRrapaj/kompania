@@ -34,6 +34,7 @@ const TextInput = forwardRef(
       rightIcon,
       elementKey,
       nextRef,
+
       required,
       validate,
       ...rest
@@ -69,7 +70,7 @@ const TextInput = forwardRef(
           <View
             style={[
               styles.inputContainer,
-              isFocused || (value && styles.inputContainerFocused),
+              (isFocused || value) && styles.inputContainerFocused,
               LeftIcon && styles.inputWithIcon,
               containerStyle,
             ]}
