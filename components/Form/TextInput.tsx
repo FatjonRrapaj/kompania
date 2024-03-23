@@ -33,7 +33,7 @@ function PasswordVisibility({
 
 interface TextInputProps extends DefaultTextInputProps {
   control: Control;
-  containerStyle: ViewStyle;
+  containerStyle?: ViewStyle;
   leftIcon?: keyof typeof IconConfig;
   rightIcon?: keyof typeof IconConfig;
   required?: string | ValidationRule<boolean>;

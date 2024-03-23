@@ -35,12 +35,7 @@ const Login = () => {
       <H5Bold style={styles.title}>{translate("loginTitle")}</H5Bold>
       <Body2 style={styles.description}>{translate("enterInfo")}</Body2>
       {loginFields.map((field, index) => (
-        <TextInput
-          {...field}
-          containerStyle={styles.textInput}
-          control={control}
-          key={index}
-        />
+        <TextInput {...field} control={control} key={index} />
       ))}
       <Pressable style={styles.forgotPassword}>
         <Body2 style={styles.forgotPasswordText}>
@@ -48,7 +43,7 @@ const Login = () => {
         </Body2>
       </Pressable>
       <GiantButton
-        disabled={!isValid}
+        inactive={!isValid}
         title={translate("login")}
         onPress={() => {}}
       />
@@ -67,7 +62,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginBottom: 30,
   },
-  textInput: { marginBottom: 16 },
   forgotPassword: {
     alignSelf: "flex-end",
     marginBottom: 30,

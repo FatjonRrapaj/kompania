@@ -21,6 +21,7 @@ interface StyledButtonProps extends PressableProps {
   arrangement?: ButtonArrangement;
   textStyle?: TextStyle;
   iconContainerStyle?: ViewStyle;
+  inactive?: Boolean;
 }
 
 export function GiantButton({
@@ -31,6 +32,7 @@ export function GiantButton({
   textStyle,
   iconContainerStyle,
   disabled,
+  inactive,
   ...rest
 }: StyledButtonProps) {
   const { style } = rest;
@@ -40,6 +42,7 @@ export function GiantButton({
   return (
     <Pressable
       onPress={onPress}
+      disabled={disabled}
       style={[
         styles.base,
         styles.giant,
@@ -47,7 +50,7 @@ export function GiantButton({
           flexDirection:
             arrangement === "iconFirst" ? "column" : "column-reverse",
         },
-        disabled && styles.disabled,
+        (disabled || inactive) && styles.disabled,
         style as StyleProp<ViewStyle>,
       ]}
     >
@@ -61,7 +64,7 @@ export function GiantButton({
         style={[
           styles.textBase,
           { fontSize: 16 },
-          disabled && styles.disabledText,
+          (disabled || inactive) && styles.disabledText,
           textStyle,
         ]}
       >
@@ -89,6 +92,7 @@ export function MediumButton({
   textStyle,
   iconContainerStyle,
   disabled,
+  inactive,
   ...rest
 }: StyledButtonProps) {
   const { style } = rest;
@@ -97,6 +101,7 @@ export function MediumButton({
   return (
     <Pressable
       onPress={onPress}
+      disabled={disabled}
       style={[
         styles.base,
         styles.medium,
@@ -104,7 +109,7 @@ export function MediumButton({
           flexDirection:
             arrangement === "iconFirst" ? "column" : "column-reverse",
         },
-        disabled && styles.disabled,
+        (disabled || inactive) && styles.disabled,
         style as StyleProp<ViewStyle>,
       ]}
     >
@@ -117,7 +122,7 @@ export function MediumButton({
         style={[
           styles.textBase,
           { fontSize: 14 },
-          disabled && styles.disabledText,
+          (disabled || inactive) && styles.disabledText,
           textStyle,
         ]}
       >
