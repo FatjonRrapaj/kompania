@@ -5,12 +5,12 @@ import { StyleSheet } from "react-native";
 interface LoginLayoutProps {}
 
 export const unstable_settings = {
-  initialRouteName: "Login",
+  initialRouteName: "login",
 };
 
 const LoginLayout = (props: LoginLayoutProps) => {
   return (
-    <Stack initialRouteName="Login" screenOptions={{ headerShown: false }} />
+    <Stack initialRouteName="login" screenOptions={{ headerShown: false }} />
   );
 };
 

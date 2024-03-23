@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { useForm } from "react-hook-form";
 import { FontAwesome } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
+import { router } from "expo-router";
 
 import { View } from "@/components/Themed";
 import { Body1Bold, Body2, H5Bold } from "@/components/StyledText";
@@ -44,7 +45,12 @@ const Login = () => {
       {loginFields.map((field, index) => (
         <TextInput {...field} control={control} key={index} />
       ))}
-      <Pressable style={styles.forgotPassword}>
+      <Pressable
+        style={styles.forgotPassword}
+        onPress={() => {
+          router.navigate("/forgot_password");
+        }}
+      >
         <Body2 style={styles.forgotPasswordText}>
           {translate("forgotPassword")}
         </Body2>
