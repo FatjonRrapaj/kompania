@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, Ref, LegacyRef, forwardRef } from "react";
 import {
-  TextInput,
+  TextInput as DefaultTextInput,
   StyleSheet,
-  TextInputProps,
+  TextInputProps as DefaultTextInputProps,
   ViewStyle,
   View,
 } from "react-native";
@@ -18,20 +18,24 @@ const IconMapper = {
   test2: () => <View />,
 };
 
-interface TextInputWithFocusProps extends TextInputProps {
+interface TextInputProps extends DefaultTextInputProps {
   name: string;
   control: any;
   placeholder: string;
   containerStyle: ViewStyle;
   leftIcon?: keyof typeof IconMapper;
+  ref?: Ref<unknown>;
+  nextRef?: Ref<unknown>;
 }
 
-const TextInputWithFocus: React.FC<TextInputWithFocusProps> = ({
+const TextInput: React.FC<TextInputProps> = ({
   name,
   control,
   placeholder,
   containerStyle,
   leftIcon,
+  ref,
+  nextRef,
   ...rest
 }) => {
   const textColor = useThemeColor({}, "text");
@@ -67,7 +71,9 @@ const TextInputWithFocus: React.FC<TextInputWithFocusProps> = ({
               <LeftIcon />
             </View>
           ) : null}
-          <TextInput
+          <DefaultTextInput
+            ref={ref as LegacyRef<DefaultTextInput>}
+            onSubmitEditing={() => (nextRef as any)?.current?.focus()}
             style={[styles.input, { color: textColor }]}
             onFocus={() => {
               localOnFocus();
@@ -89,6 +95,13 @@ const TextInputWithFocus: React.FC<TextInputWithFocusProps> = ({
     />
   );
 };
+
+export default TextInput;
+
+export type TextInputType = Omit<
+  TextInputProps,
+  "control" | "errors" | "value" | "onChange"
+>;
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -123,5 +136,3 @@ const styles = StyleSheet.create({
     color: "red",
   },
 });
-
-export default TextInputWithFocus;

@@ -7,7 +7,7 @@ interface AuthLayoutProps {}
 const AuthLayout = (props: AuthLayoutProps) => {
   return (
     <Stack>
-      <Stack.Screen name="login" />
+      <Stack.Screen name="login" options={{ headerShown: false }} />
       <Stack.Screen name="register" />
     </Stack>
   );
