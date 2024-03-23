@@ -7,7 +7,7 @@ import en from "@/translations/en";
 
 function useLoginFields(): Array<TextInputType> {
   const { t } = useTranslation();
-  const translate = (key: keyof typeof en.login) => t(`signIn:${key}`);
+  const translate = (key: keyof typeof en.login) => t(`login:${key}`);
   const passwordRef = useRef(null);
 
   return [
@@ -18,6 +18,7 @@ function useLoginFields(): Array<TextInputType> {
       placeholder: translate("enterEmail"),
       required: true,
       containerStyle: { marginBottom: 10 },
+      leftIcon: "sms",
       validate: validateField({
         fieldName: translate("email"),
         patternType: "email",
@@ -32,6 +33,8 @@ function useLoginFields(): Array<TextInputType> {
       secureTextEntry: true,
       required: true,
       containerStyle: { marginBottom: 10 },
+      leftIcon: "lock",
+      rightIcon: "eyeSlash",
       validate: validateField({
         fieldName: translate("password"),
         required: true,

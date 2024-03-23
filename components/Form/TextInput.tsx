@@ -7,21 +7,16 @@ import {
   View,
 } from "react-native";
 import { Controller, Control, ValidationRule } from "react-hook-form";
-import { primary, gray } from "@/constants/Colors";
+import { primary, gray, dark } from "@/constants/Colors";
 import { useThemeColor } from "../Themed";
 import { Label } from "../StyledText";
-
-//TODO: add the icons
-
-const IconMapper = {
-  test: () => <View />,
-  test2: () => <View />,
-};
+import IconConfig from "@/assets/svg/IconConfig";
 
 interface TextInputProps extends DefaultTextInputProps {
   control: Control;
   containerStyle: ViewStyle;
-  leftIcon?: keyof typeof IconMapper;
+  leftIcon?: keyof typeof IconConfig;
+  rightIcon?: keyof typeof IconConfig;
   required?: string | ValidationRule<boolean>;
   ref?: any;
   nextRef?: Ref<unknown>;
@@ -36,6 +31,7 @@ const TextInput = forwardRef(
       placeholder,
       containerStyle,
       leftIcon,
+      rightIcon,
       elementKey,
       nextRef,
       required,
@@ -56,7 +52,8 @@ const TextInput = forwardRef(
       setIsFocused(false);
     };
 
-    const LeftIcon = leftIcon ? IconMapper[leftIcon] : undefined;
+    const LeftIcon = leftIcon ? IconConfig[leftIcon] : undefined;
+    const RightIcon = rightIcon ? IconConfig[rightIcon] : undefined;
 
     return (
       <Controller
@@ -72,13 +69,14 @@ const TextInput = forwardRef(
           <View
             style={[
               styles.inputContainer,
-              isFocused && styles.inputContainerFocused,
+              isFocused || (value && styles.inputContainerFocused),
+              LeftIcon && styles.inputWithIcon,
               containerStyle,
             ]}
           >
             {LeftIcon ? (
               <View style={styles.iconContainer}>
-                <LeftIcon />
+                <LeftIcon fill={isFocused || value ? dark[500] : gray[500]} />
               </View>
             ) : null}
             <DefaultTextInput
@@ -97,6 +95,11 @@ const TextInput = forwardRef(
               placeholder={placeholder}
               {...rest}
             />
+            {RightIcon ? (
+              <View style={styles.iconContainerRight}>
+                <RightIcon fill={isFocused || value ? dark[500] : gray[500]} />
+              </View>
+            ) : null}
             {error?.message ? <Label>{error?.message}</Label> : null}
           </View>
         )}
@@ -119,11 +122,10 @@ const styles = StyleSheet.create({
     borderColor: gray[500],
     borderWidth: 1,
     width: "100%",
-    paddingHorizontal: 20,
-    justifyContent: "center",
-    flexDirection: "row",
+    justifyContent: "flex-start",
     position: "relative",
     alignSelf: "stretch",
+    borderRadius: 10,
   },
   input: {
     height: 56,
@@ -133,13 +135,23 @@ const styles = StyleSheet.create({
     borderColor: primary[500],
   },
   inputWithIcon: {
-    paddingLeft: 20 + 24 + 20, //icon spacing + icon width + icon distance
+    paddingLeft: 20 + 20 + 20, //icon spacing + icon width + icon distance
   },
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
     left: 20,
+    top: 0,
+    bottom: 0,
+  },
+  iconContainerRight: {
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    right: 20,
+    top: 0,
+    bottom: 0,
   },
   label: {
     marginTop: 4,

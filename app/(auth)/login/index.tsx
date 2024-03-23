@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, KeyboardAvoidingView } from "react-native";
+import { StyleSheet } from "react-native";
 import { useForm } from "react-hook-form";
 import { FontAwesome } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -11,6 +11,8 @@ import { gray, primary } from "@/constants/Colors";
 import useLoginFields from "./useLoginFields";
 import en from "@/translations/en";
 import TextInput from "@/components/Form/TextInput";
+
+import SMS from "@/assets/svg/sms.svg";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -31,7 +33,12 @@ const Login = () => {
       <H5Bold style={styles.title}>{translate("loginTitle")}</H5Bold>
       <Body2 style={styles.description}>{translate("enterInfo")}</Body2>
       {loginFields.map((field, index) => (
-        <TextInput {...field} control={control} key={index} />
+        <TextInput
+          {...field}
+          containerStyle={styles.textInput}
+          control={control}
+          key={index}
+        />
       ))}
     </View>
   );
@@ -43,6 +50,7 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 30,
   },
+  textInput: { marginBottom: 16 },
   description: {
     color: gray[500],
     marginTop: 2,
