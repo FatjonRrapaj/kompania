@@ -5,6 +5,14 @@ export default {
     register: "Register",
     forgotPassword: "Forgot password",
   },
+  form: {
+    isRequired: "is required",
+    mustBeAtLeast: "must be at least",
+    characters: "characters",
+    mustBeAMaximum: "must be a maximum of",
+    doesNotMatch: "does not match",
+    isInvalid: "is invalid",
+  },
   login: {
     loginTitle: "Login",
     enterInfo: "Enter your information below",

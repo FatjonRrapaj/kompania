@@ -1,3 +1,5 @@
+import i18next from "i18next";
+
 const patternTypes: Record<string, RegExp> = {
   phone: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
   email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -35,17 +37,21 @@ const validateField = ({
 }) => {
   return function validate(value: string): string | undefined {
     if (required && !value) {
-      return `${fieldName} is required`;
+      return `${fieldName} ${i18next.t("form:isRequired")}`;
     }
     if (required && value && min !== -1 && value.length < min) {
-      return `${fieldName} must be at least ${min} characters`;
+      return `${fieldName} ${i18next.t(
+        "form:mustBeAtLeast"
+      )} ${min} ${i18next.t("form:characters")}`;
     }
     if (required && value && max !== -1 && value.length > max) {
-      return `${fieldName} must be a maximum of ${max} characters`;
+      return `${fieldName}  ${i18next.t(
+        "form:mustBeAMaximum"
+      )} ${max} ${i18next.t("form:characters")}`;
     }
     if (match) {
       if (match !== value) {
-        return `${fieldName} does not match!`;
+        return `${fieldName} ${i18next.t("form:doesNotMatch")}`;
       }
     }
     if (
@@ -55,10 +61,10 @@ const validateField = ({
       !!patternTypes[patternType] &&
       !patternTypes[patternType].test(value)
     ) {
-      return `Invalid ${fieldName.toLowerCase()}`;
+      return `${fieldName.toLowerCase()} ${i18next.t("form:isInvalid")}`;
     }
     if (required && value && !!pattern && !pattern?.test(value)) {
-      return `Invalid ${fieldName.toLowerCase()}`;
+      return `${fieldName.toLowerCase()} ${i18next.t("form:isInvalid")}`;
     }
   };
 };

@@ -5,6 +5,14 @@ export default {
     register: "Register",
     forgotPassword: "Forgot password",
   },
+  form: {
+    isRequired: "kërkohet",
+    mustBeAtLeast: "duhet të jetë të paktën",
+    characters: "karaktere",
+    mustBeAMaximum: "duhet të jetë maksimumi",
+    doesNotMatch: "nuk përputhet",
+    isInvalid: "nuk është i saktë",
+  },
   login: {
     loginTitle: "Hyr në (Kompania)",
     enterInfo: "Plotëso informacionin më poshtë",
