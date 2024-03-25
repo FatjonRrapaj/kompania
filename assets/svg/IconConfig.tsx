@@ -1,11 +1,22 @@
-import { SvgProps } from "react-native-svg";
+//input
 import SMS from "./sms.svg";
 import Lock from "./lock.svg";
 import Eye from "./eye.svg";
 import EyeSlash from "./eye-slash.svg";
+
+//day
 import Sunrise from "./sunrise.svg";
 import Sun from "./sun.svg";
 import Moon from "./moon.svg";
+
+//package
+import TotalPackages from "./totalPackages.svg";
+import ProcessingPackages from "./processingPackages.svg";
+import ProblematicPackages from "./problematicPackages.svg";
+import AddPackage from "./addPackage.svg";
+
+//actions
+import Scan from "./scan.svg";
 
 const IconConfig = {
   SMS,
@@ -15,6 +26,11 @@ const IconConfig = {
   Sunrise,
   Sun,
   Moon,
+  TotalPackages,
+  ProcessingPackages,
+  ProblematicPackages,
+  AddPackage,
+  Scan,
 };
 
 export default IconConfig;
