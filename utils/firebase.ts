@@ -16,13 +16,15 @@ const firebaseConfig = {
   measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+//Firestore location is set at europe-west6 zurich
+
 if (!getApps().length) {
   try {
     app = initializeApp(firebaseConfig);
     auth = initializeAuth(app);
     db = getFirestore(app);
     storage = getStorage(app);
-    // functions = getFunctions(app, "europe-west3");
+    // functions = getFunctions(app, "europe-west6");
   } catch (error) {
     console.log("Error initializing app: " + error);
   }
@@ -31,7 +33,7 @@ if (!getApps().length) {
   auth = getAuth(app);
   db = getFirestore(app);
   storage = getStorage(app);
-  // functions = getFunctions(app, "europe-west3");
+  // functions = getFunctions(app, "europe-west6");
 }
 
 export { db, auth, storage, app };
