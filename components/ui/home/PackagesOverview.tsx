@@ -21,7 +21,7 @@ const PackagesOverView = (props: PackagesOverViewProps) => {
 
   return (
     <View style={styles.container}>
-      <Body1Bold>{translate("allPackages")}</Body1Bold>
+      <Body1Bold style={styles.title}>{translate("allPackages")}</Body1Bold>
       <View style={styles.numbersContainer}>
         <PackageNumber
           status="completed"
@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    marginBottom: 8,
+    marginBottom: 12,
   },
 });
