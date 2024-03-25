@@ -47,8 +47,7 @@ export function GiantButton({
         styles.base,
         styles.giant,
         {
-          flexDirection:
-            arrangement === "iconFirst" ? "column" : "column-reverse",
+          flexDirection: arrangement === "iconFirst" ? "row" : "row-reverse",
         },
         (disabled || inactive) && styles.disabled,
         style as StyleProp<ViewStyle>,
@@ -106,8 +105,7 @@ export function MediumButton({
         styles.base,
         styles.medium,
         {
-          flexDirection:
-            arrangement === "iconFirst" ? "column" : "column-reverse",
+          flexDirection: arrangement === "iconFirst" ? "row" : "row-reverse",
         },
         (disabled || inactive) && styles.disabled,
         style as StyleProp<ViewStyle>,

@@ -5,6 +5,7 @@ import { View } from "@/components/Themed";
 import globalStyles from "@/components/globalStyles";
 import GreetingComponent from "@/components/ui/home/Greeting";
 import PackagesOverView from "@/components/ui/home/PackagesOverview";
+import PackageActions from "@/components/ui/home/PackageActions";
 
 export default function TabOneScreen() {
   const handlePackageOverviewPress = (packageStatus: PackageStatus) => {
@@ -21,6 +22,7 @@ export default function TabOneScreen() {
         problematicPackages={200}
         onPackageTypePress={handlePackageOverviewPress}
       />
+      <PackageActions />
     </View>
   );
 }
