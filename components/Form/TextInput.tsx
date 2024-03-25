@@ -23,7 +23,7 @@ function PasswordVisibility({
   isVisible,
   onChange,
 }: PasswordVisibilityProps): JSX.Element {
-  const Icon = isVisible ? IconConfig["eye"] : IconConfig["eyeSlash"];
+  const Icon = isVisible ? IconConfig["Eye"] : IconConfig["EyeSlash"];
   return (
     <Pressable style={styles.iconContainerRight} onPress={onChange}>
       <Icon fill={dark[500]} />

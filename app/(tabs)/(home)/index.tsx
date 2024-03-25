@@ -2,26 +2,15 @@ import { Pressable, StyleSheet } from "react-native";
 
 import { Text, View } from "@/components/Themed";
 import { Link } from "expo-router";
+import globalStyles from "@/components/globalStyles";
+import IconConfig from "@/assets/svg/IconConfig";
 
 export default function TabOneScreen() {
+  const TimeIndicatorIcon = IconConfig.Moon;
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <Link asChild href={"/(tabs)/(home)/createPackage"}>
-        <Pressable>
-          <Text>Create Package</Text>
-        </Pressable>
-      </Link>
-      <Link asChild href={"/(tabs)/(home)/999"}>
-        <Pressable>
-          <Text>Go to 999</Text>
-        </Pressable>
-      </Link>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
+    <View style={globalStyles.screenContainer}>
+      <TimeIndicatorIcon />
     </View>
   );
 }

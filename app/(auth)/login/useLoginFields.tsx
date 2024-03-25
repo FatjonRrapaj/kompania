@@ -17,7 +17,7 @@ function useLoginFields(): Array<TextInputType> {
       keyboardType: "email-address",
       placeholder: translate("enterEmail"),
       containerStyle: { marginBottom: 16 },
-      leftIcon: "sms",
+      leftIcon: "SMS",
       validate: validateField({
         fieldName: translate("email"),
         patternType: "email",
@@ -31,7 +31,7 @@ function useLoginFields(): Array<TextInputType> {
       placeholder: translate("enterPassword"),
       secureTextEntry: true,
       containerStyle: { marginBottom: 16 },
-      leftIcon: "lock",
+      leftIcon: "Lock",
       validate: validateField({
         fieldName: translate("password"),
         required: true,
