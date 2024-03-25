@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { useState } from "react";
+import { View, StyleSheet } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 
@@ -51,7 +51,7 @@ export default GreetingComponent;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "row",
     gap: 6,

@@ -1,16 +1,26 @@
 import { Pressable, StyleSheet } from "react-native";
 
-import { Text, View } from "@/components/Themed";
-import { Link } from "expo-router";
+import { View } from "@/components/Themed";
+
 import globalStyles from "@/components/globalStyles";
-import IconConfig from "@/assets/svg/IconConfig";
+import GreetingComponent from "@/components/ui/home/Greeting";
+import PackagesOverView from "@/components/ui/home/PackagesOverview";
 
 export default function TabOneScreen() {
-  const TimeIndicatorIcon = IconConfig.Moon;
+  const handlePackageOverviewPress = (packageStatus: PackageStatus) => {
+    console.log("packageStatus: ", packageStatus);
+    //TODO: go to packages w status filter as parameter
+  };
 
   return (
     <View style={globalStyles.screenContainer}>
-      <TimeIndicatorIcon />
+      <GreetingComponent />
+      <PackagesOverView
+        totalPackages={10}
+        processingPackages={123}
+        problematicPackages={200}
+        onPackageTypePress={handlePackageOverviewPress}
+      />
     </View>
   );
 }
