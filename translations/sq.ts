@@ -26,4 +26,20 @@ export default {
     notOurMember: "Nuk je i regjistruar akoma?",
     registerNow: "Regjistrohu Tani",
   },
+  home: {
+    goodMorning: "Mirëmëngjes",
+    goodDay: "Mirëdita",
+    goodEvening: "Mirëmbrëma",
+    allPackages: "Të gjitha pakot",
+    inTotal: "në total",
+    inProcess: "në proçes",
+    problematic: "problematike",
+    newPackage: "Pako e re",
+    scanPackage: "Skano pako",
+    latest: "Të fundit",
+    seeAll: "Shiko të gjitha",
+  },
+  package: {
+    pending: "Në pritje",
+  },
 };

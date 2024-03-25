@@ -26,4 +26,20 @@ export default {
     notOurMember: "Not our member yet?",
     registerNow: "Register Now",
   },
+  home: {
+    goodMorning: "Good Morning",
+    goodDay: "Good Day",
+    goodEvening: "Good Evening",
+    allPackages: "All packages",
+    inTotal: "in total",
+    inProcess: "in process",
+    problematic: "problematic",
+    newPackage: "New package",
+    scanPackage: "Scan Package",
+    latest: "Latest",
+    seeAll: "See all",
+  },
+  package: {
+    pending: "Pending",
+  },
 };
