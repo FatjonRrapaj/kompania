@@ -41,5 +41,7 @@ export default {
   },
   package: {
     pending: "Pending",
+    completed: "Completed",
+    problematic: "Problematic",
   },
 };

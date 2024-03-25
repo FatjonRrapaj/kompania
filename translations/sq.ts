@@ -41,5 +41,7 @@ export default {
   },
   package: {
     pending: "Në pritje",
+    completed: "Përfunduar",
+    problematic: "Problematike",
   },
 };

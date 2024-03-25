@@ -5,9 +5,13 @@ import { useTranslation } from "react-i18next";
 
 import IconConfig from "@/assets/svg/IconConfig";
 import Pressable from "@/components/Pressable";
-import { primary, secondary, tertiary } from "@/constants/Colors";
-import { Body2, H6Bold } from "@/components/StyledText";
+import { Body2, Caption, H6Bold } from "@/components/StyledText";
 import en from "@/translations/en";
+import {
+  StatusTitleMap,
+  normalColorMapper,
+  transparentColorMapper,
+} from "@/utils/packageUi";
 
 interface PackageNumberProps {
   number: number;
@@ -19,28 +23,8 @@ const PackageNumber = (props: PackageNumberProps) => {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.home) => t(`home:${key}`);
 
-  type StatusColorMap = {
-    [key in PackageStatus]: string;
-  };
-
-  type StatusTitleMap = {
-    [key in PackageStatus]: string;
-  };
-
   type StatusIconMap = {
     [key in PackageStatus]: FC<SvgProps>;
-  };
-
-  const normalColorMapper: StatusColorMap = {
-    completed: primary[500],
-    pending: secondary[500],
-    problematic: tertiary[500],
-  };
-
-  const transparentColorMapper: StatusColorMap = {
-    completed: primary[10],
-    pending: secondary[10],
-    problematic: tertiary[10],
   };
 
   const iconMapper: StatusIconMap = {
@@ -73,7 +57,10 @@ const PackageNumber = (props: PackageNumberProps) => {
           {props.number}
         </H6Bold>
       </View>
-      <Body2>{titleMapper[props.status]}</Body2>
+      <View>
+        <Body2>{titleMapper[props.status]}</Body2>
+        <Caption style={{ color: normalColorMapper[props.status] }}></Caption>
+      </View>
     </Pressable>
   );
 };
@@ -84,7 +71,6 @@ const styles = StyleSheet.create({
   container: {
     width: 100,
     height: 60,
-    justifyContent: "center",
     alignItems: "flex-start",
     borderRadius: 4,
     borderWidth: 1,

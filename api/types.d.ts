@@ -3,6 +3,22 @@ interface Company {
   companyName: string;
 }
 
-interface Package {}
+interface Costumer {
+  name: "string";
+}
+
+interface Currency {
+  symbol: string;
+  name: string;
+}
 
 type PackageStatus = "completed" | "pending" | "problematic";
+
+interface Package {
+  customer: Customer;
+  creationDate: Date;
+  amount: number;
+  currency: Currency;
+  price: string;
+  status: PackageStatus;
+}
