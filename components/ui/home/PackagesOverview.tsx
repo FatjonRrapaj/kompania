@@ -6,6 +6,7 @@ import IconConfig from "@/assets/svg/IconConfig";
 import { Body1, Body2, Body1Bold } from "../../StyledText";
 import en from "@/translations/en";
 import { primary, secondary, tertiary } from "@/constants/Colors";
+import PackageNumber from "./PackageNumber";
 
 interface PackagesOverViewProps {
   totalPackages: number;
@@ -21,6 +22,23 @@ const PackagesOverView = (props: PackagesOverViewProps) => {
   return (
     <View style={styles.container}>
       <Body1Bold>{translate("allPackages")}</Body1Bold>
+      <View style={styles.numbersContainer}>
+        <PackageNumber
+          status="completed"
+          number={props.totalPackages}
+          onPress={props.onPackageTypePress}
+        />
+        <PackageNumber
+          status="pending"
+          number={props.processingPackages}
+          onPress={props.onPackageTypePress}
+        />
+        <PackageNumber
+          status="problematic"
+          number={props.problematicPackages}
+          onPress={props.onPackageTypePress}
+        />
+      </View>
     </View>
   );
 };
@@ -30,6 +48,11 @@ export default PackagesOverView;
 const styles = StyleSheet.create({
   container: {
     marginVertical: 16,
+  },
+  numbersContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   title: {
     marginBottom: 8,
