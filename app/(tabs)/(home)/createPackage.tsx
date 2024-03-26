@@ -53,7 +53,11 @@ const CreatePackage = (props: CreatePackageProps) => {
           {createPackageFields.map((field, index) => {
             if (field.type === "sectionLabel") {
               return (
-                <Body1Bold style={{ marginBottom: 16 }}>{field.text}</Body1Bold>
+                <Body1Bold
+                  style={{ marginTop: index === 0 ? 0 : 16, marginBottom: 16 }}
+                >
+                  {field.text}
+                </Body1Bold>
               );
             } else {
               return <TextInput {...field} control={control} key={index} />;
