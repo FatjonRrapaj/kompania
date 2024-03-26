@@ -12,13 +12,14 @@ type FormElementTypes =
   | "checkbox"
   | "custom"
   | "textArea"
-  | "currencySelector";
+  | "currencySelector"
+  | "undefined";
 
 interface FormElementType {
   type: FormElementTypes;
 }
 
-interface LabelType extends FormElementType {
+export interface LabelType extends FormElementType {
   text: string;
   type: "sectionLabel";
 }
@@ -27,7 +28,7 @@ interface CustomFieldComponent extends FormElementType {
   type: "custom";
 }
 
-interface PackageFieldsProps extends FormElementType {
+interface PackageFieldsProps {
   isStandardPackage: boolean;
 }
 
@@ -35,15 +36,13 @@ interface CurrencySelectorComponent extends FormElementType {
   type: "currencySelector";
 }
 
+type CreatePackageFieldsType = Array<
+  TextInputType | LabelType | CustomFieldComponent | CurrencySelectorComponent
+>;
+
 function useCreatePackageFields({
   isStandardPackage,
-}: PackageFieldsProps): Array<
-  | TextInputType
-  | LabelType
-  | CustomFieldComponent
-  | {}
-  | CurrencySelectorComponent
-> {
+}: PackageFieldsProps): CreatePackageFieldsType {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.createPackage) =>
     t(`createPackage:${key}`);
@@ -61,7 +60,7 @@ function useCreatePackageFields({
   const packageHeightRef = useRef(null);
 
   //TODO: do the input suggestion here
-  return [
+  const fields = [
     { text: translate("receiverDetails"), type: "sectionLabel" },
     {
       type: "input",
@@ -185,62 +184,33 @@ function useCreatePackageFields({
     {
       type: "custom",
     },
-    ...(!isStandardPackage
-      ? [
-          {
-            ref: packageNameRef,
-            nextRef: isStandardPackage ? packageNameRef : paymentAmountRef,
-            type: "input",
-            autoCorrect: false,
-            spellCheck: false,
-            autoComplete: "off",
-            elementKey: "packageId",
-            keyboardType: "default",
-            placeholder: translate("packageIdScanPlaceholder"),
-            containerStyle: { marginBottom: 16 },
-            validate: validateField({
-              fieldName: translate("packageId"),
-              required: true,
-              min: 6,
-            }),
-          },
-          {
-            ref: packageNameRef,
-            nextRef: isStandardPackage ? packageNameRef : paymentAmountRef,
-            type: "input",
-            autoCorrect: false,
-            spellCheck: false,
-            autoComplete: "off",
-            elementKey: "packageId",
-            keyboardType: "default",
-            placeholder: translate("packageIdScanPlaceholder"),
-            containerStyle: { marginBottom: 16 },
-            validate: validateField({
-              fieldName: translate("packageId"),
-              required: true,
-              min: 6,
-            }),
-          },
-          {
-            ref: packageNameRef,
-            nextRef: isStandardPackage ? packageNameRef : paymentAmountRef,
-            type: "input",
-            autoCorrect: false,
-            spellCheck: false,
-            autoComplete: "off",
-            elementKey: "packageId",
-            keyboardType: "default",
-            placeholder: translate("packageIdScanPlaceholder"),
-            containerStyle: { marginBottom: 16 },
-            validate: validateField({
-              fieldName: translate("packageId"),
-              required: true,
-              min: 6,
-            }),
-          },
-        ]
-      : []),
   ];
+
+  // if (!isStandardPackage) {
+  //   fields.push(
+  //     ...[
+  //       {
+  //         ref: packageNameRef,
+  //         nextRef: isStandardPackage ? packageNameRef : paymentAmountRef,
+  //         type: "input",
+  //         autoCorrect: false,
+  //         spellCheck: false,
+  //         autoComplete: "off",
+  //         elementKey: "packageId",
+  //         keyboardType: "default",
+  //         placeholder: translate("packageIdScanPlaceholder"),
+  //         containerStyle: { marginBottom: 16 },
+  //         validate: validateField({
+  //           fieldName: translate("packageId"),
+  //           required: true,
+  //           min: 6,
+  //         }),
+  //       },
+  //     ]
+  //   );
+  // }
+
+  return fields as CreatePackageFieldsType;
 }
 
 export default useCreatePackageFields;

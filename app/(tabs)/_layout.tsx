@@ -18,7 +18,6 @@ function TabBarIcon(props: {
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const segment = useSegments();
-  console.log("segment: ", segment);
 
   return (
     <Tabs

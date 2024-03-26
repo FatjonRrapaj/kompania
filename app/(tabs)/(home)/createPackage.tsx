@@ -16,6 +16,7 @@ import useCreatePackageFields from "@/components/ui/home/useCreatePackageFields"
 import en from "@/translations/en";
 import { Body1Bold } from "@/components/StyledText";
 import TextInput from "@/components/Form/TextInput";
+import { useState } from "react";
 
 interface CreatePackageProps {}
 
@@ -31,7 +32,9 @@ const CreatePackage = (props: CreatePackageProps) => {
     formState: { errors, isValid },
   } = useForm();
 
-  const createPackageFields = useCreatePackageFields();
+  const [isStandardPackage, setIsStandardPackage] = useState<boolean>(true);
+
+  const createPackageFields = useCreatePackageFields({ isStandardPackage });
 
   const onSubmit = (data: any) => {
     if (isValid) {
@@ -43,7 +46,7 @@ const CreatePackage = (props: CreatePackageProps) => {
     <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>
       <PageHeader title="newPackage" />
       <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: "#00000000" }}
+        // style={{ flex: 1, backgroundColor: "#00000000" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
@@ -59,8 +62,10 @@ const CreatePackage = (props: CreatePackageProps) => {
                   {field.text}
                 </Body1Bold>
               );
-            } else {
+            } else if (field.type === "input") {
               return <TextInput {...field} control={control} key={index} />;
+            } else {
+              return null;
             }
           })}
           <GiantButton
