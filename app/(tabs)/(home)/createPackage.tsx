@@ -40,20 +40,30 @@ const CreatePackage = (props: CreatePackageProps) => {
   };
 
   return (
-    <View style={globalStyles.screenContainer}>
+    <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>
       <PageHeader title="newPackage" />
       <KeyboardAvoidingView
         style={{ flex: 1, backgroundColor: "#00000000" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 24 }}
+        >
           {createPackageFields.map((field, index) => {
             if (field.type === "sectionLabel") {
-              return <Body1Bold>{field.text}</Body1Bold>;
+              return (
+                <Body1Bold style={{ marginBottom: 16 }}>{field.text}</Body1Bold>
+              );
             } else {
               return <TextInput {...field} control={control} key={index} />;
             }
           })}
+          <GiantButton
+            inactive={!isValid}
+            title={translate("publishNow")}
+            onPress={handleSubmit(onSubmit)}
+          />
         </ScrollView>
       </KeyboardAvoidingView>
     </View>

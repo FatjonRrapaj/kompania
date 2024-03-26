@@ -26,8 +26,6 @@ const Login = () => {
     formState: { errors, isValid },
   } = useForm();
 
-  console.log("errors: ", errors);
-
   const loginFields = useLoginFields();
 
   const onSubmit = (data: any) => {
