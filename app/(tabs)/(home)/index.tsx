@@ -9,7 +9,11 @@ import PackageActions from "@/components/ui/home/PackageActions";
 
 import { packagesMockList } from "@/mocks/packagesMock";
 import { Body1 } from "@/components/StyledText";
-import SmallPackageItem from "@/components/ui/home/PackateItem";
+import {
+  SmallPackageItem,
+  SmallPackageItemLoader,
+} from "@/components/ui/home/PackageItem";
+import HelloWorld from "@/components/ui/home/PackageListLoader";
 
 export default function TabOneScreen() {
   const handlePackageOverviewPress = (packageStatus: PackageStatus) => {
@@ -26,12 +30,8 @@ export default function TabOneScreen() {
         renderItem={({ item: packageItem, index }) => (
           <SmallPackageItem {...packageItem} />
         )}
-        data={packagesMockList}
-        ListEmptyComponent={
-          <View>
-            <Body1>EMPTY</Body1>
-          </View>
-        }
+        data={[]}
+        ListEmptyComponent={<SmallPackageItemLoader />}
         ListHeaderComponent={
           <View style={{ marginHorizontal: 3 }}>
             <GreetingComponent />

@@ -9,6 +9,9 @@ import { normalColorMapper } from "@/utils/packageUi";
 import en from "@/translations/en";
 import Pressable from "@/components/Pressable";
 
+import { Skeleton, Spacer } from "../Skeleton";
+import { Skeleton as DefaultSkeleton } from "moti/skeleton";
+
 interface SmallPackageItemProps extends Package {}
 
 const SmallPackageItem = (props: SmallPackageItemProps) => {
@@ -17,14 +20,14 @@ const SmallPackageItem = (props: SmallPackageItemProps) => {
 
   return (
     <Pressable style={styles.container}>
-      <RnView style={styles.iconContainer}>
+      <View style={styles.iconContainer}>
         <IconConfig.Package />
-      </RnView>
-      <RnView style={styles.infoContainer}>
+      </View>
+      <View style={styles.infoContainer}>
         <Body1Bold>{props.customer.name}</Body1Bold>
         <Caption>{props.creationDate.toLocaleDateString()}</Caption>
-      </RnView>
-      <RnView style={styles.priceContainer}>
+      </View>
+      <View style={styles.priceContainer}>
         <Body2Bold>
           {props.currency.symbol}
           {props.price}
@@ -32,12 +35,44 @@ const SmallPackageItem = (props: SmallPackageItemProps) => {
         <Caption style={{ color: normalColorMapper[props.status] }}>
           {translate(props.status)}
         </Caption>
-      </RnView>
+      </View>
     </Pressable>
   );
 };
 
-export default SmallPackageItem;
+const SmallPackageItemLoader = () => {
+  return (
+    <View style={styles.container}>
+      <DefaultSkeleton.Group show>
+        <Skeleton
+          width={styles.iconContainer.width}
+          height={styles.iconContainer.height}
+        />
+        <View style={styles.infoContainer}>
+          <Skeleton>
+            <Body1Bold>Fatjon Rr.</Body1Bold>
+          </Skeleton>
+          <Skeleton>
+            <Caption>Created at 22 Aug 13:13</Caption>
+          </Skeleton>
+        </View>
+        <Spacer width={16} />
+        <View style={[styles.priceContainer, { alignItems: "flex-start" }]}>
+          <Skeleton>
+            <Body2Bold>$99</Body2Bold>
+          </Skeleton>
+
+          <Skeleton>
+            <Caption>Compled</Caption>
+          </Skeleton>
+        </View>
+        <Spacer height={16} />
+      </DefaultSkeleton.Group>
+    </View>
+  );
+};
+
+export { SmallPackageItem, SmallPackageItemLoader };
 
 const styles = StyleSheet.create({
   container: {
