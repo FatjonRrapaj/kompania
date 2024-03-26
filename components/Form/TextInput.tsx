@@ -88,8 +88,6 @@ const TextInput = forwardRef(
           field: { onChange, onBlur, value },
           fieldState: { error },
         }) => {
-          console.log("error: ", error);
-
           return (
             <View style={containerStyle}>
               <View
@@ -168,6 +166,7 @@ const styles = StyleSheet.create({
     position: "relative",
     alignSelf: "stretch",
     borderRadius: 10,
+    paddingLeft: 20,
   },
   input: {
     height: 56,
