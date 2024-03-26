@@ -58,8 +58,10 @@ function useCreatePackageFields({
   const packageWidthRef = useRef(null);
   const packageLengthRef = useRef(null);
   const packageHeightRef = useRef(null);
-  const packageValueRef = useRef(null);
   const shippingCostRef = useRef(null);
+  const cashOnDeliveryRef = useRef(null);
+  const notesForPackageRef = useRef(null);
+  const endRef = useRef(null);
 
   //TODO: do the input suggestion here
   const fields = [
@@ -187,7 +189,7 @@ function useCreatePackageFields({
     },
   ];
 
-  if (isStandardPackage) {
+  if (!isStandardPackage) {
     fields.push(
       ...[
         {
@@ -243,7 +245,7 @@ function useCreatePackageFields({
         },
         {
           ref: packageHeightRef,
-          nextRef: packageValueRef,
+          nextRef: paymentAmountRef,
           type: "input",
           autoCorrect: false,
           spellCheck: false,
@@ -261,6 +263,73 @@ function useCreatePackageFields({
       ]
     );
   }
+
+  fields.push(
+    {
+      ref: paymentAmountRef,
+      nextRef: shippingCostRef,
+      autoComplete: "off",
+      autoCorrect: false,
+      spellCheck: false,
+      type: "input",
+      elementKey: "paymentAmount",
+      keyboardType: "number-pad",
+      placeholder: translate("paymentAmountPlaceholder"),
+      containerStyle: { marginBottom: 16 },
+      validate: validateField({
+        fieldName: translate("paymentAmount"),
+        required: true,
+      }),
+    },
+    {
+      ref: shippingCostRef,
+      nextRef: cashOnDeliveryRef,
+      autoComplete: "off",
+      autoCorrect: false,
+      spellCheck: false,
+      type: "input",
+      elementKey: "shippingCost",
+      keyboardType: "number-pad",
+      placeholder: translate("shippingCostPlaceholder"),
+      containerStyle: { marginBottom: 16 },
+      validate: validateField({
+        fieldName: translate("shippingCost"),
+        required: true,
+      }),
+    },
+    {
+      ref: cashOnDeliveryRef,
+      nextRef: notesForPackageRef,
+      autoComplete: "off",
+      autoCorrect: false,
+      spellCheck: false,
+      type: "input",
+      elementKey: "shippingCost",
+      keyboardType: "number-pad",
+      placeholder: translate("shippingCostPlaceholder"),
+      containerStyle: { marginBottom: 16 },
+      validate: validateField({
+        fieldName: translate("shippingCost"),
+        required: true,
+      }),
+    },
+    {
+      ref: notesForPackageRef,
+      nextRef: endRef,
+      autoComplete: "off",
+      autoCorrect: false,
+      spellCheck: false,
+      type: "input",
+      elementKey: "notesForPackage",
+      keyboardType: "default",
+      placeholder: translate("notesForPackagePlaceholder"),
+      containerStyle: { marginBottom: 16 },
+      validate: validateField({
+        fieldName: translate("notesForPackage"),
+        required: true,
+      }),
+    }
+  );
 
   return fields as CreatePackageFieldsType;
 }

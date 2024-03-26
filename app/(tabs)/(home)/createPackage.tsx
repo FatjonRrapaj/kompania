@@ -32,7 +32,7 @@ const CreatePackage = (props: CreatePackageProps) => {
     formState: { errors, isValid },
   } = useForm();
 
-  const [isStandardPackage, setIsStandardPackage] = useState<boolean>(true);
+  const [isStandardPackage, setIsStandardPackage] = useState<boolean>(false);
 
   const createPackageFields = useCreatePackageFields({ isStandardPackage });
 
@@ -50,7 +50,7 @@ const CreatePackage = (props: CreatePackageProps) => {
       >
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 24 }}
+          contentContainerStyle={{ paddingBottom: 49 }}
         >
           {createPackageFields.map((field, index) => {
             if (field.type === "sectionLabel") {

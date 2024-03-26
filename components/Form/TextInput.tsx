@@ -76,7 +76,7 @@ const TextInput = forwardRef(
 
     const LeftIcon = leftIcon ? IconConfig[leftIcon] : undefined;
     const RightIcon = rightIcon ? IconConfig[rightIcon] : undefined;
-
+    console.log("RERENDER");
     return (
       <Controller
         control={control}
@@ -154,7 +154,7 @@ export default TextInput;
 
 export type TextInputType = Omit<
   TextInputProps,
-  "control" | "errors" | "value" | "onChange" | "ref"
+  "control" | "errors" | "value" | "onChange"
 >;
 
 const styles = StyleSheet.create({
