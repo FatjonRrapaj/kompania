@@ -59,7 +59,6 @@ const PackageNumber = (props: PackageNumberProps) => {
       </View>
       <View>
         <Body2>{titleMapper[props.status]}</Body2>
-        <Caption style={{ color: normalColorMapper[props.status] }}></Caption>
       </View>
     </Pressable>
   );
@@ -72,6 +71,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 60,
     alignItems: "flex-start",
+    justifyContent: "center",
     borderRadius: 4,
     borderWidth: 1,
     paddingHorizontal: 6,
