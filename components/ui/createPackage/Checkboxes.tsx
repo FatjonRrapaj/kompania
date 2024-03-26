@@ -1,8 +1,8 @@
-import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import en from "@/translations/en";
 import { useTranslation } from "react-i18next";
+
+import en from "@/translations/en";
 import { primary } from "@/constants/Colors";
 
 interface CheckboxesProps {

@@ -1,8 +1,8 @@
-import { Caption } from "@/components/StyledText";
-import { dark, gray, primary } from "@/constants/Colors";
-import * as React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
+
+import { Caption } from "@/components/StyledText";
+import { gray, primary } from "@/constants/Colors";
 import en from "@/translations/en";
 import IconConfig from "@/assets/svg/IconConfig";
 import Pressable from "@/components/Pressable";
