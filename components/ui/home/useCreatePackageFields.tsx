@@ -5,20 +5,45 @@ import TextInput, { TextInputType } from "@/components/Form/TextInput";
 import { useRef, useState } from "react";
 import en from "@/translations/en";
 
-type FormElementType =
+type FormElementTypes =
   | "sectionLabel"
   | "input"
   | "autoSuggestInput"
   | "checkbox"
   | "custom"
-  | "textArea";
+  | "textArea"
+  | "currencySelector";
 
-interface LabelType {
+interface FormElementType {
+  type: FormElementTypes;
+}
+
+interface LabelType extends FormElementType {
   text: string;
   type: "sectionLabel";
 }
 
-function useCreatePackageFields(): Array<TextInputType | LabelType> {
+interface CustomFieldComponent extends FormElementType {
+  type: "custom";
+}
+
+interface PackageFieldsProps extends FormElementType {
+  isStandardPackage: boolean;
+}
+
+interface CurrencySelectorComponent extends FormElementType {
+  type: "currencySelector";
+}
+
+function useCreatePackageFields({
+  isStandardPackage,
+}: PackageFieldsProps): Array<
+  | TextInputType
+  | LabelType
+  | CustomFieldComponent
+  | {}
+  | CurrencySelectorComponent
+> {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.createPackage) =>
     t(`createPackage:${key}`);
@@ -30,8 +55,10 @@ function useCreatePackageFields(): Array<TextInputType | LabelType> {
   const packageIdRef = useRef(null);
   const packageNameRef = useRef(null);
   const paymentAmountRef = useRef(null);
-
-  const [isStandardPackage, setIsStandardPackage] = useState<boolean>(true);
+  const packageWeightRef = useRef(null);
+  const packageWidthRef = useRef(null);
+  const packageLengthRef = useRef(null);
+  const packageHeightRef = useRef(null);
 
   //TODO: do the input suggestion here
   return [
@@ -155,6 +182,64 @@ function useCreatePackageFields(): Array<TextInputType | LabelType> {
         min: 6,
       }),
     },
+    {
+      type: "custom",
+    },
+    ...(!isStandardPackage
+      ? [
+          {
+            ref: packageNameRef,
+            nextRef: isStandardPackage ? packageNameRef : paymentAmountRef,
+            type: "input",
+            autoCorrect: false,
+            spellCheck: false,
+            autoComplete: "off",
+            elementKey: "packageId",
+            keyboardType: "default",
+            placeholder: translate("packageIdScanPlaceholder"),
+            containerStyle: { marginBottom: 16 },
+            validate: validateField({
+              fieldName: translate("packageId"),
+              required: true,
+              min: 6,
+            }),
+          },
+          {
+            ref: packageNameRef,
+            nextRef: isStandardPackage ? packageNameRef : paymentAmountRef,
+            type: "input",
+            autoCorrect: false,
+            spellCheck: false,
+            autoComplete: "off",
+            elementKey: "packageId",
+            keyboardType: "default",
+            placeholder: translate("packageIdScanPlaceholder"),
+            containerStyle: { marginBottom: 16 },
+            validate: validateField({
+              fieldName: translate("packageId"),
+              required: true,
+              min: 6,
+            }),
+          },
+          {
+            ref: packageNameRef,
+            nextRef: isStandardPackage ? packageNameRef : paymentAmountRef,
+            type: "input",
+            autoCorrect: false,
+            spellCheck: false,
+            autoComplete: "off",
+            elementKey: "packageId",
+            keyboardType: "default",
+            placeholder: translate("packageIdScanPlaceholder"),
+            containerStyle: { marginBottom: 16 },
+            validate: validateField({
+              fieldName: translate("packageId"),
+              required: true,
+              min: 6,
+            }),
+          },
+        ]
+      : []),
   ];
 }
 
