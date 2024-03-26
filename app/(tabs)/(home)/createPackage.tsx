@@ -12,16 +12,16 @@ import { View } from "@/components/Themed";
 import globalStyles from "@/components/globalStyles";
 import PageHeader from "@/components/PageHeader";
 import { GiantButton } from "@/components/StyledButton";
-import useCreatePackageFields from "@/components/ui/home/useCreatePackageFields";
+import useCreatePackageFields from "@/components/ui/createPackage/useCreatePackageFields";
 import en from "@/translations/en";
 import { Body1Bold } from "@/components/StyledText";
 import TextInput from "@/components/Form/TextInput";
 import { useState } from "react";
+import PackageSizeSelector from "@/components/ui/createPackage/PackageSizeSelector";
 
 interface CreatePackageProps {}
 
 const CreatePackage = (props: CreatePackageProps) => {
-  const { goBack } = useNavigation();
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.createPackage) =>
     t(`createPackage:${key}`);
@@ -65,7 +65,16 @@ const CreatePackage = (props: CreatePackageProps) => {
               );
             } else if (field.type === "input") {
               return <TextInput {...field} control={control} key={index} />;
-            } else {
+            } else if (field.type === "custom") {
+              return (
+                <PackageSizeSelector
+                  key={index}
+                  onChange={(v) => setIsStandardPackage(v)}
+                  isStandard={isStandardPackage}
+                />
+              );
+            }
+            {
               return null;
             }
           })}

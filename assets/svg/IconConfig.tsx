@@ -16,6 +16,7 @@ import ProcessingPackages from "./processingPackages.svg";
 import ProblematicPackages from "./problematicPackages.svg";
 import AddPackage from "./addPackage.svg";
 import NoPackage from "./noPackage.svg";
+import PackageSize from "./packageSize.svg";
 
 //actions
 import Scan from "./scan.svg";
@@ -36,6 +37,7 @@ const IconConfig = {
   ProcessingPackages,
   ProblematicPackages,
   AddPackage,
+  PackageSize,
   Scan,
   Package,
   NoPackage,

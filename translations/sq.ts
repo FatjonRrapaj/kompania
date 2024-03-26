@@ -56,7 +56,7 @@ export default {
     packageDetails: "Detajet e Pakos",
     packageIdScanPlaceholder: "ID e Pakos (skanim)",
     packageNamePlaceholder: "Emri i Pakos",
-    standard: "Standarde",
+    standard: "Standarte",
     other: "Tjetër",
     weightPlaceholder: "Pesha (kg)",
     lenPlaceholder: "Gjat. (cm)",
