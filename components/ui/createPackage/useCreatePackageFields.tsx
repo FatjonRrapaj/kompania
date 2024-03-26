@@ -277,6 +277,7 @@ function useCreatePackageFields({
 
   fields.push(
     { type: "checkboxes" },
+    { type: "currencySelector" },
     {
       ref: paymentAmountRef,
       nextRef: shippingCostRef,

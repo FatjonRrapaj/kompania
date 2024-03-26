@@ -19,6 +19,7 @@ import TextInput from "@/components/Form/TextInput";
 import { useState } from "react";
 import PackageSizeSelector from "@/components/ui/createPackage/PackageSizeSelector";
 import Checkboxes from "@/components/ui/createPackage/Checkboxes";
+import CurrencySelector from "@/components/ui/createPackage/CurrencySelector";
 
 interface CreatePackageProps {}
 
@@ -34,6 +35,8 @@ const CreatePackage = (props: CreatePackageProps) => {
   } = useForm();
 
   const [isStandardPackage, setIsStandardPackage] = useState<boolean>(false);
+  const [selectedCurrency, setSelectedCurrency] =
+    useState<CurrencyShortValue>("ALL");
   const [isFragile, setIsFragile] = useState<boolean>(false);
   const [canBeOpened, setCanBeOpened] = useState<boolean>(true);
 
@@ -85,8 +88,14 @@ const CreatePackage = (props: CreatePackageProps) => {
                   canBeOpened={canBeOpened}
                 />
               );
-            }
-            {
+            } else if (field.type === "currencySelector") {
+              return (
+                <CurrencySelector
+                  onCurrencyChange={(currency) => setSelectedCurrency(currency)}
+                  currency={selectedCurrency}
+                />
+              );
+            } else {
               return null;
             }
           })}

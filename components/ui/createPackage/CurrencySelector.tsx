@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
 
 import Pressable from "@/components/Pressable";
-import { Body1Bold } from "@/components/StyledText";
+import { Body1Bold, H6Bold } from "@/components/StyledText";
 import { dark, gray, primary } from "@/constants/Colors";
 
 interface CurrencySelectorProps {
@@ -19,10 +19,10 @@ const CurrencySelector = ({
   return (
     <View style={styles.container}>
       <Pressable style={styles.box} onPress={() => onCurrencyChange("ALL")}>
-        <Body1Bold style={{ color: allColor }}>ALL</Body1Bold>
+        <H6Bold style={{ color: allColor }}>ALL</H6Bold>
       </Pressable>
       <Pressable style={styles.box} onPress={() => onCurrencyChange("EUR")}>
-        <Body1Bold style={{ color: eurColor }}>EUR</Body1Bold>
+        <H6Bold style={{ color: eurColor }}>EUR</H6Bold>
       </Pressable>
     </View>
   );
@@ -44,13 +44,8 @@ const styles = StyleSheet.create({
     width: 90,
     borderColor: gray[500],
     alignItems: "center",
+    justifyContent: "center",
     borderWidth: 1,
     borderRadius: 16,
-    paddingBottom: 8,
-  },
-  iconContainer: {
-    flex: 1,
-    marginBottom: 4,
-    justifyContent: "flex-end",
   },
 });
