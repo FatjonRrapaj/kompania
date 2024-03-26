@@ -18,7 +18,7 @@ interface LabelType {
   type: "sectionLabel";
 }
 
-function useLoginFields(): Array<TextInputType | LabelType> {
+function useCreatePackageFields(): Array<TextInputType | LabelType> {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.createPackage) =>
     t(`createPackage:${key}`);
@@ -39,6 +39,9 @@ function useLoginFields(): Array<TextInputType | LabelType> {
     {
       type: "input",
       nextRef: phoneNumberRef,
+      autoComplete: "off",
+      autoCorrect: false,
+      spellCheck: false,
       elementKey: "receiverName",
       keyboardType: "default",
       placeholder: translate("receiverNamePlaceHolder"),
@@ -53,6 +56,9 @@ function useLoginFields(): Array<TextInputType | LabelType> {
     {
       ref: phoneNumberRef,
       nextRef: profileLinkRef,
+      autoCorrect: false,
+      spellCheck: false,
+      autoComplete: "off",
       type: "input",
       elementKey: "phoneNumber",
       keyboardType: "number-pad",
@@ -68,6 +74,9 @@ function useLoginFields(): Array<TextInputType | LabelType> {
     {
       ref: profileLinkRef,
       nextRef: addressRef,
+      autoComplete: "off",
+      autoCorrect: false,
+      spellCheck: false,
       type: "input",
       elementKey: "profileLink",
       keyboardType: "url",
@@ -82,6 +91,9 @@ function useLoginFields(): Array<TextInputType | LabelType> {
     {
       ref: addressRef,
       nextRef: clientNotesRef,
+      autoComplete: "off",
+      autoCorrect: false,
+      spellCheck: false,
       type: "input",
       elementKey: "address",
       keyboardType: "default",
@@ -112,6 +124,9 @@ function useLoginFields(): Array<TextInputType | LabelType> {
     {
       ref: packageIdRef,
       nextRef: packageNameRef,
+      autoComplete: "off",
+      autoCorrect: false,
+      spellCheck: false,
       type: "input",
       elementKey: "packageId",
       keyboardType: "default",
@@ -127,6 +142,9 @@ function useLoginFields(): Array<TextInputType | LabelType> {
       ref: packageNameRef,
       nextRef: isStandardPackage ? packageNameRef : paymentAmountRef,
       type: "input",
+      autoCorrect: false,
+      spellCheck: false,
+      autoComplete: "off",
       elementKey: "packageId",
       keyboardType: "default",
       placeholder: translate("packageIdScanPlaceholder"),
@@ -140,4 +158,4 @@ function useLoginFields(): Array<TextInputType | LabelType> {
   ];
 }
 
-export default useLoginFields;
+export default useCreatePackageFields;
