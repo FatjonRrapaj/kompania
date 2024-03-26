@@ -46,16 +46,18 @@ const CreatePackage = (props: CreatePackageProps) => {
     <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>
       <PageHeader title="newPackage" />
       <KeyboardAvoidingView
+        style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 49 }}
+          contentContainerStyle={{ paddingBottom: 24 }}
         >
           {createPackageFields.map((field, index) => {
             if (field.type === "sectionLabel") {
               return (
                 <Body1Bold
+                  key={index}
                   style={{ marginTop: index === 0 ? 0 : 16, marginBottom: 16 }}
                 >
                   {field.text}
