@@ -7,6 +7,8 @@ interface Costumer {
   name: "string";
 }
 
+type CurrencyShortValue = "ALL" | "EUR";
+
 interface Currency {
   symbol: string;
   name: string;

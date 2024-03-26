@@ -10,9 +10,10 @@ type FormElementTypes =
   | "input"
   | "autoSuggestInput"
   | "checkbox"
-  | "custom"
+  | "sizeChecker"
   | "textArea"
   | "currencySelector"
+  | "checkboxes"
   | "undefined";
 
 interface FormElementType {
@@ -24,8 +25,12 @@ export interface LabelType extends FormElementType {
   type: "sectionLabel";
 }
 
-interface CustomFieldComponent extends FormElementType {
-  type: "custom";
+interface SizeCheckerComponent extends FormElementType {
+  type: "sizeChecker";
+}
+
+interface CheckboxesComponent extends FormElementType {
+  type: "checkboxes";
 }
 
 interface PackageFieldsProps {
@@ -37,7 +42,11 @@ interface CurrencySelectorComponent extends FormElementType {
 }
 
 type CreatePackageFieldsType = Array<
-  TextInputType | LabelType | CustomFieldComponent | CurrencySelectorComponent
+  | TextInputType
+  | LabelType
+  | SizeCheckerComponent
+  | CurrencySelectorComponent
+  | CheckboxesComponent
 >;
 
 function useCreatePackageFields({
@@ -187,7 +196,7 @@ function useCreatePackageFields({
       }),
     },
     {
-      type: "custom",
+      type: "sizeChecker",
     },
   ];
 
@@ -267,6 +276,7 @@ function useCreatePackageFields({
   }
 
   fields.push(
+    { type: "checkboxes" },
     {
       ref: paymentAmountRef,
       nextRef: shippingCostRef,

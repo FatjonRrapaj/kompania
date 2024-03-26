@@ -18,6 +18,7 @@ import { Body1Bold } from "@/components/StyledText";
 import TextInput from "@/components/Form/TextInput";
 import { useState } from "react";
 import PackageSizeSelector from "@/components/ui/createPackage/PackageSizeSelector";
+import Checkboxes from "@/components/ui/createPackage/Checkboxes";
 
 interface CreatePackageProps {}
 
@@ -33,6 +34,8 @@ const CreatePackage = (props: CreatePackageProps) => {
   } = useForm();
 
   const [isStandardPackage, setIsStandardPackage] = useState<boolean>(false);
+  const [isFragile, setIsFragile] = useState<boolean>(false);
+  const [canBeOpened, setCanBeOpened] = useState<boolean>(true);
 
   const createPackageFields = useCreatePackageFields({ isStandardPackage });
 
@@ -65,12 +68,21 @@ const CreatePackage = (props: CreatePackageProps) => {
               );
             } else if (field.type === "input") {
               return <TextInput {...field} control={control} key={index} />;
-            } else if (field.type === "custom") {
+            } else if (field.type === "sizeChecker") {
               return (
                 <PackageSizeSelector
                   key={index}
                   onChange={(v) => setIsStandardPackage(v)}
                   isStandard={isStandardPackage}
+                />
+              );
+            } else if (field.type === "checkboxes") {
+              return (
+                <Checkboxes
+                  onCanBeOpenedChange={(v) => setCanBeOpened(v)}
+                  onIsFragileChange={(v) => setIsFragile(v)}
+                  isFragile={isFragile}
+                  canBeOpened={canBeOpened}
                 />
               );
             }
