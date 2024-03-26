@@ -9,7 +9,7 @@ import { View } from "@/components/Themed";
 import { Body1Bold, Body2, H5Bold } from "@/components/StyledText";
 import globalStyles from "@/components/globalStyles";
 import { gray, primary } from "@/constants/Colors";
-import useLoginFields from "./useLoginFields";
+import useLoginFields from "../../../components/ui/login/useLoginFields";
 import en from "@/translations/en";
 import TextInput from "@/components/Form/TextInput";
 

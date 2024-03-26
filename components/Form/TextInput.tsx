@@ -41,6 +41,7 @@ interface TextInputProps extends DefaultTextInputProps {
   nextRef?: Ref<unknown>;
   elementKey: string;
   validate: (x: any) => any;
+  type: "input";
 }
 
 const TextInput = forwardRef(

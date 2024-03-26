@@ -22,6 +22,7 @@ import Scan from "./scan.svg";
 
 //Navigation
 import ArrowLeft from "./arrow-left.svg";
+import ArrowDown from "./arrow-down.svg";
 
 const IconConfig = {
   SMS,
@@ -39,6 +40,7 @@ const IconConfig = {
   Package,
   NoPackage,
   ArrowLeft,
+  ArrowDown,
 };
 
 export default IconConfig;

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import validateField from "@/utils/form";
-import TextInput, { TextInputType } from "@/components/Form/TextInput";
+import { TextInputType } from "@/components/Form/TextInput";
 import { useRef } from "react";
 import en from "@/translations/en";
 
@@ -12,6 +12,7 @@ function useLoginFields(): Array<TextInputType> {
 
   return [
     {
+      type: "input",
       nextRef: passwordRef,
       elementKey: "email",
       keyboardType: "email-address",
@@ -25,6 +26,7 @@ function useLoginFields(): Array<TextInputType> {
       }),
     },
     {
+      type: "input",
       ref: passwordRef,
       elementKey: "password",
       keyboardType: "default",
