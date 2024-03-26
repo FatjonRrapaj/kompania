@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    marginBottom: 16,
+    marginBottom: 24,
+    marginTop: 8,
   },
   box: {
     height: 90,
