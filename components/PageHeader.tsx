@@ -23,8 +23,8 @@ const PageHeader = (props: PageHeaderProps) => {
       ) : (
         <View />
       )}
-      <Body1Bold>{translate(props.title)}</Body1Bold>
-      <View />
+      <Body1Bold style={styles.title}>{translate(props.title)}</Body1Bold>
+      <View style={styles.button} />
     </View>
   );
 };
@@ -37,8 +37,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: 24,
   },
+  title: { flex: 1, textAlign: "center" },
   button: {
-    padding: 2,
+    width: 40,
   },
 });
