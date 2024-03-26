@@ -10,7 +10,13 @@ export const unstable_settings = {
 
 const IndexLayout = (props: IndexLayoutProps) => {
   return (
-    <Stack initialRouteName="index" screenOptions={{ headerShown: false }} />
+    <Stack initialRouteName="index" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="createPackage"
+        options={{ headerShown: false, navigationBarHidden: true }}
+      />
+    </Stack>
   );
 };
 
