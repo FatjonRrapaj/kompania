@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { Controller, Control, ValidationRule } from "react-hook-form";
-import { primary, gray, dark } from "@/constants/Colors";
+import { primary, gray, dark, tertiary } from "@/constants/Colors";
 import { useThemeColor } from "../Themed";
 import { Label } from "../StyledText";
 import IconConfig from "@/assets/svg/IconConfig";
@@ -197,6 +197,6 @@ const styles = StyleSheet.create({
   label: {
     marginTop: 2,
     alignSelf: "flex-end",
-    color: "red",
+    color: tertiary[500],
   },
 });
