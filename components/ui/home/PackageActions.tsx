@@ -6,12 +6,15 @@ import IconConfig from "@/assets/svg/IconConfig";
 import Pressable from "@/components/Pressable";
 import { Body1Bold } from "@/components/StyledText";
 import { primary, white } from "@/constants/Colors";
+import { router } from "expo-router";
 
 const PackageActions = () => {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.home) => t(`home:${key}`);
 
-  const handleOnNewPackagePress = () => {};
+  const handleOnNewPackagePress = () => {
+    router.push("/(tabs)/(home)/createPackage");
+  };
 
   const handleScanPackagePress = () => {};
 

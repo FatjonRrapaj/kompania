@@ -20,6 +20,9 @@ import NoPackage from "./noPackage.svg";
 //actions
 import Scan from "./scan.svg";
 
+//Navigation
+import ArrowLeft from "./arrow-left.svg";
+
 const IconConfig = {
   SMS,
   Lock,
@@ -35,6 +38,7 @@ const IconConfig = {
   Scan,
   Package,
   NoPackage,
+  ArrowLeft,
 };
 
 export default IconConfig;
