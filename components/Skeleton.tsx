@@ -1,7 +1,7 @@
 import { Skeleton as DefaultSkeleton } from "moti/skeleton";
 import { MotiSkeletonProps } from "moti/build/skeleton/types";
 import { useColorScheme } from "react-native";
-import { View, ViewProps } from "../Themed";
+import { View, ViewProps } from "./Themed";
 
 interface SkeletonProps extends Omit<MotiSkeletonProps, "Gradient"> {}
 

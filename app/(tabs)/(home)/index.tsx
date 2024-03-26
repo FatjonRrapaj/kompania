@@ -33,7 +33,7 @@ export default function TabOneScreen() {
         renderItem={({ item: packageItem }) => (
           <SmallPackageItem {...packageItem} />
         )}
-        data={[]}
+        data={data}
         ListEmptyComponent={
           loadingPackages ? <ItemLoaderList /> : <ListEmptyComponent />
         }

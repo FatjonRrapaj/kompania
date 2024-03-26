@@ -15,7 +15,7 @@ import { normalColorMapper } from "@/utils/packageUi";
 import en from "@/translations/en";
 import Pressable from "@/components/Pressable";
 
-import { Skeleton, Spacer } from "../Skeleton";
+import { Skeleton, Spacer } from "../../Skeleton";
 import { Skeleton as DefaultSkeleton } from "moti/skeleton";
 
 interface SmallPackageItemProps extends Package {}
