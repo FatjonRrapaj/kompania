@@ -46,7 +46,6 @@ const CreatePackage = (props: CreatePackageProps) => {
     <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>
       <PageHeader title="newPackage" />
       <KeyboardAvoidingView
-        // style={{ flex: 1, backgroundColor: "#00000000" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView

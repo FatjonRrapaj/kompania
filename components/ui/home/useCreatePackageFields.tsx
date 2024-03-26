@@ -58,6 +58,8 @@ function useCreatePackageFields({
   const packageWidthRef = useRef(null);
   const packageLengthRef = useRef(null);
   const packageHeightRef = useRef(null);
+  const packageValueRef = useRef(null);
+  const shippingCostRef = useRef(null);
 
   //TODO: do the input suggestion here
   const fields = [
@@ -87,7 +89,7 @@ function useCreatePackageFields({
       autoComplete: "off",
       type: "input",
       elementKey: "phoneNumber",
-      keyboardType: "number-pad",
+      keyboardType: "phone-pad",
       placeholder: translate("receiverPhoneNumberPlaceholder"),
       containerStyle: { marginBottom: 16 },
       rightIcon: "ArrowDown",
@@ -166,19 +168,18 @@ function useCreatePackageFields({
     },
     {
       ref: packageNameRef,
-      nextRef: isStandardPackage ? packageNameRef : paymentAmountRef,
+      nextRef: isStandardPackage ? paymentAmountRef : packageWeightRef,
       type: "input",
       autoCorrect: false,
       spellCheck: false,
       autoComplete: "off",
-      elementKey: "packageId",
+      elementKey: "packageName",
       keyboardType: "default",
-      placeholder: translate("packageIdScanPlaceholder"),
+      placeholder: translate("packageNamePlaceholder"),
       containerStyle: { marginBottom: 16 },
       validate: validateField({
-        fieldName: translate("packageId"),
-        required: true,
-        min: 6,
+        fieldName: translate("packageName"),
+        required: false,
       }),
     },
     {
@@ -186,29 +187,80 @@ function useCreatePackageFields({
     },
   ];
 
-  // if (!isStandardPackage) {
-  //   fields.push(
-  //     ...[
-  //       {
-  //         ref: packageNameRef,
-  //         nextRef: isStandardPackage ? packageNameRef : paymentAmountRef,
-  //         type: "input",
-  //         autoCorrect: false,
-  //         spellCheck: false,
-  //         autoComplete: "off",
-  //         elementKey: "packageId",
-  //         keyboardType: "default",
-  //         placeholder: translate("packageIdScanPlaceholder"),
-  //         containerStyle: { marginBottom: 16 },
-  //         validate: validateField({
-  //           fieldName: translate("packageId"),
-  //           required: true,
-  //           min: 6,
-  //         }),
-  //       },
-  //     ]
-  //   );
-  // }
+  if (isStandardPackage) {
+    fields.push(
+      ...[
+        {
+          ref: packageWeightRef,
+          nextRef: packageWidthRef,
+          type: "input",
+          autoCorrect: false,
+          spellCheck: false,
+          autoComplete: "off",
+          elementKey: "packageWeight",
+          keyboardType: "number-pad",
+          placeholder: translate("weightPlaceholder"),
+          containerStyle: { marginBottom: 16 },
+          validate: validateField({
+            fieldName: translate("weight"),
+            required: true,
+            min: 6,
+          }),
+        },
+        {
+          ref: packageWidthRef,
+          nextRef: packageLengthRef,
+          type: "input",
+          autoCorrect: false,
+          spellCheck: false,
+          autoComplete: "off",
+          elementKey: "packageWidth",
+          keyboardType: "number-pad",
+          placeholder: translate("widPlaceholder"),
+          containerStyle: { marginBottom: 16 },
+          validate: validateField({
+            fieldName: translate("wid"),
+            required: true,
+            min: 6,
+          }),
+        },
+        {
+          ref: packageLengthRef,
+          nextRef: packageHeightRef,
+          type: "input",
+          autoCorrect: false,
+          spellCheck: false,
+          autoComplete: "off",
+          elementKey: "packageLength",
+          keyboardType: "number-pad",
+          placeholder: translate("len"),
+          containerStyle: { marginBottom: 16 },
+          validate: validateField({
+            fieldName: translate("lenPlaceholder"),
+            required: true,
+            min: 6,
+          }),
+        },
+        {
+          ref: packageHeightRef,
+          nextRef: packageValueRef,
+          type: "input",
+          autoCorrect: false,
+          spellCheck: false,
+          autoComplete: "off",
+          elementKey: "packageHeight",
+          keyboardType: "number-pad",
+          placeholder: translate("heiPlaceholder"),
+          containerStyle: { marginBottom: 16 },
+          validate: validateField({
+            fieldName: translate("hei"),
+            required: true,
+            min: 6,
+          }),
+        },
+      ]
+    );
+  }
 
   return fields as CreatePackageFieldsType;
 }

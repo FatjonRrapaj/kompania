@@ -154,7 +154,7 @@ export default TextInput;
 
 export type TextInputType = Omit<
   TextInputProps,
-  "control" | "errors" | "value" | "onChange"
+  "control" | "errors" | "value" | "onChange" | "ref"
 >;
 
 const styles = StyleSheet.create({
