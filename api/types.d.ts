@@ -17,8 +17,8 @@ type PackageStatus = "completed" | "pending" | "problematic";
 interface Package {
   customer: Customer;
   creationDate: Date;
-  amount: number;
   currency: Currency;
-  price: string;
+  price: number;
   status: PackageStatus;
+  uid?: string;
 }
