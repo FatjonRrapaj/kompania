@@ -38,6 +38,7 @@ export default {
     scanPackage: "Scan Package",
     latest: "Latest",
     seeAll: "See all",
+    noPackages: "You don't have any packages yet",
   },
   package: {
     pending: "Pending",

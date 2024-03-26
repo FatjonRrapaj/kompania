@@ -4,6 +4,6 @@ export default StyleSheet.create({
   screenContainer: {
     flex: 1,
     paddingVertical: 40,
-    paddingHorizontal: 24,
+    paddingHorizontal: 16,
   },
 });

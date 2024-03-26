@@ -2,7 +2,13 @@ import { StyleSheet, View as RnView } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import IconConfig from "@/assets/svg/IconConfig";
-import { Body1Bold, Body2Bold, Caption } from "@/components/StyledText";
+import {
+  Body1,
+  Body1Bold,
+  Body2Bold,
+  Caption,
+  H6,
+} from "@/components/StyledText";
 import { View } from "@/components/Themed";
 import { dark, gray, white } from "@/constants/Colors";
 import { normalColorMapper } from "@/utils/packageUi";
@@ -72,7 +78,22 @@ const SmallPackageItemLoader = () => {
   );
 };
 
-export { SmallPackageItem, SmallPackageItemLoader };
+const ItemLoaderList = () =>
+  [1, 2, 3, 4].map((_, i) => <SmallPackageItemLoader key={i} />);
+
+const ListEmptyComponent = () => {
+  const { t } = useTranslation();
+  const translate = (key: keyof typeof en.home) => t(`home:${key}`);
+
+  return (
+    <View style={styles.emptyViewContainer}>
+      <IconConfig.NoPackage />
+      <Body1 style={{ color: dark[90] }}>{translate("noPackages")}</Body1>
+    </View>
+  );
+};
+
+export { SmallPackageItem, ItemLoaderList, ListEmptyComponent };
 
 const styles = StyleSheet.create({
   container: {
@@ -100,4 +121,9 @@ const styles = StyleSheet.create({
   },
   infoContainer: { gap: 6, flex: 1, marginLeft: 12 },
   priceContainer: { gap: 6, alignItems: "flex-end" },
+  emptyViewContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 16,
+  },
 });

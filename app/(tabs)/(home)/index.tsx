@@ -8,12 +8,12 @@ import PackagesOverView from "@/components/ui/home/PackagesOverview";
 import PackageActions from "@/components/ui/home/PackageActions";
 
 import { packagesMockList } from "@/mocks/packagesMock";
-import { Body1 } from "@/components/StyledText";
 import {
   SmallPackageItem,
-  SmallPackageItemLoader,
+  ItemLoaderList,
+  ListEmptyComponent,
 } from "@/components/ui/home/PackageItem";
-import HelloWorld from "@/components/ui/home/PackageListLoader";
+import PackagesListHeader from "@/components/ui/home/PackagesListHeader";
 
 export default function TabOneScreen() {
   const handlePackageOverviewPress = (packageStatus: PackageStatus) => {
@@ -21,17 +21,22 @@ export default function TabOneScreen() {
     //TODO: go to packages w status filter as parameter
   };
 
+  const loadingPackages = false;
+  const data = packagesMockList;
+
   return (
     <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>
       <FlatList
         style={{ marginHorizontal: -3 }}
         showsVerticalScrollIndicator={false}
         keyExtractor={({ uid }) => uid!}
-        renderItem={({ item: packageItem, index }) => (
+        renderItem={({ item: packageItem }) => (
           <SmallPackageItem {...packageItem} />
         )}
         data={[]}
-        ListEmptyComponent={<SmallPackageItemLoader />}
+        ListEmptyComponent={
+          loadingPackages ? <ItemLoaderList /> : <ListEmptyComponent />
+        }
         ListHeaderComponent={
           <View style={{ marginHorizontal: 3 }}>
             <GreetingComponent />
@@ -42,6 +47,7 @@ export default function TabOneScreen() {
               onPackageTypePress={handlePackageOverviewPress}
             />
             <PackageActions />
+            {data?.length && <PackagesListHeader />}
           </View>
         }
       />

@@ -15,6 +15,7 @@ import TotalPackages from "./totalPackages.svg";
 import ProcessingPackages from "./processingPackages.svg";
 import ProblematicPackages from "./problematicPackages.svg";
 import AddPackage from "./addPackage.svg";
+import NoPackage from "./noPackage.svg";
 
 //actions
 import Scan from "./scan.svg";
@@ -33,6 +34,7 @@ const IconConfig = {
   AddPackage,
   Scan,
   Package,
+  NoPackage,
 };
 
 export default IconConfig;

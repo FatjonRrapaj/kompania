@@ -38,6 +38,7 @@ export default {
     scanPackage: "Skano pako",
     latest: "Të fundit",
     seeAll: "Shiko të gjitha",
+    noPackages: "Ju nuk keni akoma asnjë pako",
   },
   package: {
     pending: "Në pritje",
