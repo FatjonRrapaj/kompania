@@ -26,7 +26,6 @@ export default PackagesListHeader;
 
 const styles = StyleSheet.create({
   packagesListTitle: {
-    marginTop: 24,
     marginBottom: 16,
     flexDirection: "row",
     justifyContent: "space-between",
