@@ -143,6 +143,8 @@ function useCreatePackageFields({
       keyboardType: "default",
       placeholder: translate("notesForReceiverPlaceholder"),
       containerStyle: { marginBottom: 16 },
+      multiline: true,
+      numberOfLines: 6,
       validate: validateField({
         fieldName: translate("notesForReceiver"),
         required: true,
@@ -320,6 +322,8 @@ function useCreatePackageFields({
       autoCorrect: false,
       spellCheck: false,
       type: "input",
+      multiline: true,
+      numberOfLines: 6,
       elementKey: "notesForPackage",
       keyboardType: "default",
       placeholder: translate("notesForPackagePlaceholder"),

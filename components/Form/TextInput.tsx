@@ -95,6 +95,7 @@ const TextInput = forwardRef(
                   styles.inputContainer,
                   (isFocused || value) && styles.inputContainerFocused,
                   LeftIcon && styles.inputWithIcon,
+                  rest.multiline && styles.textArea,
                 ]}
               >
                 {LeftIcon ? (
@@ -198,5 +199,9 @@ const styles = StyleSheet.create({
     marginTop: 2,
     alignSelf: "flex-end",
     color: tertiary[500],
+  },
+  textArea: {
+    height: 96,
+    paddingTop: 8,
   },
 });
