@@ -106,6 +106,7 @@ const TextInput = forwardRef(
                   </View>
                 ) : null}
                 <DefaultTextInput
+                  multiline={multiline}
                   ref={ref}
                   onSubmitEditing={() => (nextRef as any)?.current?.focus()}
                   secureTextEntry={inputSecured}
@@ -202,5 +203,6 @@ const styles = StyleSheet.create({
   },
   textArea: {
     height: 96,
+    paddingTop: 8,
   },
 });

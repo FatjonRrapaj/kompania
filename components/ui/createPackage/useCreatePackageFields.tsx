@@ -2,8 +2,9 @@ import { useTranslation } from "react-i18next";
 
 import validateField from "@/utils/form";
 import TextInput, { TextInputType } from "@/components/Form/TextInput";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import en from "@/translations/en";
+import { FieldValue, FieldValues, UseFormResetField } from "react-hook-form";
 
 type FormElementTypes =
   | "sectionLabel"
@@ -35,6 +36,7 @@ interface CheckboxesComponent extends FormElementType {
 
 interface PackageFieldsProps {
   isStandardPackage: boolean;
+  resetField: UseFormResetField<FieldValues>;
 }
 
 interface CurrencySelectorComponent extends FormElementType {
@@ -51,6 +53,7 @@ type CreatePackageFieldsType = Array<
 
 function useCreatePackageFields({
   isStandardPackage,
+  resetField,
 }: PackageFieldsProps): CreatePackageFieldsType {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.createPackage) =>
@@ -72,6 +75,13 @@ function useCreatePackageFields({
   const notesForPackageRef = useRef(null);
   const endRef = useRef(null);
 
+  useEffect(() => {
+    resetField("packageWeight");
+    resetField("packageWidth");
+    resetField("packageLength");
+    resetField("packageHeight");
+  }, [isStandardPackage, resetField]);
+
   //TODO: do the input suggestion here
   const fields = [
     { text: translate("receiverDetails"), type: "sectionLabel" },
@@ -88,7 +98,6 @@ function useCreatePackageFields({
       rightIcon: "ArrowDown",
       validate: validateField({
         fieldName: translate("receiverName"),
-        patternType: "email",
         required: true,
       }),
     },
@@ -147,6 +156,9 @@ function useCreatePackageFields({
     {
       ref: clientNotesRef,
       nextRef: packageIdRef,
+      autoComplete: "off",
+      autoCorrect: false,
+      spellCheck: false,
       type: "input",
       elementKey: "notesForReceiver",
       keyboardType: "default",
@@ -156,8 +168,6 @@ function useCreatePackageFields({
       numberOfLines: 6,
       validate: validateField({
         fieldName: translate("notesForReceiver"),
-        required: true,
-        min: 6,
       }),
     },
     { text: translate("packageDetails"), type: "sectionLabel" },
@@ -216,8 +226,7 @@ function useCreatePackageFields({
           containerStyle: { marginBottom: 16 },
           validate: validateField({
             fieldName: translate("weight"),
-            required: true,
-            min: 6,
+            required: !isStandardPackage,
           }),
         },
         {
@@ -233,8 +242,7 @@ function useCreatePackageFields({
           containerStyle: { marginBottom: 16 },
           validate: validateField({
             fieldName: translate("wid"),
-            required: true,
-            min: 6,
+            required: !isStandardPackage,
           }),
         },
         {
@@ -250,8 +258,7 @@ function useCreatePackageFields({
           containerStyle: { marginBottom: 16 },
           validate: validateField({
             fieldName: translate("len"),
-            required: true,
-            min: 6,
+            required: !isStandardPackage,
           }),
         },
         {
@@ -267,8 +274,7 @@ function useCreatePackageFields({
           containerStyle: { marginBottom: 16 },
           validate: validateField({
             fieldName: translate("hei"),
-            required: true,
-            min: 6,
+            required: !isStandardPackage,
           }),
         },
       ]

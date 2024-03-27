@@ -31,6 +31,7 @@ const CreatePackage = (props: CreatePackageProps) => {
   const {
     control,
     handleSubmit,
+    resetField,
     formState: { errors, isValid },
   } = useForm();
 
@@ -40,9 +41,13 @@ const CreatePackage = (props: CreatePackageProps) => {
   const [isFragile, setIsFragile] = useState<boolean>(false);
   const [canBeOpened, setCanBeOpened] = useState<boolean>(true);
 
-  const createPackageFields = useCreatePackageFields({ isStandardPackage });
+  const createPackageFields = useCreatePackageFields({
+    isStandardPackage,
+    resetField,
+  });
 
   const onSubmit = (data: any) => {
+    console.log("data: ", data);
     if (isValid) {
       console.log("data: ", data);
     }
@@ -78,6 +83,7 @@ const CreatePackage = (props: CreatePackageProps) => {
               case "checkboxes":
                 return (
                   <Checkboxes
+                    key={index}
                     onCanBeOpenedChange={(v) => setCanBeOpened(v)}
                     onIsFragileChange={(v) => setIsFragile(v)}
                     isFragile={isFragile}
@@ -87,6 +93,7 @@ const CreatePackage = (props: CreatePackageProps) => {
               case "currencySelector":
                 return (
                   <CurrencySelector
+                    key={index}
                     onCurrencyChange={(currency) =>
                       setSelectedCurrency(currency)
                     }
