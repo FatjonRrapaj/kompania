@@ -1,4 +1,3 @@
-import { useNavigation } from "expo-router";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -32,6 +31,7 @@ const CreatePackage = (props: CreatePackageProps) => {
     control,
     handleSubmit,
     resetField,
+    setValue,
     formState: { errors, isValid },
   } = useForm();
 
@@ -44,6 +44,7 @@ const CreatePackage = (props: CreatePackageProps) => {
   const createPackageFields = useCreatePackageFields({
     isStandardPackage,
     resetField,
+    setValue,
   });
 
   const onSubmit = (data: any) => {

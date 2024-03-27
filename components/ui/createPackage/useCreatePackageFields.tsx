@@ -4,7 +4,12 @@ import validateField from "@/utils/form";
 import TextInput, { TextInputType } from "@/components/Form/TextInput";
 import { useEffect, useRef, useState } from "react";
 import en from "@/translations/en";
-import { FieldValue, FieldValues, UseFormResetField } from "react-hook-form";
+import {
+  FieldValue,
+  FieldValues,
+  UseFormResetField,
+  UseFormSetValue,
+} from "react-hook-form";
 
 type FormElementTypes =
   | "sectionLabel"
@@ -34,11 +39,6 @@ interface CheckboxesComponent extends FormElementType {
   type: "checkboxes";
 }
 
-interface PackageFieldsProps {
-  isStandardPackage: boolean;
-  resetField: UseFormResetField<FieldValues>;
-}
-
 interface CurrencySelectorComponent extends FormElementType {
   type: "currencySelector";
 }
@@ -51,9 +51,16 @@ type CreatePackageFieldsType = Array<
   | CheckboxesComponent
 >;
 
+interface PackageFieldsProps {
+  isStandardPackage: boolean;
+  resetField: UseFormResetField<FieldValues>;
+  setValue: UseFormSetValue<FieldValues>;
+}
+
 function useCreatePackageFields({
   isStandardPackage,
   resetField,
+  setValue,
 }: PackageFieldsProps): CreatePackageFieldsType {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.createPackage) =>
@@ -82,6 +89,18 @@ function useCreatePackageFields({
     resetField("packageHeight");
   }, [isStandardPackage, resetField]);
 
+  const handleInputAutoSuggestClicked = (autoSuggest: any) => {
+    const client = autoSuggest as Customer;
+    const { name, phoneNumber, address, profileLink } = client;
+
+    setValue("receiverName", name);
+    setValue("phoneNumber", Number(phoneNumber));
+    setValue("address", address);
+    if (profileLink) {
+      setValue("profileLink", profileLink);
+    }
+  };
+
   //TODO: do the input suggestion here
   const fields = [
     { text: translate("receiverDetails"), type: "sectionLabel" },
@@ -96,6 +115,7 @@ function useCreatePackageFields({
       placeholder: translate("receiverNamePlaceHolder"),
       containerStyle: { marginBottom: 16 },
       rightIcon: "ArrowDown",
+      onAutoSuggestResultClicked: handleInputAutoSuggestClicked,
       validate: validateField({
         fieldName: translate("receiverName"),
         required: true,

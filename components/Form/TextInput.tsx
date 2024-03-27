@@ -5,11 +5,12 @@ import {
   TextInputProps as DefaultTextInputProps,
   ViewStyle,
   View,
+  FlatList,
 } from "react-native";
 import { Controller, Control, ValidationRule } from "react-hook-form";
-import { primary, gray, dark, tertiary } from "@/constants/Colors";
+import { primary, gray, dark, tertiary, white } from "@/constants/Colors";
 import { useThemeColor } from "../Themed";
-import { Label } from "../StyledText";
+import { Body1, Body2, Caption, Label } from "../StyledText";
 import IconConfig from "@/assets/svg/IconConfig";
 
 import Pressable from "../Pressable";
@@ -31,7 +32,7 @@ function PasswordVisibility({
   );
 }
 
-interface TextInputProps extends DefaultTextInputProps {
+interface TextInputProps<T = any> extends DefaultTextInputProps {
   control: Control;
   containerStyle?: ViewStyle;
   leftIcon?: keyof typeof IconConfig;
@@ -42,7 +43,34 @@ interface TextInputProps extends DefaultTextInputProps {
   elementKey: string;
   validate: (x: any) => any;
   type: "input";
+  onAutoSuggestResultClicked?: (result?: T) => void;
+  autoSuggestionApiFunction?: () => Promise<T[]>;
 }
+
+const clientsMockData = [
+  {
+    uid: "109312o3123",
+    name: "Fatjon Rrapaj",
+    phoneNumber: 99999999999,
+    profileLink: "fatjon.com",
+    address: "Rr Don bosko nrm",
+    notesForClient: "eshte me vonese",
+    text1: "Fatjon Rrapaj",
+    text2: 99999999999,
+    text3: "Rr Don bosko nrm",
+  },
+  {
+    uid: "109312seo3123",
+    name: "Ledjon Dedolli",
+    phoneNumber: 8888888888,
+    profileLink: "ledjon.com",
+    address: "Rr Kavajes sigurisht",
+    notesForClient: "eshte heret",
+    text1: "Ledjon Dedolli",
+    text2: 8888888888,
+    text3: "Rr Kavajes sigurisht",
+  },
+];
 
 const TextInput = forwardRef(
   (
@@ -58,6 +86,8 @@ const TextInput = forwardRef(
       required,
       multiline,
       validate,
+      onAutoSuggestResultClicked,
+      autoSuggestionApiFunction,
       ...rest
     }: TextInputProps,
     ref
@@ -77,6 +107,9 @@ const TextInput = forwardRef(
 
     const LeftIcon = leftIcon ? IconConfig[leftIcon] : undefined;
     const RightIcon = rightIcon ? IconConfig[rightIcon] : undefined;
+
+    const hasAutoSuggest = !!onAutoSuggestResultClicked;
+
     return (
       <Controller
         control={control}
@@ -139,6 +172,57 @@ const TextInput = forwardRef(
                   />
                 ) : null}
               </View>
+              {hasAutoSuggest ? (
+                <View
+                  style={{
+                    marginHorizontal: 2,
+                    elevation: 3,
+                    shadowColor: dark[500],
+                    backgroundColor: white[500],
+                    shadowOffset: { width: 0, height: 1 },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 2,
+                    borderRadius: 8,
+                    marginVertical: 8,
+                  }}
+                >
+                  {clientsMockData.map((item, index) => (
+                    <Pressable
+                      key={item.uid}
+                      style={{
+                        padding: 16,
+                        position: "relative",
+                        gap: 4,
+                      }}
+                      onPress={() => onAutoSuggestResultClicked(item)}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Body1>{item.text1}</Body1>
+                        <Body2>{item.text2}</Body2>
+                      </View>
+                      <Caption>{item.text3}</Caption>
+                      {clientsMockData?.length - 1 !== index && (
+                        <View
+                          style={{
+                            position: "absolute",
+                            bottom: 0,
+                            left: 16,
+                            right: 16,
+                            height: 1,
+                            backgroundColor: gray[80],
+                          }}
+                        />
+                      )}
+                    </Pressable>
+                  ))}
+                </View>
+              ) : null}
               {error?.message ? (
                 <Label style={styles.label}>{error?.message}</Label>
               ) : null}

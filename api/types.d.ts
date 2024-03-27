@@ -3,8 +3,12 @@ interface Company {
   companyName: string;
 }
 
-interface Costumer {
-  name: "string";
+interface Customer {
+  name: string;
+  phoneNumber: string;
+  address: string;
+  notes?: string;
+  profileLink?: string;
 }
 
 type CurrencyShortValue = "ALL" | "EUR";
