@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
 
 import Pressable from "@/components/Pressable";
-import { Body1Bold, H6Bold } from "@/components/StyledText";
+import { H6Bold } from "@/components/StyledText";
 import { dark, gray, primary } from "@/constants/Colors";
 
 interface CurrencySelectorProps {

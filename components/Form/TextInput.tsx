@@ -56,6 +56,7 @@ const TextInput = forwardRef(
       nextRef,
       secureTextEntry,
       required,
+      multiline,
       validate,
       ...rest
     }: TextInputProps,
@@ -76,7 +77,6 @@ const TextInput = forwardRef(
 
     const LeftIcon = leftIcon ? IconConfig[leftIcon] : undefined;
     const RightIcon = rightIcon ? IconConfig[rightIcon] : undefined;
-    console.log("RERENDER");
     return (
       <Controller
         control={control}
@@ -95,7 +95,7 @@ const TextInput = forwardRef(
                   styles.inputContainer,
                   (isFocused || value) && styles.inputContainerFocused,
                   LeftIcon && styles.inputWithIcon,
-                  rest.multiline && styles.textArea,
+                  multiline && styles.textArea,
                 ]}
               >
                 {LeftIcon ? (
