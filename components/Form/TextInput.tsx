@@ -101,8 +101,8 @@ const TextInput = forwardRef(
     const [isFocused, setIsFocused] = useState(false);
     const [inputSecured, setInputSecured] = useState(secureTextEntry);
     const [hasSelectedSuggestion, setHasSelectedSuggestion] = useState(false);
-    const [autoSuggestData, setAutoSuggestData] = useState(clientsMockData);
-    const [loadingGetSuggestions, setLoadingGetSuggestions] = useState(true);
+    const [autoSuggestData, setAutoSuggestData] = useState([]);
+    const [loadingGetSuggestions, setLoadingGetSuggestions] = useState(false);
 
     const localOnFocus = () => {
       setIsFocused(true);
@@ -224,45 +224,46 @@ const TextInput = forwardRef(
                     marginVertical: 8,
                   }}
                 >
-                  {autoSuggestData.map((item, index) => (
-                    <Pressable
-                      key={item.uid}
-                      style={{
-                        padding: 16,
-                        position: "relative",
-                        gap: 4,
-                      }}
-                      onPress={() => {
-                        onAutoSuggestResultClicked(item);
-                        setHasSelectedSuggestion(true);
-                        setAutoSuggestData([]);
-                      }}
-                    >
-                      <View
+                  {autoSuggestData?.length &&
+                    autoSuggestData.map((item: any, index) => (
+                      <Pressable
+                        key={item.uid}
                         style={{
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          alignItems: "center",
+                          padding: 16,
+                          position: "relative",
+                          gap: 4,
+                        }}
+                        onPress={() => {
+                          onAutoSuggestResultClicked(item);
+                          setHasSelectedSuggestion(true);
+                          setAutoSuggestData([]);
                         }}
                       >
-                        <Body1>{item.text1}</Body1>
-                        <Body2>{item.text2}</Body2>
-                      </View>
-                      <Caption>{item.text3}</Caption>
-                      {autoSuggestData?.length - 1 !== index && (
                         <View
                           style={{
-                            position: "absolute",
-                            bottom: 0,
-                            left: 16,
-                            right: 16,
-                            height: 1,
-                            backgroundColor: gray[80],
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
                           }}
-                        />
-                      )}
-                    </Pressable>
-                  ))}
+                        >
+                          <Body1>{item.text1}</Body1>
+                          <Body2>{item.text2}</Body2>
+                        </View>
+                        <Caption>{item.text3}</Caption>
+                        {autoSuggestData?.length - 1 !== index && (
+                          <View
+                            style={{
+                              position: "absolute",
+                              bottom: 0,
+                              left: 16,
+                              right: 16,
+                              height: 1,
+                              backgroundColor: gray[80],
+                            }}
+                          />
+                        )}
+                      </Pressable>
+                    ))}
                 </View>
               ) : null}
               {error?.message ? (
