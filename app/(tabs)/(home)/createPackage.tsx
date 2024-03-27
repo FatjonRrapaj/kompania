@@ -60,43 +60,49 @@ const CreatePackage = (props: CreatePackageProps) => {
           contentContainerStyle={{ paddingBottom: 24 }}
         >
           {createPackageFields.map((field, index) => {
-            if (field.type === "sectionLabel") {
-              return (
-                <Body1Bold
-                  key={index}
-                  style={{ marginTop: index === 0 ? 0 : 16, marginBottom: 16 }}
-                >
-                  {field.text}
-                </Body1Bold>
-              );
-            } else if (field.type === "input") {
-              return <TextInput {...field} control={control} key={index} />;
-            } else if (field.type === "sizeChecker") {
-              return (
-                <PackageSizeSelector
-                  key={index}
-                  onChange={(v) => setIsStandardPackage(v)}
-                  isStandard={isStandardPackage}
-                />
-              );
-            } else if (field.type === "checkboxes") {
-              return (
-                <Checkboxes
-                  onCanBeOpenedChange={(v) => setCanBeOpened(v)}
-                  onIsFragileChange={(v) => setIsFragile(v)}
-                  isFragile={isFragile}
-                  canBeOpened={canBeOpened}
-                />
-              );
-            } else if (field.type === "currencySelector") {
-              return (
-                <CurrencySelector
-                  onCurrencyChange={(currency) => setSelectedCurrency(currency)}
-                  currency={selectedCurrency}
-                />
-              );
-            } else {
-              return null;
+            switch (field.type) {
+              case "sectionLabel":
+                return (
+                  <Body1Bold
+                    key={index}
+                    style={{
+                      marginTop: index === 0 ? 0 : 16,
+                      marginBottom: 16,
+                    }}
+                  >
+                    {field.text}
+                  </Body1Bold>
+                );
+              case "input":
+                return <TextInput {...field} control={control} key={index} />;
+              case "checkboxes":
+                return (
+                  <Checkboxes
+                    onCanBeOpenedChange={(v) => setCanBeOpened(v)}
+                    onIsFragileChange={(v) => setIsFragile(v)}
+                    isFragile={isFragile}
+                    canBeOpened={canBeOpened}
+                  />
+                );
+              case "currencySelector":
+                return (
+                  <CurrencySelector
+                    onCurrencyChange={(currency) =>
+                      setSelectedCurrency(currency)
+                    }
+                    currency={selectedCurrency}
+                  />
+                );
+              case "sizeChecker":
+                return (
+                  <PackageSizeSelector
+                    key={index}
+                    onChange={(v) => setIsStandardPackage(v)}
+                    isStandard={isStandardPackage}
+                  />
+                );
+              default:
+                return null;
             }
           })}
           <GiantButton
