@@ -6,6 +6,7 @@ import {
   ViewStyle,
   View,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import { Controller, Control, ValidationRule } from "react-hook-form";
 import { primary, gray, dark, tertiary, white } from "@/constants/Colors";
@@ -101,6 +102,7 @@ const TextInput = forwardRef(
     const [inputSecured, setInputSecured] = useState(secureTextEntry);
     const [hasSelectedSuggestion, setHasSelectedSuggestion] = useState(false);
     const [autoSuggestData, setAutoSuggestData] = useState(clientsMockData);
+    const [loadingGetSuggestions, setLoadingGetSuggestions] = useState(true);
 
     const localOnFocus = () => {
       setIsFocused(true);
@@ -126,6 +128,15 @@ const TextInput = forwardRef(
           />
         );
       }
+
+      if (loadingGetSuggestions) {
+        return (
+          <View style={styles.iconContainerRight}>
+            <ActivityIndicator color={dark[500]} size="small" />
+          </View>
+        );
+      }
+
       if (hasSelectedSuggestion) {
         return (
           <Pressable
