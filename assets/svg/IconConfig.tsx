@@ -20,6 +20,7 @@ import PackageSize from "./packageSize.svg";
 
 //actions
 import Scan from "./scan.svg";
+import CloseCircle from "./close-circle.svg";
 
 //Navigation
 import ArrowLeft from "./arrow-left.svg";
@@ -39,6 +40,7 @@ const IconConfig = {
   AddPackage,
   PackageSize,
   Scan,
+  CloseCircle,
   Package,
   NoPackage,
   ArrowLeft,

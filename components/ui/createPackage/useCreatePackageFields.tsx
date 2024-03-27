@@ -94,11 +94,18 @@ function useCreatePackageFields({
     const { name, phoneNumber, address, profileLink } = client;
 
     setValue("receiverName", name);
-    setValue("phoneNumber", Number(phoneNumber));
+    setValue("phoneNumber", phoneNumber.toString());
     setValue("address", address);
     if (profileLink) {
       setValue("profileLink", profileLink);
     }
+  };
+
+  const handleAutoSuggestCleared = () => {
+    setValue("receiverName", "");
+    setValue("phoneNumber", "");
+    setValue("address", "");
+    setValue("profileLink", "");
   };
 
   //TODO: do the input suggestion here
@@ -116,6 +123,7 @@ function useCreatePackageFields({
       containerStyle: { marginBottom: 16 },
       rightIcon: "ArrowDown",
       onAutoSuggestResultClicked: handleInputAutoSuggestClicked,
+      onClearAutoSuggest: handleAutoSuggestCleared,
       validate: validateField({
         fieldName: translate("receiverName"),
         required: true,

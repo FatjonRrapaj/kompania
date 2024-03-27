@@ -14,6 +14,7 @@ import { Body1, Body2, Caption, Label } from "../StyledText";
 import IconConfig from "@/assets/svg/IconConfig";
 
 import Pressable from "../Pressable";
+import { FontAwesome } from "@expo/vector-icons";
 
 interface PasswordVisibilityProps {
   isVisible?: boolean;
@@ -45,6 +46,7 @@ interface TextInputProps<T = any> extends DefaultTextInputProps {
   type: "input";
   onAutoSuggestResultClicked?: (result?: T) => void;
   autoSuggestionApiFunction?: () => Promise<T[]>;
+  onClearAutoSuggest: () => void;
 }
 
 const clientsMockData = [
@@ -87,6 +89,7 @@ const TextInput = forwardRef(
       multiline,
       validate,
       onAutoSuggestResultClicked,
+      onClearAutoSuggest,
       autoSuggestionApiFunction,
       ...rest
     }: TextInputProps,
@@ -96,6 +99,8 @@ const TextInput = forwardRef(
 
     const [isFocused, setIsFocused] = useState(false);
     const [inputSecured, setInputSecured] = useState(secureTextEntry);
+    const [hasSelectedSuggestion, setHasSelectedSuggestion] = useState(false);
+    const [autoSuggestData, setAutoSuggestData] = useState(clientsMockData);
 
     const localOnFocus = () => {
       setIsFocused(true);
@@ -109,6 +114,39 @@ const TextInput = forwardRef(
     const RightIcon = rightIcon ? IconConfig[rightIcon] : undefined;
 
     const hasAutoSuggest = !!onAutoSuggestResultClicked;
+
+    const renderCorrectRightIcon = (value: any) => {
+      if (secureTextEntry) {
+        return (
+          <PasswordVisibility
+            onChange={() => {
+              setInputSecured((old) => !old);
+            }}
+            isVisible={!inputSecured}
+          />
+        );
+      }
+      if (hasSelectedSuggestion) {
+        return (
+          <Pressable
+            style={styles.iconContainerRight}
+            onPress={() => {
+              onClearAutoSuggest();
+              setHasSelectedSuggestion(false);
+            }}
+          >
+            <IconConfig.CloseCircle />
+          </Pressable>
+        );
+      }
+      if (RightIcon) {
+        return (
+          <View style={styles.iconContainerRight}>
+            <RightIcon fill={isFocused || value ? dark[500] : gray[500]} />
+          </View>
+        );
+      }
+    };
 
     return (
       <Controller
@@ -157,22 +195,11 @@ const TextInput = forwardRef(
                   {...rest}
                 />
 
-                {RightIcon ? (
-                  <View style={styles.iconContainerRight}>
-                    <RightIcon
-                      fill={isFocused || value ? dark[500] : gray[500]}
-                    />
-                  </View>
-                ) : secureTextEntry !== undefined ? (
-                  <PasswordVisibility
-                    onChange={() => {
-                      setInputSecured((old) => !old);
-                    }}
-                    isVisible={!inputSecured}
-                  />
-                ) : null}
+                {renderCorrectRightIcon(value)}
               </View>
-              {hasAutoSuggest ? (
+              {autoSuggestData?.length &&
+              hasAutoSuggest &&
+              !hasSelectedSuggestion ? (
                 <View
                   style={{
                     marginHorizontal: 2,
@@ -186,7 +213,7 @@ const TextInput = forwardRef(
                     marginVertical: 8,
                   }}
                 >
-                  {clientsMockData.map((item, index) => (
+                  {autoSuggestData.map((item, index) => (
                     <Pressable
                       key={item.uid}
                       style={{
@@ -194,7 +221,11 @@ const TextInput = forwardRef(
                         position: "relative",
                         gap: 4,
                       }}
-                      onPress={() => onAutoSuggestResultClicked(item)}
+                      onPress={() => {
+                        onAutoSuggestResultClicked(item);
+                        setHasSelectedSuggestion(true);
+                        setAutoSuggestData([]);
+                      }}
                     >
                       <View
                         style={{
@@ -207,7 +238,7 @@ const TextInput = forwardRef(
                         <Body2>{item.text2}</Body2>
                       </View>
                       <Caption>{item.text3}</Caption>
-                      {clientsMockData?.length - 1 !== index && (
+                      {autoSuggestData?.length - 1 !== index && (
                         <View
                           style={{
                             position: "absolute",
