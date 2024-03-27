@@ -202,6 +202,5 @@ const styles = StyleSheet.create({
   },
   textArea: {
     height: 96,
-    paddingTop: 8,
   },
 });
