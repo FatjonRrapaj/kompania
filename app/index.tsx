@@ -8,7 +8,7 @@ interface IndexPageProps {}
 const IndexPage = (props: IndexPageProps) => {
   React.useEffect(() => {
     setTimeout(() => {
-      if (true) {
+      if (false) {
         router.replace("/(tabs)/(home)");
       } else {
         router.replace("/(auth)/login");

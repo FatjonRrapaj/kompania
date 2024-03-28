@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { FontAwesome } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { router } from "expo-router";
@@ -28,14 +28,13 @@ const Login = () => {
     defaultValues: {
       email: "fatjonrrapaj@live.com",
       password: "123456",
-    },
+    } as FieldValues,
   });
 
   const loginFields = useLoginFields();
 
   const onSubmit = (data: any) => {
     if (isValid) {
-      console.log("data: ", data);
     }
   };
 

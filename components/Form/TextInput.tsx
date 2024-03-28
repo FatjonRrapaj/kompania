@@ -141,7 +141,7 @@ const TextInput = forwardRef(
           <Pressable
             style={styles.iconContainerRight}
             onPress={() => {
-              onClearAutoSuggest();
+              onClearAutoSuggest?.();
               setHasSelectedSuggestion(false);
             }}
           >
