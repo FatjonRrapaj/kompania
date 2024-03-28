@@ -326,5 +326,109 @@ export default {
       text2:
         "Ju lutem jepni një buffer të vlefshëm byte për separatorin e kripës.",
     },
+    "auth/invalid-id-token": {
+      text1: "Tokeni ID i dhënë nuk është një token ID Firebase i vlefshëm.",
+      text2: "Ju lutem sigurohuni që po përdorni një token të vlefshëm ID.",
+    },
+    "auth/invalid-last-sign-in-time": {
+      text1: "Koha e fundit e kyçjes është e pavlefshme.",
+      text2:
+        "Ju lutem jepni një varg datash UTC të vlefshme për kohën e fundit të kyçjes.",
+    },
+    "auth/invalid-page-token": {
+      text1: "Tokeni i faqes së dhënë është i pavlefshëm.",
+      text2: "Ju lutem jepni një varg të vlefshëm jo-bosh për tokenin e faqes.",
+    },
+    "auth/invalid-password": {
+      text1: "Fjalëkalimi i dhënë është i pavlefshëm.",
+      text2: "Ju lutem jepni një fjalëkalim me të paktën gjashtë karaktere.",
+    },
+    "auth/invalid-password-hash": {
+      text1: "Hashi i fjalëkalimit është i pavlefshëm.",
+      text2:
+        "Ju lutem jepni një buffer të vlefshëm byte për hashin e fjalëkalimit.",
+    },
+    "auth/invalid-password-salt": {
+      text1: "Kripa e fjalëkalimit është e pavlefshme.",
+      text2:
+        "Ju lutem jepni një buffer të vlefshëm byte për kripën e fjalëkalimit.",
+    },
+    "auth/invalid-photo-url": {
+      text1: "PhotoURL e dhënë është e pavlefshme.",
+      text2: "Ju lutem jepni një URL string të vlefshëm për PhotoURL.",
+    },
+    "auth/invalid-provider-data": {
+      text1: "Dhënia e furnizuesit është e pavlefshme.",
+      text2: "Ju lutem jepni një varg të vlefshëm të objekteve UserInfo.",
+    },
+    "auth/invalid-provider-id": {
+      text1: "ID e furnizuesit është e pavlefshme.",
+      text2:
+        "Ju lutem jepni një string identifikues të vlefshëm të furnizuesit të mbështetur.",
+    },
+    "auth/invalid-oauth-responsetype": {
+      text1: "Konfigurimi i responseType OAuth i pavlefshëm.",
+      text2:
+        "Ju lutem konfiguroni vetëm një responseType OAuth që të jetë vendosur në true.",
+    },
+    "auth/invalid-session-cookie-duration": {
+      text1: "Koha e gjatësisë së cookies së sesionit është e pavlefshme.",
+      text2:
+        "Ju lutem jepni një numër të vlefshëm në milidetë nga 5 minuta deri në 2 javë.",
+    },
+    "auth/invalid-uid": {
+      text1: "UID e dhënë është e pavlefshme.",
+      text2:
+        "Ju lutem jepni një string jo-bosh me të palingët 128 karaktere për UID.",
+    },
+    "auth/invalid-user-import": {
+      text1: "Regjistrimi i përdoruesit për import është i pavlefshëm.",
+      text2:
+        "Ju lutem kontrolloni regjistrimin e dhënë të përdoruesit për import.",
+    },
+    "auth/maximum-user-count-exceeded": {
+      text1:
+        "Numri maksimal i lejuar i përdoruesve për importim është tejkaluar.",
+      text2:
+        "Ju lutem sigurohuni që nuk tejkaloni numrin maksimal të përdoruesve për importim.",
+    },
+    "auth/missing-android-pkg-name": {
+      text1: "Emri i Paketës Android mungon.",
+      text2: "Ju lutem jepni një Emër Pakete Android nëse është e nevojshme.",
+    },
+    "auth/missing-continue-uri": {
+      text1: "Mungon një URL vazhdimi i vlefshëm.",
+      text2: "Ju lutem jepni një URL vazhdimi të vlefshëm në kërkesë.",
+    },
+    "auth/missing-hash-algorithm": {
+      text1: "Algoritmi i hash-it dhe parametrat e tij mungojnë.",
+      text2:
+        "Ju lutem jepni algoritmin e kërkuar të hash-it dhe parametrat për importim përdoruesi.",
+    },
+    "auth/missing-uid": {
+      text1: "Mungon UID-ja.",
+      text2: "Ju lutem jepni një identifikues UID për operacionin aktual.",
+    },
+    "auth/missing-oauth-client-secret": {
+      text1: "Sekreti i klientit OAuth mungon.",
+      text2:
+        "Ju lutem jepni sekretin e detyrueshëm të klientit OAuth për të mundësuar rrjedhën e kodit OIDC.",
+    },
+    "auth/phone-number-already-exists": {
+      text1:
+        "Numri i dhënë i telefonit është tashmë në përdorim nga një përdorues ekzistues.",
+      text2: "Secili përdorues duhet të ketë një numër telefoni unik.",
+    },
+    "auth/project-not-found": {
+      text1: "Nuk u gjet projekt Firebase për kredencialet e dhëna.",
+      text2:
+        "Ju lutem sigurohuni që keni kredencialet e duhura të projektit Firebase.",
+    },
+    "auth/reserved-claims": {
+      text1:
+        "Një ose më shumë pretendimet e përdoruesit të përshtatura janë të rezervuara.",
+      text2:
+        "Ju lutem shmangni përdorimin e pretendimeve të rezervuara për pretendimet e përdoruesit të përshtatura",
+    },
   },
 };
