@@ -1,6 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "@/utils/firebase";
+import generateCustomError from "@/utils/customError";
 
 const getUserId = () => {
   return auth?.currentUser?.uid;
@@ -12,5 +13,8 @@ export const callLogin = async (
 ): Promise<void> => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
-  } catch (error) {}
+    throw generateCustomError({ errorKey: "failedToAddPackage" });
+  } catch (error) {
+    throw error;
+  }
 };

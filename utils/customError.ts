@@ -4,12 +4,12 @@ interface CustomErrorArgs {
   errorKey: keyof typeof en.toastMessages;
 }
 interface CustomError {
-  customError: keyof typeof en.toastMessages;
+  customCode: keyof typeof en.toastMessages;
 }
 
 const generateCustomError = ({ errorKey }: CustomErrorArgs): CustomError => {
   return {
-    customError: errorKey,
+    customCode: errorKey,
   };
 };
 

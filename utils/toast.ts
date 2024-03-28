@@ -64,6 +64,14 @@ export default function showToast({
   });
 }
 
+export function showToastFromError(error: any) {
+  if (error?.customCode) {
+    showToast({ type: "error", text1Key: error?.customCode });
+  } else {
+    showFirebaseErrorToast({ errorKey: error?.code });
+  }
+}
+
 export function hideToast() {
   Toast.hide();
 }

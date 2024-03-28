@@ -4,6 +4,10 @@ import { Immutable } from "immer";
 import { User } from "firebase/auth";
 
 import { callLogin } from "@/api/auth";
+import showToast, {
+  showFirebaseErrorToast,
+  showToastFromError,
+} from "@/utils/toast";
 
 type AuthState = {
   initializing: boolean;
@@ -49,8 +53,9 @@ const useAuthStore = create<ImmutableAuthStore>()(
           state.loadingLogin = true;
         });
         await callLogin(email, password);
-      } catch (error) {
+      } catch (error: any) {
         //TODO: crashlytics or sentry to record error.
+        showToastFromError(error);
       } finally {
         set((state) => {
           state.loadingLogin = false;
