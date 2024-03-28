@@ -10,7 +10,6 @@ const getUserId = () => {
 export const callLogin = async (info: UserLoginInfo): Promise<void> => {
   try {
     await signInWithEmailAndPassword(auth, info.email, info.password);
-    throw generateCustomError({ errorKey: "failedToAddPackage" });
   } catch (error) {
     throw error;
   }
