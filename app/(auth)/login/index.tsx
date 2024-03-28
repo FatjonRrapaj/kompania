@@ -15,6 +15,7 @@ import TextInput from "@/components/Form/TextInput";
 
 import Pressable from "@/components/Pressable";
 import { GiantButton } from "@/components/StyledButton";
+import showToast from "@/utils/toast";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -34,6 +35,11 @@ const Login = () => {
   const loginFields = useLoginFields();
 
   const onSubmit = (data: any) => {
+    showToast({
+      type: "success",
+      text1Key: "changePasswordSuccess",
+      text2Key: "checkEmailText2",
+    });
     if (isValid) {
     }
   };
