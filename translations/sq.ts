@@ -430,5 +430,79 @@ export default {
       text2:
         "Ju lutem shmangni përdorimin e pretendimeve të rezervuara për pretendimet e përdoruesit të përshtatura",
     },
+    "auth/uid-already-exists": {
+      text1:
+        "UID i dhënë është tashmë në përdorim nga një përdorues ekzistues.",
+      text2: "Secili përdorues duhet të ketë një UID unik.",
+    },
+    "storage/unknown": {
+      text1: "Ndodhi një gabim i panjohur.",
+      text2: "Kontaktoni për ndihmë.",
+    },
+    "storage/object-not-found": {
+      text1: "Nuk ekziston objekt në referencën e dëshiruar.",
+      text2: "Kontrolloni referencën dhe provoni përsëri.",
+    },
+    "storage/bucket-not-found": {
+      text1: "Nuk është konfiguruar ndonjë kovë për Depozitim në Cloud.",
+      text2: "Ju lutem kontaktoni për ndihmë.",
+    },
+    "storage/project-not-found": {
+      text1: "Nuk është konfiguruar ndonjë projekt për Depozitim në Cloud.",
+      text2: "Konfiguroni një projekt dhe provoni përsëri.",
+    },
+    "storage/quota-exceeded": {
+      text1: "Kuota në kovën tuaj për Depozitim në Cloud është tejkaluar.",
+      text2: "Ju lutem kontaktoni për ndihmë.",
+    },
+    "storage/unauthenticated": {
+      text1: "Ju lutem rikyçuni për të përfunduar këtë veprim",
+      text2: "Sigurohuni që jeni i autentikuar dhe provoni veprimin përsëri.",
+    },
+    "storage/unauthorized": {
+      text1: "Ju nuk keni autorizim për të kryer veprimin e dëshiruar.",
+      text2:
+        "Kontrolloni rregullat tuaja të sigurisë për të siguruar që janë të saktë.",
+    },
+    "storage/retry-limit-exceeded": {
+      text1: "Koha maksimale e kufizuar për një veprim është tejkaluar.",
+      text2: "Ju lutem provoni veprimin përsëri.",
+    },
+    "storage/invalid-checksum": {
+      text1:
+        "Dosja në klient nuk përputhet me checksumin e dosjes\nmarrë nga serveri.",
+      text2: "Provo ngarkimin e dosjes përsëri.",
+    },
+    "storage/canceled": {
+      text1: "Veprimi u anulua.",
+      text2: "Ju lutem nisni veprimin përsëri nëse është e nevojshme.",
+    },
+    "storage/invalid-event-name": {
+      text1: "Ndodhi një gabim",
+      text2: "Emër i pavlefshëm i ngjarjes është dhënë.",
+    },
+    "storage/invalid-url": {
+      text1: "URL i pavlefshëm i dhënë.",
+      text2: "Ju lutem kontaktoni për ndihmë.",
+    },
+    "storage/invalid-argument": {
+      text1: "Argument i pavlefshëm i dhënë",
+      text2: "Ne do ta ndreqim këtë gabim së shpejti.",
+    },
+    "storage/no-default-bucket": {
+      text1: "Ndodhi një gabim", //  "Nuk është konfiguruar ndonjë kovë në pronat e konfiguruar storageBucket të konfigurimit tuaj.",
+
+      text2: "Ju lutem kontaktoni për ndihmë.",
+    },
+    "storage/cannot-slice-blob": {
+      text1: "Ndodh zakonisht kur dosja lokale është ndryshuar.",
+      text2:
+        "Provo ngarkimin e dosjes përsëri pasi të verifikosh se ajo nuk është ndryshuar.",
+    },
+    "storage/server-file-wrong-size": {
+      text1:
+        "Dosja në klient nuk përputhet me madhësinë e dosjes\nmarrë nga serveri.",
+      text2: "Provo ngarkimin e dosjes përsëri.",
+    },
   },
 };
