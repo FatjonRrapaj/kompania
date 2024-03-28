@@ -42,6 +42,7 @@ const useAuthStore = create<ImmutableAuthStore>()(
     updateAuth: (newUser) => {
       set((state) => {
         state.user = newUser;
+        state.initializing = false;
       });
     },
     login: async (info: UserLoginInfo) => {

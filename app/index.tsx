@@ -1,36 +1,33 @@
+import { useEffect } from "react";
 import { router } from "expo-router";
-import * as React from "react";
-import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+
+import useAuthStore from "@/store/auth";
+import { View } from "@/components/Themed";
+import { H1Bold } from "@/components/StyledText";
+import globalStyles from "@/components/globalStyles";
 
 interface IndexPageProps {}
 
 const IndexPage = (props: IndexPageProps) => {
-  React.useEffect(() => {
-    setTimeout(() => {
-      if (false) {
-        router.replace("/(tabs)/(home)");
-      } else {
-        router.replace("/(auth)/login");
-      }
-    }, 2000);
-  }, []);
+  const initializing = useAuthStore((store) => store.initializing);
+  const user = useAuthStore((store) => store.user);
+
+  useEffect(() => {
+    if (initializing) {
+      return;
+    }
+    if (user) {
+      router.replace("/(tabs)/(home)");
+    } else {
+      router.replace("/(auth)/login");
+    }
+  }, [initializing, user]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ActivityIndicator />
-      <Text style={{ color: "white" }}>Checking for auth</Text>
-    </SafeAreaView>
+    <View style={globalStyles.screenContainer}>
+      {initializing ? <H1Bold>Initializing...</H1Bold> : null}
+    </View>
   );
 };
 
 export default IndexPage;
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "red",
-    flex: 1,
-  },
-});
