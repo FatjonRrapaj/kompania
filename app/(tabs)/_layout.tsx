@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import { useSegments } from "expo-router";
@@ -6,6 +6,7 @@ import { useSegments } from "expo-router";
 import Colors, { primary } from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import useAuthStore from "@/store/auth";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -18,6 +19,10 @@ function TabBarIcon(props: {
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const segment = useSegments();
+
+  useEffect(() => {
+    useAuthStore.getState().getProfile();
+  }, []);
 
   return (
     <Tabs

@@ -3,7 +3,7 @@ import { immer } from "zustand/middleware/immer";
 import { Immutable } from "immer";
 import { User } from "firebase/auth";
 
-import { callLogin, callLogout } from "@/api/auth";
+import { callGetProfile, callLogin, callLogout } from "@/api/auth";
 import showToast, { showToastFromError } from "@/utils/toast";
 import { router } from "expo-router";
 
@@ -14,7 +14,7 @@ type AuthState = {
   loadingRegister: boolean;
   user: User | null;
   loadingGetProfile: boolean;
-  profile?: Company;
+  profile?: CompanyUserProfile;
 };
 
 type AuthActions = {
@@ -71,6 +71,7 @@ const useAuthStore = create<ImmutableAuthStore>()(
         await callLogout();
         router.replace("/(auth)/login");
       } catch (error) {
+        showToastFromError(error);
       } finally {
         set((state) => {
           state.loadingLogout = false;
@@ -78,9 +79,20 @@ const useAuthStore = create<ImmutableAuthStore>()(
       }
     },
     getProfile: async (uid?: string) => {
+      set((state) => {
+        state.loadingGetProfile = true;
+      });
       try {
+        const profile = await callGetProfile(uid);
+        set((state) => {
+          state.profile = profile;
+        });
       } catch (error) {
+        showToastFromError(error);
       } finally {
+        set((state) => {
+          state.loadingGetProfile = false;
+        });
       }
     },
   }))

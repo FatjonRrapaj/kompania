@@ -2,7 +2,7 @@ import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 import { auth, db } from "@/utils/firebase";
 import generateCustomError from "@/utils/customError";
-import { doc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
 const getUserId = () => {
   return auth?.currentUser?.uid;
@@ -21,6 +21,18 @@ const getUserDocumentReference = (uid?: string) => {
     return doc(db, "drivers", uidToUse);
   } catch (error) {
     throw error;
+  }
+};
+
+export const callGetProfile = async (
+  uid?: string
+): Promise<CompanyUserProfile> => {
+  const docRef = getUserDocumentReference(uid);
+  const documentSnapshot = await getDoc(docRef);
+  if (documentSnapshot.exists()) {
+    return documentSnapshot.data() as CompanyUserProfile;
+  } else {
+    throw new Error("driver does not exist");
   }
 };
 

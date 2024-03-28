@@ -8,6 +8,13 @@ interface Company {
   companyName: string;
 }
 
+interface CompanyUserProfile {
+  email: string;
+  companyID: string;
+  firstName: string;
+  lastName: string;
+}
+
 interface Customer {
   name: string;
   phoneNumber: string;
