@@ -11,6 +11,7 @@ interface IndexPageProps {}
 const IndexPage = (props: IndexPageProps) => {
   const initializing = useAuthStore((store) => store.initializing);
   const user = useAuthStore((store) => store.user);
+  console.log("user: ", user);
 
   useEffect(() => {
     if (initializing) {

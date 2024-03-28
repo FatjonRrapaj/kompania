@@ -1,5 +1,11 @@
 import { FirebaseApp, getApp, getApps, initializeApp } from "firebase/app";
-import { getAuth, initializeAuth, Auth } from "firebase/auth";
+import {
+  getAuth,
+  initializeAuth,
+  Auth,
+  getReactNativePersistence,
+} from "firebase/auth";
+import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 import { Firestore, getFirestore } from "firebase/firestore";
 import { getStorage, FirebaseStorage } from "firebase/storage";
 
@@ -20,7 +26,9 @@ const firebaseConfig = {
 if (!getApps().length) {
   try {
     app = initializeApp(firebaseConfig);
-    auth = initializeAuth(app);
+    auth = initializeAuth(app, {
+      persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+    });
     db = getFirestore(app);
     storage = getStorage(app);
     // functions = getFunctions(app, "europe-west6");
