@@ -10,5 +10,7 @@ export const callLogin = async (
   email: string,
   password: string
 ): Promise<void> => {
-  await signInWithEmailAndPassword(auth, email, password);
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {}
 };
