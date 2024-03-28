@@ -45,9 +45,16 @@ const useAuthStore = create<ImmutableAuthStore>()(
     },
     login: async (email: string, password: string) => {
       try {
+        set((state) => {
+          state.loadingLogin = true;
+        });
         await callLogin(email, password);
       } catch (error) {
+        //TODO: crashlytics or sentry to record error.
       } finally {
+        set((state) => {
+          state.loadingLogin = false;
+        });
       }
     },
     logout: async () => {
@@ -64,3 +71,5 @@ const useAuthStore = create<ImmutableAuthStore>()(
     },
   }))
 );
+
+export default useAuthStore;

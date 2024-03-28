@@ -91,4 +91,240 @@ export default {
     cashOnDelivery: "Pagesa në dorëzim",
     notesForPackage: "Shënimi për pakon",
   },
+  firebaseErrors: {
+    "auth/operation-not-allowed": {
+      text1: "Kjo veprim nuk lejohet.",
+      text2: "Ju lutem kontaktoni mbështetjen për ndihmë.",
+    },
+    "auth/requires-recent-login": {
+      text1: "Ju lutem kyçuni përsëri për të përfunduar veprimin",
+      text2: "Për arsye sigurie kërkohet një kyçje e fundit",
+    },
+    "auth/provider-already-linked": {
+      text1: "Ky furnizues është tashmë i lidhur me llogarinë tuaj.",
+      text2: "",
+    },
+    "auth/invalid-credential": {
+      text1: "Kredencialet e dhëna janë të pavlefshme ose kanë skaduar.",
+      text2: "Ju lutem provoni një të re",
+    },
+    "auth/credential-already-in-use": {
+      text1: "Kredencialet janë tashmë në përdorim.",
+      text2: "Ju lutem provoni një tjetër",
+    },
+    "auth/email-already-in-use": {
+      text1: "Adresa email është tashmë në përdorim",
+      text2: "Ju lutem kyçuni ose jepni një të re",
+    },
+    "auth/invalid-email": {
+      text1: "Adresa email e dhënë nuk është e vlefshme.",
+      text2: "Ju lutem jepni një adresë emaili të vlefshme.",
+    },
+    "auth/wrong-password": {
+      text1: "Fjalëkalimi është i pasaktë.",
+      text2: "Ju lutem kontrolloni përsëri fjalëkalimin tuaj.",
+    },
+    "auth/invalid-verification-code": {
+      text1: "Kodi i verifikimit është i pavlefshëm.",
+      text2: "Ju lutem kontrolloni dhe provoni përsëri.",
+    },
+    "auth/invalid-verification-id": {
+      text1: "ID-ja e verifikimit është e pavlefshme.",
+      text2: "Ju lutem kontrolloni dhe provoni përsëri.",
+    },
+    "auth/user-mismatch": {
+      text1: "Kredencialet e dhëna nuk përputhen me përdoruesin.",
+      text2: "Ju lutem provoni një tjetër",
+    },
+    "auth/user-not-found": {
+      text1:
+        "Nuk u gjet asnjë përdorues për kodin e rindërtimit të fjalëkalimit të dhënë.",
+      text2: "Sigurohuni që të dhënat që jepni janë të sakta",
+    },
+    "auth/missing-ios-bundle-id": {
+      text1:
+        "Ju lutem jepni një iOS Bundle ID nëse është dhënë një ID e Aplikacionit në App Store.",
+      text2: "Ju lutem kontaktoni mbështetjen",
+    },
+    "auth/invalid-continue-uri": {
+      text1: "URL-ja e vazhdimit e dhënë në kërkesë nuk është e vlefshme.",
+      text2: "Ju lutem kontaktoni mbështetjen",
+    },
+    "auth/unauthorized-continue-uri": {
+      text1: "Domeni i URL-së së vazhdimit nuk është i lejuar.",
+      text2: "Ju lutem kontaktoni mbështetjen",
+    },
+    "auth/no-such-provider": {
+      text1:
+        "Furnizuesi nuk është i lidhur me llogarinë tuaj ose nuk ekziston.",
+      text2: "Ju lutem kontaktoni mbështetjen",
+    },
+    "auth/weak-password": {
+      text1: "Fjalëkalimi nuk është i mjaftueshëm i fortë.",
+      text2: "Duhet të jetë më i gjatë dhe të përmbajë karaktere speciale.",
+    },
+    "auth/invalid-phone-number": {
+      text1: "Formati i numrit të telefonit është i pavlefshëm.",
+      text2: "Ju lutem jepni një numër të vlefshëm të telefonit.",
+    },
+    "auth/missing-phone-number": {
+      text1: "Numri i telefonit mungon.",
+      text2: "Ju lutem jepni një numër telefoni.",
+    },
+    "auth/quota-exceeded": {
+      text1: "Kuota e SMS për projektin Firebase është tejkaluar.",
+      text2: "Ju lutem kontaktoni mbështetjen",
+    },
+    "auth/user-disabled": {
+      text1:
+        "Përdoruesi i lidhur me kodin e rindërtimit të fjalëkalimit është çaktivizuar.",
+      text2: "Ju lutem krijo një të re ose kontaktoni mbështetjen",
+    },
+    "auth/custom-token-mismatch": {
+      text1: "Tokeni i përshtatur për një Aplikacion Firebase tjetër.",
+      text2: "Ju lutem kontaktoni mbështetjen",
+    },
+    "auth/invalid-custom-token": {
+      text1: "Formati i tokenit të përshtatur është i pasaktë.",
+      text2: "Ju lutem kontaktoni mbështetjen",
+    },
+    "auth/account-exists-with-different-credential": {
+      text1: "Një llogari me këtë adresë emaili ekziston tashmë.",
+      text2: "Ju lutem kyçuni ose jepni një email të ri",
+    },
+    "auth/argument-error": {
+      text1: "Ndodhi një gabim.",
+      text2: "Ju lutem provoni përsëri më vonë.",
+    },
+    "auth/expired-action-code": {
+      text1: "Kodi i rindërtimit të fjalëkalimit ka skaduar.",
+      text2: "Ju lutem kërko një të ri.",
+    },
+
+    "auth/invalid-action-code": {
+      text1:
+        "Kodi i rindërtimit të fjalëkalimit është i pavlefshëm ose është përdorur më parë.",
+      text2:
+        "Ju lutem kërkoni një të ri, ose kontaktoni mbështetjen nëse nuk keni qenë ju",
+    },
+    "auth/keychain-error": {
+      text1: "Ndodhi një gabim gjatë qasjes në keychain.",
+      text2: "Ju lutem kontaktoni mbështetjen",
+    },
+    "auth/app-deleted": {
+      text1: "Aplikacioni Firebase është fshirë.",
+      text2: "Ju lutem kontaktoni mbështetjen për ndihmë.",
+    },
+    "auth/app-not-authorized": {
+      text1: "Aplikacioni nuk është i autorizuar për Autentikim në Firebase.",
+      text2:
+        "Ju lutem rishikoni konfigurimin e aplikacionit tuaj në Konsollën Firebase.",
+    },
+    "auth/invalid-api-key": {
+      text1: "Çelësi i API-së i dhënë është i pavlefshëm.",
+      text2:
+        "Ju lutem verifikoni se e keni kopjuar saktësisht nga Konsolla Firebase.",
+    },
+    "auth/invalid-user-token": {
+      text1: "Kredencialet e përdoruesit nuk janë më të vlefshme.",
+      text2: "Përdoruesi duhet të kyçet përsëri për të zgjidhur këtë problem.",
+    },
+    "auth/invalid-tenant-id": {
+      text1: "ID-ja e dhenë e qirasit nuk është e vlefshme.",
+      text2: "Ju lutem sigurohuni që keni dhënë një ID qiraje të vlefshme.",
+    },
+    "auth/network-request-failed": {
+      text1: "Një gabim rrjeti ka ndodhur.",
+      text2:
+        "Ju lutem kontrolloni lidhjen tuaj të rrjetit dhe provoni përsëri.",
+    },
+    "auth/too-many-requests": {
+      text1: "Ka shumë kërkesa duke u bërë nga ky pajisje.",
+      text2: "Ju lutem prisni për disa kohë dhe provoni përsëri më vonë.",
+    },
+    "auth/unauthorized-domain": {
+      text1: "Domeni i aplikacionit nuk është autorizuar për operacione OAuth.",
+      text2:
+        "Ju lutem konfiguroni domainet e autorizuara në Konsollën Firebase.",
+    },
+    "auth/user-token-expired": {
+      text1: "Kredencialet e përdoruesit kanë skaduar.",
+      text2: "Ju lutem dilni dhe kyçuni përsëri për të zgjidhur këtë problem.",
+    },
+    "auth/web-storage-unsupported": {
+      text1: "Ruajtja në internet nuk është e mbështetur nga shfletuesi.",
+      text2:
+        "Ju lutem aktivizoni ruajtjen në internet ose provoni një shfletues tjetër në internet.",
+    },
+    "auth/claims-too-large": {
+      text1:
+        "Paketa e pretendimeve të përshtatura kalon madhësinë maksimale të lejuar.",
+      text2: "Ju lutem zvogëloni madhësinë e pretendimeve të përshtatura.",
+    },
+
+    "auth/id-token-expired": {
+      text1: "Tokeni ID Firebase i dhënë ka skaduar.",
+      text2: "Ju lutem dilni dhe kyçuni përsëri për të marrë një token të ri.",
+    },
+    "auth/id-token-revoked": {
+      text1: "Tokeni ID Firebase i dhënë është anuluar.",
+      text2: "Ju lutem dilni dhe kyçuni përsëri për të marrë një token të ri.",
+    },
+    "auth/insufficient-permission": {
+      text1: "SDK-ja e Adminit ka leje të pamjaftueshme.",
+      text2: "Ju lutem konfiguroni SDK-në e Adminit me lejet e duhura.",
+    },
+    "auth/internal-error": {
+      text1: "Ndodhi një gabim i papritur në serverin e Autentikimit.",
+      text2:
+        "Ju lutem raportoni problem në kanalin tonë të mbështetjes nëse vazhdon.",
+    },
+    "auth/invalid-argument": {
+      text1: "U dhënë një argument i pavlefshëm për një metodë Autentikimi.",
+      text2: "Ju lutem kontrolloni argumentet e dhëna dhe provoni përsëri.",
+    },
+    "auth/invalid-claims": {
+      text1: "Atributet e pretendimeve të përshtatura janë të pavlefshme.",
+      text2:
+        "Ju lutem kontrolloni atributet e pretendimeve të përshtatura të dhëna.",
+    },
+    "auth/invalid-email-verified": {
+      text1: "Vlera emailVerified është e pavlefshme.",
+      text2: "Ju lutem sigurohuni që është një vlerë booleane.",
+    },
+    "auth/invalid-hash-algorithm": {
+      text1: "Algoritmi i hash-it nuk është i mbështetur.",
+      text2: "Ju lutem përdorni një algoritem të mbështetur hashimi.",
+    },
+    "auth/invalid-hash-block-size": {
+      text1: "Madhësia e bllokut të hash-it është e pavlefshme.",
+      text2: "Ju lutem jepni një numër të vlefshëm për madhësinë e bllokut.",
+    },
+    "auth/invalid-hash-derived-key-length": {
+      text1: "Gjatësia e çelësit të përdorur për hashim është e pavlefshme.",
+      text2: "Ju lutem jepni një numër të vlefshëm për gjatësinë e çelësit.",
+    },
+    "auth/invalid-hash-key": {
+      text1: "Çelësi i hash-it është i pavlefshëm.",
+      text2:
+        "Ju lutem jepni një buffer të vlefshëm byte për çelësin e hash-it.",
+    },
+    "auth/invalid-hash-memory-cost": {
+      text1: "Kostoja e memorjes së hash-it është e pavlefshme.",
+      text2: "Ju lutem jepni një numër të vlefshëm për koston e memorjes.",
+    },
+    "auth/invalid-hash-parallelization": {
+      text1: "Paralelizimi i hash-it është i pavlefshëm.",
+      text2: "Ju lutem jepni një numër të vlefshëm për paralelizimin.",
+    },
+    "auth/invalid-hash-rounds": {
+      text1: "Vlera e rrotullimeve të hash-it është e pavlefshme.",
+      text2: "Ju lutem jepni një numër të vlefshëm rrotullimesh.",
+    },
+    "auth/invalid-hash-salt-separator": {
+      text1: "Separatori i kripës për algoritmin e hash-it është i pavlefshëm.",
+      text2:
+        "Ju lutem jepni një buffer të vlefshëm byte për separatorin e kripës.",
+    },
+  },
 };
