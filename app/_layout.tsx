@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColorScheme } from "@/components/useColorScheme";
 import "@/translations/translations";
 import Storage from "@/constants/Storage";
+import Toast from "react-native-toast-message";
 
 export const unstable_settings = {
   initialRouteName: "(auth)",
@@ -67,6 +68,7 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Slot />
+      <Toast />
     </ThemeProvider>
   );
 }
