@@ -23,8 +23,13 @@ const Login = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
-  } = useForm();
+    formState: { isValid },
+  } = useForm({
+    defaultValues: {
+      email: "fatjonrrapaj@live.com",
+      password: "123456",
+    },
+  });
 
   const loginFields = useLoginFields();
 

@@ -48,7 +48,7 @@ const CreatePackage = (props: CreatePackageProps) => {
   });
 
   const onSubmit = (data: any) => {
-    console.log("data: ", data);
+    console.log("data: ", JSON.stringify("data"));
     if (isValid) {
       console.log("data: ", data);
     }

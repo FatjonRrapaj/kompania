@@ -15,7 +15,6 @@ import { Body1, Body2, Caption, Label } from "../StyledText";
 import IconConfig from "@/assets/svg/IconConfig";
 
 import Pressable from "../Pressable";
-import { FontAwesome } from "@expo/vector-icons";
 
 interface PasswordVisibilityProps {
   isVisible?: boolean;
@@ -47,7 +46,7 @@ interface TextInputProps<T = any> extends DefaultTextInputProps {
   type: "input";
   onAutoSuggestResultClicked?: (result?: T) => void;
   autoSuggestionApiFunction?: () => Promise<T[]>;
-  onClearAutoSuggest: () => void;
+  onClearAutoSuggest?: () => void;
 }
 
 const clientsMockData = [
