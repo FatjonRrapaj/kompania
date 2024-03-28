@@ -6,19 +6,14 @@ import { auth } from "@/utils/firebase";
 import useAuthStore from "@/store/auth";
 
 const AuthStateChangeListener = () => {
-  const segment = useSegments();
-  console.log("segment: ", segment);
+  const segments = useSegments();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser: User | null) => {
       useAuthStore.getState().updateAuth(currentUser);
       if (currentUser) {
-        if (!segment?.[0]?.includes("tabs")) {
+        if (segments?.[0] !== "(tabs)") {
           router.replace("/(tabs)/(home)");
-        }
-      } else {
-        if (!segment?.[0]?.includes("auth")) {
-          router.replace("/(auth)/login");
         }
       }
     });

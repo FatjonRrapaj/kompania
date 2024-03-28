@@ -3,8 +3,9 @@ import { immer } from "zustand/middleware/immer";
 import { Immutable } from "immer";
 import { User } from "firebase/auth";
 
-import { callLogin } from "@/api/auth";
+import { callLogin, callLogout } from "@/api/auth";
 import showToast, { showToastFromError } from "@/utils/toast";
+import { router } from "expo-router";
 
 type AuthState = {
   initializing: boolean;
@@ -64,8 +65,16 @@ const useAuthStore = create<ImmutableAuthStore>()(
     },
     logout: async () => {
       try {
+        set((state) => {
+          state.loadingLogout = true;
+        });
+        await callLogout();
+        router.replace("/(auth)/login");
       } catch (error) {
       } finally {
+        set((state) => {
+          state.loadingLogout = false;
+        });
       }
     },
     getProfile: async (uid?: string) => {
