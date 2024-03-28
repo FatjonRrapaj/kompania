@@ -94,7 +94,7 @@ export default {
   firebaseErrors: {
     "auth/operation-not-allowed": {
       text1: "Kjo veprim nuk lejohet.",
-      text2: "Ju lutem kontaktoni mbështetjen për ndihmë.",
+      text2: "Ju lutem kontaktoni suportin për ndihmë.",
     },
     "auth/requires-recent-login": {
       text1: "Ju lutem kyçuni përsëri për të përfunduar veprimin",
@@ -144,20 +144,20 @@ export default {
     "auth/missing-ios-bundle-id": {
       text1:
         "Ju lutem jepni një iOS Bundle ID nëse është dhënë një ID e Aplikacionit në App Store.",
-      text2: "Ju lutem kontaktoni mbështetjen",
+      text2: "Ju lutem kontaktoni suportin",
     },
     "auth/invalid-continue-uri": {
       text1: "URL-ja e vazhdimit e dhënë në kërkesë nuk është e vlefshme.",
-      text2: "Ju lutem kontaktoni mbështetjen",
+      text2: "Ju lutem kontaktoni suportin",
     },
     "auth/unauthorized-continue-uri": {
       text1: "Domeni i URL-së së vazhdimit nuk është i lejuar.",
-      text2: "Ju lutem kontaktoni mbështetjen",
+      text2: "Ju lutem kontaktoni suportin",
     },
     "auth/no-such-provider": {
       text1:
         "Furnizuesi nuk është i lidhur me llogarinë tuaj ose nuk ekziston.",
-      text2: "Ju lutem kontaktoni mbështetjen",
+      text2: "Ju lutem kontaktoni suportin",
     },
     "auth/weak-password": {
       text1: "Fjalëkalimi nuk është i mjaftueshëm i fortë.",
@@ -173,20 +173,20 @@ export default {
     },
     "auth/quota-exceeded": {
       text1: "Kuota e SMS për projektin Firebase është tejkaluar.",
-      text2: "Ju lutem kontaktoni mbështetjen",
+      text2: "Ju lutem kontaktoni suportin",
     },
     "auth/user-disabled": {
       text1:
         "Përdoruesi i lidhur me kodin e rindërtimit të fjalëkalimit është çaktivizuar.",
-      text2: "Ju lutem krijo një të re ose kontaktoni mbështetjen",
+      text2: "Ju lutem krijo një të re ose kontaktoni suportin",
     },
     "auth/custom-token-mismatch": {
       text1: "Tokeni i përshtatur për një Aplikacion Firebase tjetër.",
-      text2: "Ju lutem kontaktoni mbështetjen",
+      text2: "Ju lutem kontaktoni suportin",
     },
     "auth/invalid-custom-token": {
       text1: "Formati i tokenit të përshtatur është i pasaktë.",
-      text2: "Ju lutem kontaktoni mbështetjen",
+      text2: "Ju lutem kontaktoni suportin",
     },
     "auth/account-exists-with-different-credential": {
       text1: "Një llogari me këtë adresë emaili ekziston tashmë.",
@@ -205,15 +205,15 @@ export default {
       text1:
         "Kodi i rindërtimit të fjalëkalimit është i pavlefshëm ose është përdorur më parë.",
       text2:
-        "Ju lutem kërkoni një të ri, ose kontaktoni mbështetjen nëse nuk keni qenë ju",
+        "Ju lutem kërkoni një të ri, ose kontaktoni suportin nëse nuk keni qenë ju",
     },
     "auth/keychain-error": {
       text1: "Ndodhi një gabim gjatë qasjes në keychain.",
-      text2: "Ju lutem kontaktoni mbështetjen",
+      text2: "Ju lutem kontaktoni suportin",
     },
     "auth/app-deleted": {
       text1: "Aplikacioni Firebase është fshirë.",
-      text2: "Ju lutem kontaktoni mbështetjen për ndihmë.",
+      text2: "Ju lutem kontaktoni suportin për ndihmë.",
     },
     "auth/app-not-authorized": {
       text1: "Aplikacioni nuk është i autorizuar për Autentikim në Firebase.",
@@ -504,5 +504,25 @@ export default {
         "Dosja në klient nuk përputhet me madhësinë e dosjes\nmarrë nga serveri.",
       text2: "Provo ngarkimin e dosjes përsëri.",
     },
+  },
+  toastMessages: {
+    userNotLoggedIn: "Përdoruesi nuk është i kyçur.",
+    userDocumentNotFound: "Dokumenti i përdoruesit nuk u gjet.",
+    companyDocumentNotFound: "Dokumenti i kompanisë nuk u gjet.",
+    companyIdNotFound:
+      "CompanyId nuk u gjet në të dhënat e përdoruesit nuk janë saktë.",
+    failedToGetUserCompany: "Marrja e kompanisë së përdoruesit dështoi",
+    failedToAddPackage: "Shtimi i pakos dështoi.",
+    somethingWrongText1: "Diçka shkoi keq",
+    somethingWrongText2: "Ne nuk mundëm të përpunojmë kërkesën tuaj",
+    verifyEmailSentText1: "Emaili i verifikimit është dërguar",
+    checkEmailText2: "Ju lutemi kontrolloni emailin tuaj",
+    passwordResetEmailSentText1:
+      "Emaili i rivendosjes së fjalëkalimit është dërguar",
+    updateNameSuccess: "Emri u përditësua me sukses",
+    updatePhoneSuccess: "Numri i telefonit u përditësua me sukses",
+    changePasswordSuccess: "Fjalëkalimi u ndryshua me sukses",
+    passwordIncorrect: "Fjalëkalimi i dhënë është i pasaktë",
+    pleaseTryAgainText2: "Ju lutemi provoni përsëri",
   },
 };
