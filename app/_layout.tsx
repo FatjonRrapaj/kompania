@@ -16,6 +16,7 @@ import { useColorScheme } from "@/components/useColorScheme";
 import "@/translations/translations";
 import Storage from "@/constants/Storage";
 import Toast from "react-native-toast-message";
+import AuthStateChangeListener from "@/components/ui/auth/AuthStateChagesListener";
 
 export const unstable_settings = {
   initialRouteName: "(auth)",
@@ -69,6 +70,7 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Slot />
       <Toast />
+      <AuthStateChangeListener />
     </ThemeProvider>
   );
 }

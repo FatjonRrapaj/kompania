@@ -11,7 +11,6 @@ interface IndexPageProps {}
 const IndexPage = (props: IndexPageProps) => {
   const initializing = useAuthStore((store) => store.initializing);
   const user = useAuthStore((store) => store.user);
-  console.log("user: ", user);
 
   useEffect(() => {
     if (initializing) {
@@ -24,11 +23,7 @@ const IndexPage = (props: IndexPageProps) => {
     }
   }, [initializing, user]);
 
-  return (
-    <View style={globalStyles.screenContainer}>
-      {initializing ? <H1Bold>Initializing...</H1Bold> : null}
-    </View>
-  );
+  return null;
 };
 
 export default IndexPage;
