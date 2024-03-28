@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 import { auth } from "@/utils/firebase";
 import generateCustomError from "@/utils/customError";
@@ -13,4 +13,8 @@ export const callLogin = async (info: UserLoginInfo): Promise<void> => {
   } catch (error) {
     throw error;
   }
+};
+
+export const callLogout = async () => {
+  await signOut(auth);
 };

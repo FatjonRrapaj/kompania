@@ -40,6 +40,7 @@ const useAuthStore = create<ImmutableAuthStore>()(
   immer((set) => ({
     ...initialState,
     updateAuth: (newUser) => {
+      console.log("newUser: ", newUser);
       set((state) => {
         state.user = newUser;
         state.initializing = false;
@@ -52,6 +53,7 @@ const useAuthStore = create<ImmutableAuthStore>()(
         });
         await callLogin(info);
       } catch (error: any) {
+        console.log("error: ", error);
         //TODO: crashlytics or sentry to record error.
         showToastFromError(error);
       } finally {

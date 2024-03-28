@@ -17,6 +17,7 @@ import "@/translations/translations";
 import Storage from "@/constants/Storage";
 import Toast from "react-native-toast-message";
 import AuthStateChangeListener from "@/components/ui/auth/AuthStateChagesListener";
+import useAuthStore from "@/store/auth";
 
 export const unstable_settings = {
   initialRouteName: "(auth)",
@@ -34,6 +35,7 @@ export default function RootLayout() {
   });
 
   const { i18n } = useTranslation();
+  const initializing = useAuthStore((store) => store.initializing);
 
   useEffect(() => {
     async function setSavedLanguage() {
@@ -51,10 +53,10 @@ export default function RootLayout() {
   }, [error]);
 
   useEffect(() => {
-    if (loaded) {
+    if (loaded && initializing) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [loaded, initializing]);
 
   if (!loaded) {
     return null;
