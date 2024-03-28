@@ -5,7 +5,6 @@ import TextInput, { TextInputType } from "@/components/Form/TextInput";
 import { useEffect, useRef, useState } from "react";
 import en from "@/translations/en";
 import {
-  FieldValue,
   FieldValues,
   UseFormResetField,
   UseFormSetValue,

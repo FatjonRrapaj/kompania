@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { FieldValues, useForm } from "react-hook-form";
+import { Control, SubmitHandler, useForm } from "react-hook-form";
 import { FontAwesome } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { router } from "expo-router";
@@ -16,6 +16,7 @@ import TextInput from "@/components/Form/TextInput";
 import Pressable from "@/components/Pressable";
 import { GiantButton } from "@/components/StyledButton";
 import showToast from "@/utils/toast";
+import useAuthStore from "@/store/auth";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -25,22 +26,18 @@ const Login = () => {
     control,
     handleSubmit,
     formState: { isValid },
-  } = useForm({
+  } = useForm<UserLoginInfo>({
     defaultValues: {
       email: "fatjonrrapaj@live.com",
       password: "123456",
-    } as FieldValues,
+    } as UserLoginInfo,
   });
 
   const loginFields = useLoginFields();
 
-  const onSubmit = (data: any) => {
-    showToast({
-      type: "success",
-      text1Key: "changePasswordSuccess",
-      text2Key: "checkEmailText2",
-    });
+  const onSubmit: SubmitHandler<UserLoginInfo> = (info) => {
     if (isValid) {
+      useAuthStore.getState().login(info);
     }
   };
 
@@ -51,7 +48,11 @@ const Login = () => {
       <H5Bold style={styles.title}>{translate("loginTitle")}</H5Bold>
       <Body2 style={styles.description}>{translate("enterInfo")}</Body2>
       {loginFields.map((field, index) => (
-        <TextInput {...field} control={control} key={index} />
+        <TextInput
+          {...field}
+          control={control as Control<UserLoginInfo, any>}
+          key={index}
+        />
       ))}
       <Pressable
         style={styles.forgotPassword}

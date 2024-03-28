@@ -1,3 +1,8 @@
+interface UserLoginInfo {
+  email: string;
+  password: string;
+}
+
 interface Company {
   email: string;
   companyName: string;

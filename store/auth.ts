@@ -4,10 +4,7 @@ import { Immutable } from "immer";
 import { User } from "firebase/auth";
 
 import { callLogin } from "@/api/auth";
-import showToast, {
-  showFirebaseErrorToast,
-  showToastFromError,
-} from "@/utils/toast";
+import showToast, { showToastFromError } from "@/utils/toast";
 
 type AuthState = {
   initializing: boolean;
@@ -21,7 +18,7 @@ type AuthState = {
 
 type AuthActions = {
   updateAuth: (auth: User | null) => void;
-  login: (email: string, password: string) => Promise<void>;
+  login: (info: UserLoginInfo) => Promise<void>;
   logout: () => Promise<void>;
   getProfile: (uid?: string) => Promise<void>;
 };
@@ -47,12 +44,12 @@ const useAuthStore = create<ImmutableAuthStore>()(
         state.user = newUser;
       });
     },
-    login: async (email: string, password: string) => {
+    login: async (info: UserLoginInfo) => {
       try {
         set((state) => {
           state.loadingLogin = true;
         });
-        await callLogin(email, password);
+        await callLogin(info);
       } catch (error: any) {
         //TODO: crashlytics or sentry to record error.
         showToastFromError(error);

@@ -8,7 +8,12 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import { Controller, Control, ValidationRule } from "react-hook-form";
+import {
+  Controller,
+  Control,
+  ValidationRule,
+  FieldValues,
+} from "react-hook-form";
 import { primary, gray, dark, tertiary, white } from "@/constants/Colors";
 import { useThemeColor } from "../Themed";
 import { Body1, Body2, Caption, Label } from "../StyledText";
@@ -33,8 +38,9 @@ function PasswordVisibility({
   );
 }
 
-interface TextInputProps<T = any> extends DefaultTextInputProps {
-  control: Control;
+interface TextInputProps<T = any, FormInfoType extends FieldValues = any>
+  extends DefaultTextInputProps {
+  control: Control<FormInfoType, any>;
   containerStyle?: ViewStyle;
   leftIcon?: keyof typeof IconConfig;
   rightIcon?: keyof typeof IconConfig;
