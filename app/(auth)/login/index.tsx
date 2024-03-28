@@ -15,12 +15,13 @@ import TextInput from "@/components/Form/TextInput";
 
 import Pressable from "@/components/Pressable";
 import { GiantButton } from "@/components/StyledButton";
-import showToast from "@/utils/toast";
 import useAuthStore from "@/store/auth";
 
 const Login = () => {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.login) => t(`login:${key}`);
+
+  const loadingLogin = useAuthStore((state) => state.loadingLogin);
 
   const {
     control,
@@ -65,7 +66,9 @@ const Login = () => {
         </Body2>
       </Pressable>
       <GiantButton
+        loading={loadingLogin}
         inactive={!isValid}
+        disabled={loadingLogin}
         title={translate("login")}
         onPress={handleSubmit(onSubmit)}
       />

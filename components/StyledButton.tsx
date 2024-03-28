@@ -5,6 +5,7 @@ import {
   TextStyle,
   ViewStyle,
   StyleProp,
+  ActivityIndicator,
 } from "react-native";
 import { JostText, PoppinsText } from "./StyledText";
 import Pressable, { PressableProps } from "./Pressable";
@@ -21,7 +22,8 @@ interface StyledButtonProps extends PressableProps {
   arrangement?: ButtonArrangement;
   textStyle?: TextStyle;
   iconContainerStyle?: ViewStyle;
-  inactive?: Boolean;
+  inactive?: boolean;
+  loading?: boolean;
 }
 
 export function GiantButton({
@@ -33,6 +35,7 @@ export function GiantButton({
   iconContainerStyle,
   disabled,
   inactive,
+  loading,
   ...rest
 }: StyledButtonProps) {
   const { style } = rest;
@@ -49,12 +52,18 @@ export function GiantButton({
         {
           flexDirection: arrangement === "iconFirst" ? "row" : "row-reverse",
         },
-        (disabled || inactive) && styles.disabled,
+        inactive && styles.inactive,
         style as StyleProp<ViewStyle>,
       ]}
     >
       {Icon ? (
-        <View style={[iconContainerStyle, styles.iconContainerGiant]}>
+        <View
+          style={[
+            iconContainerStyle,
+            styles.iconContainerGiant,
+            loading && styles.loadingIconContainer,
+          ]}
+        >
           <Icon />
         </View>
       ) : null}
@@ -63,12 +72,20 @@ export function GiantButton({
         style={[
           styles.textBase,
           { fontSize: 16 },
-          (disabled || inactive) && styles.disabledText,
+          inactive && styles.inactiveText,
+          loading && styles.loadingText,
           textStyle,
         ]}
       >
         {title}
       </PoppinsText>
+      {loading && (
+        <View
+          style={[StyleSheet.absoluteFill, styles.activityIndicatorContainer]}
+        >
+          <ActivityIndicator size={"small"} style={{}} color={white[500]} />
+        </View>
+      )}
     </Pressable>
   );
 }
@@ -92,6 +109,7 @@ export function MediumButton({
   iconContainerStyle,
   disabled,
   inactive,
+  loading,
   ...rest
 }: StyledButtonProps) {
   const { style } = rest;
@@ -107,12 +125,18 @@ export function MediumButton({
         {
           flexDirection: arrangement === "iconFirst" ? "row" : "row-reverse",
         },
-        (disabled || inactive) && styles.disabled,
+        inactive && styles.inactive,
         style as StyleProp<ViewStyle>,
       ]}
     >
       {Icon ? (
-        <View style={[iconContainerStyle, styles.iconContainerMedium]}>
+        <View
+          style={[
+            iconContainerStyle,
+            styles.iconContainerMedium,
+            loading && styles.loadingIconContainer,
+          ]}
+        >
           <Icon />
         </View>
       ) : null}
@@ -120,12 +144,20 @@ export function MediumButton({
         style={[
           styles.textBase,
           { fontSize: 14 },
-          (disabled || inactive) && styles.disabledText,
+          inactive && styles.inactiveText,
+          loading && styles.loadingText,
           textStyle,
         ]}
       >
         {title}
       </JostText>
+      {loading && (
+        <View
+          style={[StyleSheet.absoluteFill, styles.activityIndicatorContainer]}
+        >
+          <ActivityIndicator size={"small"} style={{}} color={white[500]} />
+        </View>
+      )}
     </Pressable>
   );
 }
@@ -147,6 +179,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
   },
   iconContainerBase: { justifyContent: "center", alignItems: "center" },
   iconContainerGiant: { height: 24, width: 24 },
@@ -169,6 +202,12 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   small: { paddingHorizontal: 8, paddingVertical: 10, gap: 8 },
-  disabled: { backgroundColor: gray[20] },
-  disabledText: { color: gray[500] },
+  inactive: { backgroundColor: gray[20] },
+  inactiveText: { color: gray[500] },
+  loadingText: { opacity: 0 },
+  loadingIconContainer: { opacity: 0 },
+  activityIndicatorContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
