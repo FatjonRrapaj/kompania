@@ -30,6 +30,7 @@ export default function HomeScreen() {
   const data = packagesMockList;
   const user = useAuthStore((store) => store.user);
   const profile = useAuthStore((store) => store.profile);
+  console.log("profile: ", profile);
   const loadingGetCompany = useCompanyStore((store) => store.loadingGetCompany);
   const company = useCompanyStore((store) => store.company as Company);
 
