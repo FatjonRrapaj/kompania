@@ -9,6 +9,7 @@ import {
   UseFormResetField,
   UseFormSetValue,
 } from "react-hook-form";
+import { Customer } from "@/api/company";
 
 type FormElementTypes =
   | "sectionLabel"

@@ -7,6 +7,7 @@ import { Body1, Body2, Body1Bold } from "../../StyledText";
 import en from "@/translations/en";
 import { primary, secondary, tertiary } from "@/constants/Colors";
 import PackageNumber from "./PackageNumber";
+import { PackageStatus } from "@/api/package";
 
 interface PackagesOverViewProps {
   totalPackages: number;

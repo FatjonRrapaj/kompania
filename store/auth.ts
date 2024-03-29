@@ -3,8 +3,14 @@ import { immer } from "zustand/middleware/immer";
 import { Immutable } from "immer";
 import { User } from "firebase/auth";
 
-import { callGetProfile, callLogin, callLogout } from "@/api/auth";
-import showToast, { showToastFromError } from "@/utils/toast";
+import {
+  CompanyUserProfile,
+  UserLoginInfo,
+  callGetProfile,
+  callLogin,
+  callLogout,
+} from "@/api/auth";
+import { showToastFromError } from "@/utils/toast";
 import { router } from "expo-router";
 
 type AuthState = {

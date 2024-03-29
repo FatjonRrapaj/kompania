@@ -17,6 +17,7 @@ import Pressable from "@/components/Pressable";
 
 import { Skeleton, Spacer } from "../../Skeleton";
 import { Skeleton as DefaultSkeleton } from "moti/skeleton";
+import { Package } from "@/api/package";
 
 interface SmallPackageItemProps extends Package {}
 

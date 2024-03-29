@@ -1,3 +1,4 @@
+import { PackageStatus } from "@/api/package";
 import { primary, secondary, tertiary } from "@/constants/Colors";
 
 export type StatusColorMap = {

@@ -16,6 +16,7 @@ import TextInput from "@/components/Form/TextInput";
 import Pressable from "@/components/Pressable";
 import { GiantButton } from "@/components/StyledButton";
 import useAuthStore from "@/store/auth";
+import { UserLoginInfo } from "@/api/auth";
 
 const Login = () => {
   const { t } = useTranslation();

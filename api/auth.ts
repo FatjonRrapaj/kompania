@@ -5,6 +5,18 @@ import generateCustomError from "@/utils/customError";
 import { doc, getDoc } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 
+export interface UserLoginInfo {
+  email: string;
+  password: string;
+}
+
+export interface CompanyUserProfile {
+  email: string;
+  companyID: string;
+  firstName: string;
+  lastName: string;
+}
+
 export const getUserId = () => {
   return auth!.currentUser!.uid;
 };

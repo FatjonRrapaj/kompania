@@ -12,6 +12,7 @@ import {
   normalColorMapper,
   transparentColorMapper,
 } from "@/utils/packageUi";
+import { PackageStatus } from "@/api/package";
 
 interface PackageNumberProps {
   number: number;

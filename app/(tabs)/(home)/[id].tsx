@@ -3,9 +3,7 @@ import * as React from "react";
 import { Text, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-interface PackageProps {}
-
-const Package = (props: PackageProps) => {
+const Package = () => {
   const { goBack } = useNavigation();
 
   const { id } = useLocalSearchParams<{ id: string }>();

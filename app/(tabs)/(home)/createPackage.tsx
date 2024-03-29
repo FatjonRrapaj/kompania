@@ -19,10 +19,9 @@ import { useState } from "react";
 import PackageSizeSelector from "@/components/ui/createPackage/PackageSizeSelector";
 import Checkboxes from "@/components/ui/createPackage/Checkboxes";
 import CurrencySelector from "@/components/ui/createPackage/CurrencySelector";
+import { CurrencyShortValue } from "@/api/package";
 
-interface CreatePackageProps {}
-
-const CreatePackage = (props: CreatePackageProps) => {
+const CreatePackage = () => {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.createPackage) =>
     t(`createPackage:${key}`);

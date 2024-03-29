@@ -1,3 +1,5 @@
+import { Package } from "@/api/package";
+
 const packagesMockList: Package[] = [
   {
     uid: "aosdjoasjdad",

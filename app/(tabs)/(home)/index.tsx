@@ -17,6 +17,7 @@ import PackagesListHeader from "@/components/ui/home/PackagesListHeader";
 import useAuthStore from "@/store/auth";
 import { useEffect } from "react";
 import { auth } from "@/utils/firebase";
+import { PackageStatus } from "@/api/package";
 
 export default function HomeScreen() {
   const handlePackageOverviewPress = (packageStatus: PackageStatus) => {
