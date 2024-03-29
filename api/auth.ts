@@ -5,20 +5,19 @@ import generateCustomError from "@/utils/customError";
 import { doc, getDoc } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 
-const getUserId = () => {
+export const getUserId = () => {
   return auth!.currentUser!.uid;
 };
 
-const getProfileDocumentReference = (uid?: string) => {
+export const getProfileDocumentReference = (uid?: string) => {
   try {
     let uidToUse = uid;
     if (!uid) {
-      //get current uid
       console.log("getUserId() ", getUserId());
       uidToUse = getUserId();
     }
     if (!uidToUse) {
-      throw new Error("Something went wrong");
+      throw generateCustomError({ errorKey: "userDocumentNotFound" });
     }
     return doc(db, Collections.users, uidToUse);
   } catch (error) {
@@ -34,7 +33,7 @@ export const callGetProfile = async (
   if (documentSnapshot.exists()) {
     return documentSnapshot.data() as CompanyUserProfile;
   } else {
-    throw new Error("driver does not exist");
+    throw generateCustomError({ errorKey: "userDocumentNotFound" });
   }
 };
 
