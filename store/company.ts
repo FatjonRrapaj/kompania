@@ -32,8 +32,10 @@ const useCompanyStore = create<ImmutableCompanyStore>()(
           state.loadingGetCompany = true;
         });
         const company = await callGetCompany({
-          companyID: useAuthStore().profile?.companyID!,
+          companyID: useAuthStore.getState().profile?.companyID!,
         });
+        console.log("company: ", company);
+
         set((state) => {
           state.company = company;
         });
@@ -43,7 +45,7 @@ const useCompanyStore = create<ImmutableCompanyStore>()(
         showToastFromError(error);
       } finally {
         set((state) => {
-          state.loadingGetCompany = true;
+          state.loadingGetCompany = false;
         });
       }
     },

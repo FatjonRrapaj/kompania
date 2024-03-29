@@ -30,25 +30,20 @@ export default function HomeScreen() {
   const data = packagesMockList;
   const user = useAuthStore((store) => store.user);
   const profile = useAuthStore((store) => store.profile);
-  const loadingGetProfile = useAuthStore((store) => store.loadingGetProfile);
   const loadingGetCompany = useCompanyStore((store) => store.loadingGetCompany);
   const company = useCompanyStore((store) => store.company as Company);
 
   useEffect(() => {
-    console.log("auth?.currentUser: ", auth?.currentUser);
-    if (auth?.currentUser && !user) {
-      console.log("auth?.currentUser: ", auth?.currentUser);
+    if (user && !profile) {
       useAuthStore.getState().getProfile();
     }
   }, [user]);
 
   useEffect(() => {
-    if (profile) {
+    if (profile && !company) {
       useCompanyStore.getState().getCompany();
     }
-  }, [profile, loadingGetProfile]);
-
-  console.log("profile: ", profile);
+  }, [profile]);
 
   return (
     <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>

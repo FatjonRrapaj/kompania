@@ -1,6 +1,5 @@
 import { doc, getDoc } from "firebase/firestore";
 import { GeoPoint } from "firebase/firestore";
-import { getUserId } from "./auth";
 import { Collections } from "@/constants/Firestore";
 import { db } from "@/utils/firebase";
 import generateCustomError from "@/utils/customError";

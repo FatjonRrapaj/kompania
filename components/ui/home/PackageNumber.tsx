@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import IconConfig from "@/assets/svg/IconConfig";
 import Pressable from "@/components/Pressable";
-import { Body2, Caption, H6Bold } from "@/components/StyledText";
+import { Body2, H6Bold } from "@/components/StyledText";
 import en from "@/translations/en";
 import {
   StatusTitleMap,
