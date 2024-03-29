@@ -3,22 +3,24 @@ import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, db } from "@/utils/firebase";
 import generateCustomError from "@/utils/customError";
 import { doc, getDoc } from "firebase/firestore";
+import { Collections } from "@/constants/Firestore";
 
 const getUserId = () => {
-  return auth?.currentUser?.uid;
+  return auth!.currentUser!.uid;
 };
 
-const getUserDocumentReference = (uid?: string) => {
+const getProfileDocumentReference = (uid?: string) => {
   try {
     let uidToUse = uid;
     if (!uid) {
       //get current uid
-      uidToUse = auth.currentUser?.uid;
+      console.log("getUserId() ", getUserId());
+      uidToUse = getUserId();
     }
     if (!uidToUse) {
       throw new Error("Something went wrong");
     }
-    return doc(db, "drivers", uidToUse);
+    return doc(db, Collections.users, uidToUse);
   } catch (error) {
     throw error;
   }
@@ -27,7 +29,7 @@ const getUserDocumentReference = (uid?: string) => {
 export const callGetProfile = async (
   uid?: string
 ): Promise<CompanyUserProfile> => {
-  const docRef = getUserDocumentReference(uid);
+  const docRef = getProfileDocumentReference(uid);
   const documentSnapshot = await getDoc(docRef);
   if (documentSnapshot.exists()) {
     return documentSnapshot.data() as CompanyUserProfile;

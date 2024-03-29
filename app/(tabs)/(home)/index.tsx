@@ -17,7 +17,6 @@ import PackagesListHeader from "@/components/ui/home/PackagesListHeader";
 
 export default function TabOneScreen() {
   const handlePackageOverviewPress = (packageStatus: PackageStatus) => {
-    console.log("packageStatus: ", packageStatus);
     //TODO: go to packages w status filter as parameter
   };
 
