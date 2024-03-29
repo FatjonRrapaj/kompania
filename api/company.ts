@@ -36,13 +36,16 @@ export interface Customer {
   profileLink?: string;
 }
 
+export const getCompanyRef = (companyID: string) =>
+  doc(db, Collections.companies, companyID);
+
 export const callGetCompany = async ({
   companyID,
 }: {
   companyID: string;
 }): Promise<Company> => {
   try {
-    const companyDocReference = doc(db, Collections.companies, companyID);
+    const companyDocReference = getCompanyRef(companyID);
     const companyDocSnapshot = await getDoc(companyDocReference);
     if (companyDocSnapshot.exists()) {
       return companyDocSnapshot.data() as Company;

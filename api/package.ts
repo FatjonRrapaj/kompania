@@ -3,7 +3,8 @@ import { GeoPoint } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 import { db } from "@/utils/firebase";
 
-import { Customer } from "./company";
+import { Customer, getCompanyRef } from "./company";
+import generateCustomError from "@/utils/customError";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -85,3 +86,38 @@ function getPreviousPeriod(): PackagesPeriod {
     packagesPeriodName: prevPackagesPeriodName,
   };
 }
+
+const getLatestPeriodWithPackages = async (companyID: string): Promise<any> => {
+  const companyRef = getCompanyRef(companyID);
+  const companySnapshot = await getDoc(companyRef);
+
+  if (!companySnapshot.exists) {
+    throw generateCustomError({ errorKey: "companyIdNotFound" });
+  }
+
+  const companyData = companySnapshot.data();
+
+  if (!companyData || !companyData.totals) {
+    throw generateCustomError({ errorKey: "companyDocumentNotFound" });
+  }
+
+  const periodsWithPackages = Object.keys(companyData.totals).filter(
+    (period) => {
+      const totals = companyData.totals[period];
+      return (
+        totals.completed > 0 || totals.pending > 0 || totals.problematic > 0
+      );
+    }
+  );
+
+  // Sort periods by date in descending order to get the latest
+  periodsWithPackages.sort((a, b) => {
+    const dateA = new Date(a);
+    console.log("dateA: ", dateA);
+    const dateB = new Date(b);
+    console.log("dateB: ", dateB);
+    return dateB.getTime() - dateA.getTime();
+  });
+  console.log("periodsWithPackages: ", periodsWithPackages);
+  return periodsWithPackages;
+};
