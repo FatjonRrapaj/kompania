@@ -3,16 +3,27 @@ interface UserLoginInfo {
   password: string;
 }
 
-interface Company {
-  email: string;
-  companyName: string;
-}
-
 interface CompanyUserProfile {
   email: string;
   companyID: string;
   firstName: string;
   lastName: string;
+}
+
+interface Totals {
+  completed: number;
+  pending: number;
+  problematic: number;
+}
+
+interface CompanyTotals {
+  allTotals: Totals;
+  [x: string]: Totals;
+}
+
+interface Company {
+  email: string;
+  companyName: string;
 }
 
 interface Customer {
@@ -31,6 +42,13 @@ interface Currency {
 }
 
 type PackageStatus = "completed" | "pending" | "problematic";
+
+type PackageTimelineStatus =
+  | "available"
+  | "accepted"
+  | "picked"
+  | "delivered"
+  | "returned";
 
 interface Package {
   customer: Customer;

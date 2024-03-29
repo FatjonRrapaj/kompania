@@ -12,6 +12,7 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "/api/types.d.ts"
+    "/api/types.d.ts",
+    "/api/company.d.ts"
   ]
 }

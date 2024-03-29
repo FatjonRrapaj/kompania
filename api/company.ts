@@ -5,14 +5,11 @@ import { db } from "@/utils/firebase";
 import generateCustomError from "@/utils/customError";
 
 export const getCompany = async ({
-  uid,
   companyID,
 }: {
-  uid?: string;
   companyID: string;
 }): Promise<Company> => {
   try {
-    const uidToUse = uid ?? getUserId();
     const companyDocReference = doc(db, Collections.companies, companyID);
     const companyDocSnapshot = await getDoc(companyDocReference);
     if (companyDocSnapshot.exists()) {
