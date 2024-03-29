@@ -1,5 +1,3 @@
-// src/database/schema.ts
-
 import { appSchema, tableSchema } from "@nozbe/watermelondb";
 
 const schema = appSchema({
