@@ -15,7 +15,7 @@ import {
 import { PackageStatus } from "@/api/package";
 
 interface PackageNumberProps {
-  number: number;
+  number?: number;
   status: PackageStatus;
   onPress: (status: PackageStatus) => void;
 }
