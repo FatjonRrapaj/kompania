@@ -49,6 +49,7 @@ const PackageNumber = (props: PackageNumberProps) => {
         {
           backgroundColor: transparentColorMapper[props.status],
           borderColor: normalColorMapper[props.status],
+          borderWidth: props.number ? 1 : 0,
         },
       ]}
     >

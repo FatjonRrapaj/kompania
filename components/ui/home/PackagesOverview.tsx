@@ -8,11 +8,13 @@ import en from "@/translations/en";
 import { primary, secondary, tertiary } from "@/constants/Colors";
 import PackageNumber from "./PackageNumber";
 import { PackageStatus } from "@/api/package";
+import { Company } from "@/api/company";
+import { Skeleton as DefaultSkeleton } from "moti/skeleton";
+import { Skeleton } from "@/components/Skeleton";
 
 interface PackagesOverViewProps {
-  totalPackages: number;
-  processingPackages: number;
-  problematicPackages: number;
+  company?: Company;
+  loading: boolean;
   onPackageTypePress: (packageStatus: PackageStatus) => void;
 }
 
@@ -24,21 +26,31 @@ const PackagesOverView = (props: PackagesOverViewProps) => {
     <View style={styles.container}>
       <Body1Bold style={styles.title}>{translate("allPackages")}</Body1Bold>
       <View style={styles.numbersContainer}>
-        <PackageNumber
-          status="completed"
-          number={props.totalPackages}
-          onPress={props.onPackageTypePress}
-        />
-        <PackageNumber
-          status="pending"
-          number={props.processingPackages}
-          onPress={props.onPackageTypePress}
-        />
-        <PackageNumber
-          status="problematic"
-          number={props.problematicPackages}
-          onPress={props.onPackageTypePress}
-        />
+        <DefaultSkeleton.Group show={props.loading}>
+          <Skeleton>
+            <PackageNumber
+              status="completed"
+              number={props?.company?.totals?.allTotals?.completed}
+              onPress={props.onPackageTypePress}
+            />
+          </Skeleton>
+
+          <Skeleton>
+            <PackageNumber
+              status="pending"
+              number={props?.company?.totals?.allTotals?.pending}
+              onPress={props?.onPackageTypePress}
+            />
+          </Skeleton>
+
+          <Skeleton>
+            <PackageNumber
+              status="problematic"
+              number={props?.company?.totals?.allTotals?.problematic}
+              onPress={props?.onPackageTypePress}
+            />
+          </Skeleton>
+        </DefaultSkeleton.Group>
       </View>
     </View>
   );

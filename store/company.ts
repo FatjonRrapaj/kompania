@@ -19,7 +19,7 @@ type CompanyStore = CompanyState & CompanyActions;
 type ImmutableCompanyStore = Immutable<CompanyStore>;
 
 const initialState: CompanyState = {
-  loadingGetCompany: false,
+  loadingGetCompany: true,
   company: undefined,
 };
 

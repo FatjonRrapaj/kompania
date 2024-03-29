@@ -18,6 +18,8 @@ import useAuthStore from "@/store/auth";
 import { useEffect } from "react";
 import { auth } from "@/utils/firebase";
 import { PackageStatus } from "@/api/package";
+import useCompanyStore from "@/store/company";
+import { Company } from "@/api/company";
 
 export default function HomeScreen() {
   const handlePackageOverviewPress = (packageStatus: PackageStatus) => {
@@ -29,6 +31,8 @@ export default function HomeScreen() {
   const user = useAuthStore((store) => store.user);
   const profile = useAuthStore((store) => store.profile);
   const loadingGetProfile = useAuthStore((store) => store.loadingGetProfile);
+  const loadingGetCompany = useCompanyStore((store) => store.loadingGetCompany);
+  const company = useCompanyStore((store) => store.company as Company);
 
   useEffect(() => {
     console.log("auth?.currentUser: ", auth?.currentUser);
@@ -40,7 +44,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     if (profile) {
-      //TODO: get company now
+      useCompanyStore.getState().getCompany();
     }
   }, [profile, loadingGetProfile]);
 
@@ -63,9 +67,8 @@ export default function HomeScreen() {
           <View style={{ marginHorizontal: 3 }}>
             <GreetingComponent />
             <PackagesOverView
-              totalPackages={10}
-              processingPackages={123}
-              problematicPackages={200}
+              company={company}
+              loading={loadingGetCompany}
               onPackageTypePress={handlePackageOverviewPress}
             />
             <PackageActions />
