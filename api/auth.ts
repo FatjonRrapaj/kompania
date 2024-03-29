@@ -25,7 +25,6 @@ export const getProfileDocumentReference = (uid?: string) => {
   try {
     let uidToUse = uid;
     if (!uid) {
-      console.log("getUserId() ", getUserId());
       uidToUse = getUserId();
     }
     if (!uidToUse) {

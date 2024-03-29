@@ -30,6 +30,9 @@ type AuthActions = {
   getProfile: (uid?: string) => Promise<void>;
 };
 
+type AuthStore = AuthState & AuthActions;
+type ImmutableAuthStore = Immutable<AuthStore>;
+
 const initialState: AuthState = {
   initializing: true,
   loadingLogin: false,
@@ -39,9 +42,6 @@ const initialState: AuthState = {
   profile: undefined,
   user: null,
 };
-
-type AuthStore = AuthState & AuthActions;
-type ImmutableAuthStore = Immutable<AuthStore>;
 
 const useAuthStore = create<ImmutableAuthStore>()(
   immer((set) => ({

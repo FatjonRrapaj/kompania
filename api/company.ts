@@ -37,7 +37,7 @@ export interface Customer {
   profileLink?: string;
 }
 
-export const getCompany = async ({
+export const callGetCompany = async ({
   companyID,
 }: {
   companyID: string;
