@@ -16,6 +16,11 @@ interface CompanyLocation {
   description?: string;
 }
 
+interface CustomerAddress {
+  coordinates?: GeoPoint;
+  description?: string;
+}
+
 interface CompanyTotals {
   allTotals: Totals;
   [x: string]: Totals;
@@ -28,10 +33,15 @@ export interface Company {
   locations: CompanyLocation[];
 }
 
+interface CustomerAddress {
+  coordinates?: GeoPoint;
+  description?: string;
+}
+
 export interface Customer {
   name: string;
   phoneNumber: string;
-  address: string;
+  address: CustomerAddress;
   notes?: string;
   profileLink?: string;
 }
