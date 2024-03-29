@@ -6,14 +6,13 @@ import useAuthStore from "@/store/auth";
 
 const AuthStateChangeListener = () => {
   const { getState } = useNavigation();
-
+  const updateAuth = useAuthStore((state) => state.updateAuth);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser: User | null) => {
-      useAuthStore.getState().updateAuth(currentUser);
+      updateAuth(currentUser);
       if (currentUser) {
         const { index, routes } = getState();
         const screenName = routes[index].name;
-
         if (screenName !== "(tabs)") {
           router.replace("/(tabs)/(home)");
         }

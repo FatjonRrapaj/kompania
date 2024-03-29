@@ -14,14 +14,36 @@ import {
   ListEmptyComponent,
 } from "@/components/ui/home/PackageItem";
 import PackagesListHeader from "@/components/ui/home/PackagesListHeader";
+import useAuthStore from "@/store/auth";
+import { useEffect } from "react";
+import { auth } from "@/utils/firebase";
 
-export default function TabOneScreen() {
+export default function HomeScreen() {
   const handlePackageOverviewPress = (packageStatus: PackageStatus) => {
     //TODO: go to packages w status filter as parameter
   };
 
   const loadingPackages = false;
   const data = packagesMockList;
+  const user = useAuthStore((store) => store.user);
+  const profile = useAuthStore((store) => store.profile);
+  const loadingGetProfile = useAuthStore((store) => store.loadingGetProfile);
+
+  useEffect(() => {
+    console.log("auth?.currentUser: ", auth?.currentUser);
+    if (auth?.currentUser && !user) {
+      console.log("auth?.currentUser: ", auth?.currentUser);
+      useAuthStore.getState().getProfile();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (profile) {
+      //TODO: get company now
+    }
+  }, [profile, loadingGetProfile]);
+
+  console.log("profile: ", profile);
 
   return (
     <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>

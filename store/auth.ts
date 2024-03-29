@@ -53,7 +53,7 @@ const useAuthStore = create<ImmutableAuthStore>()(
         });
         await callLogin(info);
       } catch (error: any) {
-        console.log("error: ", error);
+        console.log("error @login: ", error);
         //TODO: crashlytics or sentry to record error.
         showToastFromError(error);
       } finally {
@@ -83,11 +83,12 @@ const useAuthStore = create<ImmutableAuthStore>()(
       });
       try {
         const profile = await callGetProfile(uid);
+        console.log("profile @getProfile: ", profile);
         set((state) => {
           state.profile = profile;
         });
       } catch (error) {
-        console.log("error: ", error);
+        console.log("error@ getProfile: ", error);
         showToastFromError(error);
       } finally {
         set((state) => {
