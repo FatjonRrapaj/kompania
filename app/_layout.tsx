@@ -16,7 +16,7 @@ import { useColorScheme } from "@/components/useColorScheme";
 import "@/translations/translations";
 import Storage from "@/constants/Storage";
 import Toast from "react-native-toast-message";
-import AuthStateChangeListener from "@/components/ui/auth/AuthStateChagesListener";
+import AuthStateChangeListener from "@/components/listeners/AuthStateChagesListener";
 import useAuthStore from "@/store/auth";
 
 export const unstable_settings = {
