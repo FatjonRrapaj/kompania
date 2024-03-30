@@ -27,6 +27,7 @@ interface CompanyTotals {
 }
 
 export interface Company {
+  uid: string;
   email: string;
   companyName: string;
   totals: CompanyTotals;
@@ -57,8 +58,9 @@ export const callGetCompany = async ({
   try {
     const companyDocReference = getCompanyRef(companyID);
     const companyDocSnapshot = await getDoc(companyDocReference);
+    const uid = companyDocSnapshot.id;
     if (companyDocSnapshot.exists()) {
-      return companyDocSnapshot.data() as Company;
+      return { ...companyDocSnapshot.data(), uid } as Company;
     } else {
       throw generateCustomError({ errorKey: "companyIdNotFound" });
     }
