@@ -2,7 +2,7 @@ import { Model } from "@nozbe/watermelondb";
 import { date, field, text } from "@nozbe/watermelondb/decorators";
 
 import { TableName } from "../index";
-class Package extends Model {
+class PackageModel extends Model {
   static table: TableName = "packages";
 
   @field("packageId") packageId!: string;

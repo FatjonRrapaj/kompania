@@ -3,8 +3,8 @@
 import { Database } from "@nozbe/watermelondb";
 import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite";
 import schema from "./schema";
-import Package from "./models/Package";
-import Customer from "./models/Customer";
+import PackageModel from "./models/Package";
+import CustomerModel from "./models/Customer";
 import { Platform } from "react-native";
 
 export type TableName = "packages" | "customers";
@@ -14,12 +14,12 @@ const adapter = new SQLiteAdapter({
   jsi: Platform.OS === "ios",
 });
 
-const database = new Database({
+const watermelonDB = new Database({
   adapter,
-  modelClasses: [Package, Customer],
+  modelClasses: [PackageModel, CustomerModel],
 });
 
-export default database;
+export default watermelonDB;
 
 //TODO: create package operations
 //QUERY package operations

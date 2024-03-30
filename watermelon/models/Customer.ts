@@ -1,9 +1,9 @@
 // src/models/Customer.ts
 
 import { Model } from "@nozbe/watermelondb";
-import { date, field, text } from "@nozbe/watermelondb/decorators";
+import { field } from "@nozbe/watermelondb/decorators";
 
-class Customer extends Model {
+class CustomerModel extends Model {
   static table = "customers";
 
   @field("name") name!: string;
@@ -16,4 +16,4 @@ class Customer extends Model {
   @field("createdAt") createdAt!: number;
 }
 
-export default Customer;
+export default CustomerModel;
