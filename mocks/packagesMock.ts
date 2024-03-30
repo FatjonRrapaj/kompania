@@ -1,149 +1,51 @@
-import { Package } from "@/api/package";
+import {
+  Courier,
+  Currency,
+  Package,
+  PackageStatus,
+  PackageTimelineStatus,
+} from "@/api/package";
+
+const mockPackageObject = {
+  uid: "1234567890",
+  packageName: "Sample Package",
+  receiverName: "John Doe",
+  receiverPhoneNumber: "123-456-7890",
+  address: "1234 Main St, City, Country",
+  notesForReceiver: "Leave at front door",
+  packageDetails: {
+    weight: 2.5,
+    length: 20,
+    width: 15,
+    height: 10,
+    fragile: true,
+    canBeOpened: false,
+  },
+  paymentAmount: 50,
+  shippingCost: 10,
+  cashOnDelivery: 20,
+  notesForPackage: "Urgent delivery",
+  createdAt: "2024-03-30T10:00:00Z",
+  updatedAt: "2024-03-30T13:30:00Z",
+  status: "pending" as PackageStatus,
+  timelineStatus: "available" as PackageTimelineStatus,
+  courier: {
+    name: "Jane Smith",
+    phoneNumber: "987-654-3210",
+    profilePicture: "https://example.com/profile.jpg",
+  } as Courier,
+  currency: {
+    symbol: "$",
+    name: "USD",
+  } as Currency,
+};
 
 const packagesMockList: Package[] = [
-  {
-    uid: "aosdjoasjdad",
-    customer: {
-      name: "asdads",
-    },
-    currency: {
-      symbol: "$",
-      name: "Dollar",
-    },
-    price: 999,
-    status: "completed",
-    creationDate: new Date(),
-  },
-  {
-    uid: "aosdjoasjdadasdd",
-    customer: {
-      name: "asdads",
-    },
-    currency: {
-      symbol: "$",
-      name: "Dollar",
-    },
-    price: 999,
-    status: "pending",
-    creationDate: new Date(),
-  },
-  {
-    uid: "23aosdjoasjdaa34d",
-    customer: {
-      name: "asdads",
-    },
-    currency: {
-      symbol: "$",
-      name: "Dollar",
-    },
-    price: 999,
-    status: "completed",
-    creationDate: new Date(),
-  },
-  {
-    uid: "aosdj32oasjdad142",
-    customer: {
-      name: "asdads",
-    },
-    currency: {
-      symbol: "$",
-      name: "Dollar",
-    },
-    price: 999,
-    status: "problematic",
-    creationDate: new Date(),
-  },
-  {
-    uid: "1aosdjo123123asjdad",
-    customer: {
-      name: "asdads",
-    },
-    currency: {
-      symbol: "$",
-      name: "Dollar",
-    },
-    price: 999,
-    status: "completed",
-    creationDate: new Date(),
-  },
-  {
-    uid: "aosdajo123123asjdad",
-    customer: {
-      name: "asdads",
-    },
-    currency: {
-      symbol: "$",
-      name: "Dollar",
-    },
-    price: 999,
-    status: "completed",
-    creationDate: new Date(),
-  },
-  {
-    uid: "aosdjo123123asjdad",
-    customer: {
-      name: "asdads",
-    },
-    currency: {
-      symbol: "$",
-      name: "Dollar",
-    },
-    price: 999,
-    status: "completed",
-    creationDate: new Date(),
-  },
-  {
-    uid: "aosdjoss123123asjdad",
-    customer: {
-      name: "asdads",
-    },
-    currency: {
-      symbol: "$",
-      name: "Dollar",
-    },
-    price: 999,
-    status: "completed",
-    creationDate: new Date(),
-  },
-  {
-    uid: "aosdjo12312asd3asjdad",
-    customer: {
-      name: "asdads",
-    },
-    currency: {
-      symbol: "$",
-      name: "Dollar",
-    },
-    price: 999,
-    status: "completed",
-    creationDate: new Date(),
-  },
-  {
-    uid: "aosdjo123123asjdasdad",
-    customer: {
-      name: "asdads",
-    },
-    currency: {
-      symbol: "$",
-      name: "Dollar",
-    },
-    price: 999,
-    status: "completed",
-    creationDate: new Date(),
-  },
-  {
-    uid: "asadosdjo1231asd23asjdad",
-    customer: {
-      name: "asdads",
-    },
-    currency: {
-      symbol: "$",
-      name: "Dollar",
-    },
-    price: 999,
-    status: "completed",
-    creationDate: new Date(),
-  },
+  mockPackageObject,
+  mockPackageObject,
+  mockPackageObject,
+  mockPackageObject,
+  mockPackageObject,
 ];
 
 export { packagesMockList };

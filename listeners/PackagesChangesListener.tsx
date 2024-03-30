@@ -8,6 +8,8 @@ import { QuerySnapshot, collection, doc, onSnapshot } from "firebase/firestore";
 import { getCompanyRef } from "@/api/company";
 import watermelonDB from "@/watermelon";
 import { Package } from "@/api/package";
+import { TableName } from "@/watermelon/index";
+import PackageModel from "@/watermelon/models/Package";
 
 const PackagesChangesListener = () => {
   const user = useAuthStore((state) => state.user);
@@ -15,26 +17,23 @@ const PackagesChangesListener = () => {
 
   const handleSnapshot = (snapshot: QuerySnapshot) => {
     snapshot.docChanges().forEach((change) => {
-      const packageObj = {
+      const firebasePackageObject = {
         ...change.doc.data(),
         uid: change.doc.id,
       } as Package;
 
       watermelonDB.write(async () => {
-        const existingPackage = watermelonDB.collections
+        const existingPackage = await watermelonDB.collections
           .get("packages")
-          .findAndObserve(packageObj.uid);
+          .find(firebasePackageObject.uid);
 
         if (existingPackage) {
-          await existingPackage.update((record) => {
-            record.packageData = packageObj;
-          });
+          await existingPackage.update((record) => {});
         } else {
-          await watermelonDB.collections
-            .get("packages")
-            .create((newPackage) => {
-              newPackage.id = packageData.packageId;
-              newPackage.packageData = packageData;
+          watermelonDB.collections
+            .get<PackageModel>("packages")
+            .prepareCreate((newRecord) => {
+              newRecord.paymentAmount = firebasePackageObject.price;
             });
         }
       });

@@ -13,6 +13,12 @@ export interface Currency {
   name: string;
 }
 
+export interface Courier {
+  name: string;
+  phoneNumber: string;
+  profilePicture?: string;
+}
+
 export type PackageStatus = "completed" | "pending" | "problematic";
 
 export type PackageTimelineStatus =
@@ -23,10 +29,28 @@ export type PackageTimelineStatus =
   | "returned";
 
 export interface Package {
-  customer: Customer;
-  creationDate: Date;
-  currency: Currency;
-  price: number;
-  status: PackageStatus;
   uid: string;
+  packageName: string;
+  receiverName: string;
+  receiverPhoneNumber: string;
+  address: string;
+  notesForReceiver: string;
+  packageDetails: {
+    weight: number;
+    length: number;
+    width: number;
+    height: number;
+    fragile: boolean;
+    canBeOpened: boolean;
+  };
+  paymentAmount: number;
+  shippingCost: number;
+  cashOnDelivery: number;
+  notesForPackage: string;
+  status: PackageStatus;
+  timelineStatus: PackageTimelineStatus;
+  courier: Courier;
+  currency: Currency;
+  createdAt: string;
+  updatedAt: string;
 }

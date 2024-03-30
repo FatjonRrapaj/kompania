@@ -32,4 +32,4 @@ class PackageModel extends Model {
   @field("courierPhoneNumber") courierPhoneNumber?: string;
 }
 
-export default Package;
+export default PackageModel;
