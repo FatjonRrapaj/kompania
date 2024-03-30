@@ -17,26 +17,29 @@ const PackagesChangesListener = () => {
 
   const handleSnapshot = (snapshot: QuerySnapshot) => {
     snapshot.docChanges().forEach((change) => {
+      console.log("change: ", change);
+      //TODO: check change has a type = added.
+      //For easier querying the local db with additions, updates, etc
       const firebasePackageObject = {
         ...change.doc.data(),
         uid: change.doc.id,
       } as Package;
 
-      watermelonDB.write(async () => {
-        const existingPackage = await watermelonDB.collections
-          .get("packages")
-          .find(firebasePackageObject.uid);
+      // watermelonDB.write(async () => {
+      //   const existingPackage = await watermelonDB.collections
+      //     .get("packages")
+      //     .find(firebasePackageObject.uid);
 
-        if (existingPackage) {
-          await existingPackage.update((record) => {});
-        } else {
-          watermelonDB.collections
-            .get<PackageModel>("packages")
-            .prepareCreate((newRecord) => {
-              newRecord.paymentAmount = firebasePackageObject.price;
-            });
-        }
-      });
+      //   if (existingPackage) {
+      //     await existingPackage.update((record) => {});
+      //   } else {
+      //     watermelonDB.collections
+      //       .get<PackageModel>("packages")
+      //       .prepareCreate((newRecord) => {
+      //         newRecord.paymentAmount = firebasePackageObject.price;
+      //       });
+      //   }
+      // });
     });
   };
   useEffect(() => {
@@ -56,6 +59,9 @@ const PackagesChangesListener = () => {
     );
 
     const unsubscribe = onSnapshot(last2WeeksPackagesRef, handleSnapshot);
+    return () => {
+      unsubscribe();
+    };
   }, [user, company]);
 
   return <></>;

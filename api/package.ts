@@ -1,10 +1,12 @@
-import { collection, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { GeoPoint } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 import { db } from "@/utils/firebase";
 
 import { Customer, getCompanyRef } from "./company";
 import generateCustomError from "@/utils/customError";
+
+import { mockPackageObject } from "@/mocks/packagesMock";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -29,7 +31,7 @@ export type PackageTimelineStatus =
   | "returned";
 
 export interface Package {
-  uid: string;
+  uid?: string;
   packageName: string;
   receiverName: string;
   receiverPhoneNumber: string;
@@ -49,8 +51,20 @@ export interface Package {
   notesForPackage: string;
   status: PackageStatus;
   timelineStatus: PackageTimelineStatus;
-  courier: Courier;
+  courier?: Courier;
   currency: Currency;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export async function pushMockPackages(companyID: string) {
+  const companyRef = getCompanyRef(companyID);
+  const last2WeeksPackagesRef = collection(
+    companyRef,
+    Collections.last2WeeksPackages
+  );
+
+  for (let i = 0; i < 50; i++) {
+    await addDoc(last2WeeksPackagesRef, mockPackageObject);
+  }
 }

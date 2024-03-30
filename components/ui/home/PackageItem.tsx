@@ -31,13 +31,13 @@ const SmallPackageItem = (props: SmallPackageItemProps) => {
         <IconConfig.Package />
       </View>
       <View style={styles.infoContainer}>
-        <Body1Bold>{props.customer.name}</Body1Bold>
-        <Caption>{props.creationDate.toLocaleDateString()}</Caption>
+        <Body1Bold>{"props.customer.name"}</Body1Bold>
+        <Caption>{"props.creationDate.toLocaleDateString()"}</Caption>
       </View>
       <View style={styles.priceContainer}>
         <Body2Bold>
           {props.currency.symbol}
-          {props.price}
+          {"props.price"}
         </Body2Bold>
         <Caption style={{ color: normalColorMapper[props.status] }}>
           {translate(props.status)}

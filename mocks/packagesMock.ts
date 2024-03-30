@@ -6,8 +6,7 @@ import {
   PackageTimelineStatus,
 } from "@/api/package";
 
-const mockPackageObject = {
-  uid: "1234567890",
+export const mockPackageObject: Package = {
   packageName: "Sample Package",
   receiverName: "John Doe",
   receiverPhoneNumber: "123-456-7890",
