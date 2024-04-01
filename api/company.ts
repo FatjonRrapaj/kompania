@@ -35,13 +35,14 @@ export interface Company {
 }
 
 export interface Customer {
+  uid?: string;
   name: string;
   phoneNumber: string;
-  address: CustomerAddress;
+  profileUrl?: string;
+  //TODO: never save the notes on the customers location.
   notes?: string;
-  profileLink?: string;
+  receiverLocation?: CustomerAddress;
 }
-
 export const getCompanyRef = (companyID: string) =>
   doc(db, Collections.companies, companyID);
 

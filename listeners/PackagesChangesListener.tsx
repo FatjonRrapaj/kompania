@@ -67,15 +67,23 @@ const PackagesChangesListener = () => {
                 firebasePackageObject.timelineStatus;
 
               //receiver
-              newRecord.receiverName = firebasePackageObject.receiverName;
+              newRecord.receiverId = firebasePackageObject?.receiver?.uid;
+              newRecord.receiverName = firebasePackageObject.receiver?.name;
               newRecord.receiverPhoneNumber =
-                firebasePackageObject.receiverPhoneNumber;
+                firebasePackageObject.receiver?.phoneNumber;
               newRecord.receiverProfileUrl =
-                firebasePackageObject.receiverProfileUrl;
-              newRecord.receiverAddressDescription =
-                firebasePackageObject.receiverAddressDescription;
+                firebasePackageObject.receiver?.profileUrl;
               newRecord.notesForReceiver =
-                firebasePackageObject.notesForReceiver;
+                firebasePackageObject.receiver?.notes;
+              newRecord.receiverAddressLat =
+                firebasePackageObject.receiver?.receiverLocation?.coordinates?.latitude;
+              newRecord.receiverAddressLng =
+                firebasePackageObject.receiver?.receiverLocation?.coordinates?.longitude;
+              newRecord.receiverAddressDescription =
+                firebasePackageObject.receiver?.receiverLocation?.description;
+
+              //package courier
+              newRecord.courierId = firebasePackageObject.courier?.uid;
 
               //package size & speficics
               newRecord.packageHeight =
@@ -106,14 +114,6 @@ const PackagesChangesListener = () => {
                 firebasePackageObject.companyAddress?.coordinates.longitude;
               newRecord.companyLocationDescription =
                 firebasePackageObject.companyAddress?.description;
-
-              //package courier
-              newRecord.receiverAddressLat =
-                firebasePackageObject.receiverLocation?.coordinates?.latitude;
-              newRecord.receiverAddressLng =
-                firebasePackageObject.receiverLocation?.coordinates?.longitude;
-              newRecord.receiverAddressDescription =
-                firebasePackageObject.receiverLocation?.description;
 
               //package dates
               newRecord.createdAt = firebasePackageObject.createdAt;

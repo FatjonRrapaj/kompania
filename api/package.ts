@@ -1,7 +1,12 @@
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 
-import { CompanyAddress, CustomerAddress, getCompanyRef } from "./company";
+import {
+  CompanyAddress,
+  CustomerAddress,
+  getCompanyRef,
+  Customer,
+} from "./company";
 import generateCustomError from "@/utils/customError";
 
 import { mockPackageObject } from "@/mocks/packagesMock";
@@ -17,6 +22,7 @@ export interface Courier {
   name: string;
   phoneNumber: string;
   profilePicture?: string;
+  uid?: string;
 }
 
 export type PackageStatus = "completed" | "pending" | "problematic";
@@ -32,11 +38,7 @@ export interface Package {
   uid?: string;
   packageName: string;
   scanId: string;
-  receiverName: string;
-  receiverPhoneNumber: string;
-  receiverProfileUrl?: string;
-  receiverAddressDescription?: string;
-  notesForReceiver: string;
+  receiver?: Customer;
   packageDetails: {
     weight: number;
     length: number;
@@ -55,11 +57,12 @@ export interface Package {
   currency: Currency;
   createdAt?: number;
   updatedAt?: number;
+  postedAt?: number;
   acceptedAt?: number;
   pickedAt?: number;
   deliveredAt?: number;
+  returnedAt?: number;
   companyAddress?: CompanyAddress;
-  receiverLocation?: CustomerAddress;
 }
 
 export async function pushMockPackages(companyID: string) {
