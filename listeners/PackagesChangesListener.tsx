@@ -10,18 +10,19 @@ import watermelonDB from "@/watermelon";
 import { Package } from "@/api/package";
 import { TableName } from "@/watermelon/index";
 import PackageModel from "@/watermelon/models/Package";
+import { sanitizedRaw } from "@nozbe/watermelondb/RawRecord";
 
 const PackagesChangesListener = () => {
   const user = useAuthStore((state) => state.user);
   const company = useCompanyStore((state) => state.company);
   const mountedOnce = useRef<boolean>(false);
 
-  const handleSnapshot = (snapshot: QuerySnapshot) => {
+  const handleSnapshot = async (snapshot: QuerySnapshot) => {
     let addsCount = 0;
     let modifiedCount = 0;
     let removedCount = 0;
 
-    snapshot.docChanges().forEach((change) => {
+    snapshot.docChanges().forEach(async (change) => {
       if (!change.doc.exists) {
         return;
       }
@@ -31,9 +32,16 @@ const PackagesChangesListener = () => {
         uid: change.doc.id,
       } as Package;
 
+      const existingPackage = await watermelonDB.collections
+        .get("packages")
+        .find(firebasePackageObject!.uid!);
+
       switch (change.type) {
         case "added":
-          addsCount++;
+          if (existingPackage) {
+            return;
+          } else {
+          }
           break;
         case "modified":
           modifiedCount++;
@@ -44,88 +52,6 @@ const PackagesChangesListener = () => {
         default:
           break;
       }
-
-      watermelonDB.write(async () => {
-        const existingPackage = await watermelonDB.collections
-          .get("packages")
-          .find(firebasePackageObject!.uid!);
-
-        if (existingPackage) {
-          await existingPackage.update((record) => {});
-        } else {
-          watermelonDB.collections
-            .get<PackageModel>("packages")
-            .prepareCreate((newRecord) => {
-              //identification
-              //TODO: id
-              newRecord.packageName = firebasePackageObject.packageName;
-              newRecord.packageScanId = firebasePackageObject.scanId;
-
-              //package status
-              newRecord.packageStatus = firebasePackageObject.status;
-              newRecord.packageTimeLineStatus =
-                firebasePackageObject.timelineStatus;
-
-              //receiver
-              newRecord.receiverId = firebasePackageObject?.receiver?.uid;
-              newRecord.receiverName = firebasePackageObject.receiver?.name;
-              newRecord.receiverPhoneNumber =
-                firebasePackageObject.receiver?.phoneNumber;
-              newRecord.receiverProfileUrl =
-                firebasePackageObject.receiver?.profileUrl;
-              newRecord.notesForReceiver =
-                firebasePackageObject.receiver?.notes;
-              newRecord.receiverAddressLat =
-                firebasePackageObject.receiver?.receiverLocation?.coordinates?.latitude;
-              newRecord.receiverAddressLng =
-                firebasePackageObject.receiver?.receiverLocation?.coordinates?.longitude;
-              newRecord.receiverAddressDescription =
-                firebasePackageObject.receiver?.receiverLocation?.description;
-
-              //package courier
-              newRecord.courierId = firebasePackageObject.courier?.uid;
-
-              //package size & speficics
-              newRecord.packageHeight =
-                firebasePackageObject.packageDetails.height;
-              newRecord.packageWeight =
-                firebasePackageObject.packageDetails.weight;
-              newRecord.packageWidth =
-                firebasePackageObject.packageDetails.width;
-              newRecord.packageLength =
-                firebasePackageObject.packageDetails.length;
-              newRecord.isFragile =
-                firebasePackageObject.packageDetails.isFragile;
-              newRecord.canBeOpened =
-                firebasePackageObject.packageDetails.canBeOpened;
-
-              //package price
-              newRecord.paymentAmount = firebasePackageObject.paymentAmount;
-              newRecord.shippingCost = firebasePackageObject.shippingCost;
-              newRecord.cashOnDelivery = firebasePackageObject.cashOnDelivery;
-              newRecord.currencyName = firebasePackageObject?.currency?.name;
-              newRecord.currencySymbol =
-                firebasePackageObject?.currency?.symbol;
-
-              //package company location
-              newRecord.companyLocationLat =
-                firebasePackageObject.companyAddress?.coordinates.latitude;
-              newRecord.companyLocationLng =
-                firebasePackageObject.companyAddress?.coordinates.longitude;
-              newRecord.companyLocationDescription =
-                firebasePackageObject.companyAddress?.description;
-
-              //package dates
-              newRecord.createdAt = firebasePackageObject.timeline?.createdAt;
-              newRecord.postedAt = firebasePackageObject.timeline?.postedAt;
-              newRecord.acceptedAt = firebasePackageObject.timeline?.acceptedAt;
-              newRecord.pickedAt = firebasePackageObject.timeline?.pickedAt;
-              newRecord.deliveredAt =
-                firebasePackageObject.timeline?.deliveredAt;
-              newRecord.returnedAt = firebasePackageObject.timeline?.returnedAt;
-            });
-        }
-      });
     });
 
     console.log("addsCount: ", addsCount);

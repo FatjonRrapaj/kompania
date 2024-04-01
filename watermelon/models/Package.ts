@@ -31,6 +31,8 @@ class PackageModel extends Model {
   @field("courierId") courierId?: string;
   @field("courierProfilePicture") courierProfilePicture?: string;
   @field("courierPhoneNumber") courierPhoneNumber?: string;
+
+  @field("receiverId") receiverId?: string;
   @field("receiverName") receiverName?: string;
   @field("receiverProfileUrl") receiverProfileUrl?: string;
   @field("receiverAddressDescription") receiverAddressDescription?: string;
