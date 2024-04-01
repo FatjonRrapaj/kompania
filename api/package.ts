@@ -35,7 +35,8 @@ export interface Package {
   packageName: string;
   receiverName: string;
   receiverPhoneNumber: string;
-  address: string;
+  receiverProfileUrl?: string;
+  receiverAddress?: string;
   notesForReceiver: string;
   packageDetails: {
     weight: number;
@@ -64,7 +65,7 @@ export async function pushMockPackages(companyID: string) {
     Collections.last2WeeksPackages
   );
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 1; i++) {
     await addDoc(last2WeeksPackagesRef, mockPackageObject);
   }
 }

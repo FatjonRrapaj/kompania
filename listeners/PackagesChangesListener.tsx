@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { auth, db } from "@/utils/firebase";
 import useAuthStore from "@/store/auth";
@@ -14,34 +14,80 @@ import PackageModel from "@/watermelon/models/Package";
 const PackagesChangesListener = () => {
   const user = useAuthStore((state) => state.user);
   const company = useCompanyStore((state) => state.company);
+  const mountedOnce = useRef<boolean>(false);
 
   const handleSnapshot = (snapshot: QuerySnapshot) => {
+    let addsCount = 0;
+    let modifiedCount = 0;
+    let removedCount = 0;
+
     snapshot.docChanges().forEach((change) => {
-      console.log("change: ", change);
-      //TODO: check change has a type = added.
-      //For easier querying the local db with additions, updates, etc
+      if (!change.doc.exists) {
+        return;
+      }
+
       const firebasePackageObject = {
         ...change.doc.data(),
         uid: change.doc.id,
       } as Package;
 
-      // watermelonDB.write(async () => {
-      //   const existingPackage = await watermelonDB.collections
-      //     .get("packages")
-      //     .find(firebasePackageObject.uid);
+      switch (change.type) {
+        case "added":
+          addsCount++;
+          break;
+        case "modified":
+          modifiedCount++;
+          break;
+        case "removed":
+          removedCount++;
+          break;
+        default:
+          break;
+      }
 
-      //   if (existingPackage) {
-      //     await existingPackage.update((record) => {});
-      //   } else {
-      //     watermelonDB.collections
-      //       .get<PackageModel>("packages")
-      //       .prepareCreate((newRecord) => {
-      //         newRecord.paymentAmount = firebasePackageObject.price;
-      //       });
-      //   }
-      // });
+      watermelonDB.write(async () => {
+        const existingPackage = await watermelonDB.collections
+          .get("packages")
+          .find(firebasePackageObject!.uid!);
+
+        if (existingPackage) {
+          await existingPackage.update((record) => {});
+        } else {
+          watermelonDB.collections
+            .get<PackageModel>("packages")
+            .prepareCreate((newRecord) => {
+              newRecord.paymentAmount = firebasePackageObject.paymentAmount;
+              newRecord.packageName = firebasePackageObject.packageName;
+              newRecord.receiverName = firebasePackageObject?.receiverName;
+              newRecord.receiverPhoneNumber =
+                firebasePackageObject?.receiverPhoneNumber;
+
+              newRecord.receiverProfileUrl =
+                firebasePackageObject?.receiverProfileUrl;
+              newRecord.receiverAddress =
+                firebasePackageObject?.receiverAddress;
+
+              newRecord.notesForReceiver =
+                firebasePackageObject?.notesForReceiver;
+              newRecord.packageHeight =
+                firebasePackageObject?.packageDetails?.height;
+              newRecord.packageWeight =
+                firebasePackageObject?.packageDetails?.weight;
+              newRecord.packageWidth =
+                firebasePackageObject?.packageDetails?.width;
+              newRecord.packageLength =
+                firebasePackageObject?.packageDetails?.length;
+              //left at isfragile
+            });
+        }
+      });
     });
+
+    console.log("addsCount: ", addsCount);
+    console.log("modifiedCount: ", modifiedCount);
+    console.log("removedCount: ", removedCount);
   };
+
   useEffect(() => {
     if (!auth?.currentUser || !user) {
       console.log("PackagesChangesListener Not logged in****");
@@ -52,15 +98,20 @@ const PackagesChangesListener = () => {
       return;
     }
 
-    const companyRef = getCompanyRef(company.uid);
-    const last2WeeksPackagesRef = collection(
-      companyRef,
-      Collections.last2WeeksPackages
-    );
+    let unsubscribe: any;
 
-    const unsubscribe = onSnapshot(last2WeeksPackagesRef, handleSnapshot);
+    if (!mountedOnce.current) {
+      const companyRef = getCompanyRef(company.uid);
+      const last2WeeksPackagesRef = collection(
+        companyRef,
+        Collections.last2WeeksPackages
+      );
+      unsubscribe = onSnapshot(last2WeeksPackagesRef, handleSnapshot);
+      mountedOnce.current = true;
+    }
+
     return () => {
-      unsubscribe();
+      unsubscribe?.();
     };
   }, [user, company]);
 

@@ -30,6 +30,11 @@ class PackageModel extends Model {
   @field("courierId") courierId?: string;
   @field("courierProfilePicture") courierProfilePicture?: string;
   @field("courierPhoneNumber") courierPhoneNumber?: string;
+  @field("receiverName") receiverName?: string;
+  @field("receiverProfileUrl") receiverProfileUrl?: string;
+  @field("receiverAddress") receiverAddress?: string;
+  @field("receiverPhoneNumber") receiverPhoneNumber?: string;
+  @field("notesForReceiver") notesForReceiver?: string;
 }
 
 export default PackageModel;
