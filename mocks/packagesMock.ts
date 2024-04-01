@@ -17,7 +17,7 @@ export const mockPackageObject: Package = {
     length: 20,
     width: 15,
     height: 10,
-    fragile: true,
+    isFragile: true,
     canBeOpened: false,
   },
   paymentAmount: 50,

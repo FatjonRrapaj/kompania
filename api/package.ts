@@ -1,7 +1,7 @@
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 
-import { CompanyLocation, getCompanyRef } from "./company";
+import { CompanyAddress, CustomerAddress, getCompanyRef } from "./company";
 import generateCustomError from "@/utils/customError";
 
 import { mockPackageObject } from "@/mocks/packagesMock";
@@ -31,10 +31,11 @@ export type PackageTimelineStatus =
 export interface Package {
   uid?: string;
   packageName: string;
+  scanId: string;
   receiverName: string;
   receiverPhoneNumber: string;
   receiverProfileUrl?: string;
-  receiverAddress?: string;
+  receiverAddressDescription?: string;
   notesForReceiver: string;
   packageDetails: {
     weight: number;
@@ -52,9 +53,13 @@ export interface Package {
   timelineStatus: PackageTimelineStatus;
   courier?: Courier;
   currency: Currency;
-  createdAt?: string;
-  updatedAt?: string;
-  companyLocation?: CompanyLocation;
+  createdAt?: number;
+  updatedAt?: number;
+  acceptedAt?: number;
+  pickedAt?: number;
+  deliveredAt?: number;
+  companyAddress?: CompanyAddress;
+  receiverLocation?: CustomerAddress;
 }
 
 export async function pushMockPackages(companyID: string) {

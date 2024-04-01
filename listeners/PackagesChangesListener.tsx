@@ -56,9 +56,15 @@ const PackagesChangesListener = () => {
           watermelonDB.collections
             .get<PackageModel>("packages")
             .prepareCreate((newRecord) => {
-              //package
+              //identification
               //TODO: id
               newRecord.packageName = firebasePackageObject.packageName;
+              newRecord.packageScanId = firebasePackageObject.scanId;
+
+              //package status
+              newRecord.packageStatus = firebasePackageObject.status;
+              newRecord.packageTimeLineStatus =
+                firebasePackageObject.timelineStatus;
 
               //receiver
               newRecord.receiverName = firebasePackageObject.receiverName;
@@ -66,7 +72,8 @@ const PackagesChangesListener = () => {
                 firebasePackageObject.receiverPhoneNumber;
               newRecord.receiverProfileUrl =
                 firebasePackageObject.receiverProfileUrl;
-              newRecord.receiverAddress = firebasePackageObject.receiverAddress;
+              newRecord.receiverAddressDescription =
+                firebasePackageObject.receiverAddressDescription;
               newRecord.notesForReceiver =
                 firebasePackageObject.notesForReceiver;
 
@@ -88,16 +95,33 @@ const PackagesChangesListener = () => {
               newRecord.paymentAmount = firebasePackageObject.paymentAmount;
               newRecord.shippingCost = firebasePackageObject.shippingCost;
               newRecord.cashOnDelivery = firebasePackageObject.cashOnDelivery;
+              newRecord.currencyName = firebasePackageObject?.currency?.name;
+              newRecord.currencySymbol =
+                firebasePackageObject?.currency?.symbol;
 
               //package company location
               newRecord.companyLocationLat =
-                firebasePackageObject.companyLocation?.coordinates.latitude;
+                firebasePackageObject.companyAddress?.coordinates.latitude;
               newRecord.companyLocationLng =
-                firebasePackageObject.companyLocation?.coordinates.longitude;
+                firebasePackageObject.companyAddress?.coordinates.longitude;
               newRecord.companyLocationDescription =
-                firebasePackageObject.companyLocation?.description;
+                firebasePackageObject.companyAddress?.description;
 
               //package courier
+              newRecord.receiverAddressLat =
+                firebasePackageObject.receiverLocation?.coordinates?.latitude;
+              newRecord.receiverAddressLng =
+                firebasePackageObject.receiverLocation?.coordinates?.longitude;
+              newRecord.receiverAddressDescription =
+                firebasePackageObject.receiverLocation?.description;
+
+              //package dates
+              newRecord.createdAt = firebasePackageObject.createdAt;
+              newRecord.postedAt = firebasePackageObject.postedAt;
+              newRecord.acceptedAt = firebasePackageObject.acceptedAt;
+              newRecord.pickedAt = firebasePackageObject.pickedAt;
+              newRecord.deliveredAt = firebasePackageObject.deliveredAt;
+              newRecord.returnedAt = firebasePackageObject.returnedAt;
             });
         }
       });

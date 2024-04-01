@@ -10,13 +10,13 @@ interface Totals {
   problematic: number;
 }
 
-export interface CompanyLocation {
+export interface CompanyAddress {
   coordinates: GeoPoint;
   name: string;
   description?: string;
 }
 
-interface CustomerAddress {
+export interface CustomerAddress {
   coordinates?: GeoPoint;
   description?: string;
 }
@@ -31,12 +31,7 @@ export interface Company {
   email: string;
   companyName: string;
   totals: CompanyTotals;
-  locations: CompanyLocation[];
-}
-
-interface CustomerAddress {
-  coordinates?: GeoPoint;
-  description?: string;
+  locations: CompanyAddress[];
 }
 
 export interface Customer {
