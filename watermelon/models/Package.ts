@@ -13,9 +13,10 @@ class PackageModel extends Model {
   @field("packageHeight") packageHeight?: number;
   @field("paymentAmount") paymentAmount!: number;
   @field("shippingCost") shippingCost!: number;
+  @field("cashOnDelivery") cashOnDelivery!: number;
   @field("currencySymbol") currencySymbol!: string;
   @field("currencyName") currencyName!: string;
-  @field("fragile") fragile?: boolean;
+  @field("isFragile") isFragile?: boolean;
   @field("canBeOpened") canBeOpened?: boolean;
   @field("packageStatus") packageStatus!: string;
   @field("packageTimeLineStatus") packageTimeLineStatus!: string;
@@ -35,6 +36,9 @@ class PackageModel extends Model {
   @field("receiverAddress") receiverAddress?: string;
   @field("receiverPhoneNumber") receiverPhoneNumber?: string;
   @field("notesForReceiver") notesForReceiver?: string;
+  @field("companyLocationLat") companyLocationLat?: number;
+  @field("companyLocationLng") companyLocationLng?: number;
+  @field("companyLocationDescription") companyLocationDescription?: string;
 }
 
 export default PackageModel;

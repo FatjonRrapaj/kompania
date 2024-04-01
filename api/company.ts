@@ -10,7 +10,7 @@ interface Totals {
   problematic: number;
 }
 
-interface CompanyLocation {
+export interface CompanyLocation {
   coordinates: GeoPoint;
   name: string;
   description?: string;

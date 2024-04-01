@@ -56,28 +56,48 @@ const PackagesChangesListener = () => {
           watermelonDB.collections
             .get<PackageModel>("packages")
             .prepareCreate((newRecord) => {
-              newRecord.paymentAmount = firebasePackageObject.paymentAmount;
+              //package
+              //TODO: id
               newRecord.packageName = firebasePackageObject.packageName;
-              newRecord.receiverName = firebasePackageObject?.receiverName;
+
+              //receiver
+              newRecord.receiverName = firebasePackageObject.receiverName;
               newRecord.receiverPhoneNumber =
-                firebasePackageObject?.receiverPhoneNumber;
-
+                firebasePackageObject.receiverPhoneNumber;
               newRecord.receiverProfileUrl =
-                firebasePackageObject?.receiverProfileUrl;
-              newRecord.receiverAddress =
-                firebasePackageObject?.receiverAddress;
-
+                firebasePackageObject.receiverProfileUrl;
+              newRecord.receiverAddress = firebasePackageObject.receiverAddress;
               newRecord.notesForReceiver =
-                firebasePackageObject?.notesForReceiver;
+                firebasePackageObject.notesForReceiver;
+
+              //package size & speficics
               newRecord.packageHeight =
-                firebasePackageObject?.packageDetails?.height;
+                firebasePackageObject.packageDetails.height;
               newRecord.packageWeight =
-                firebasePackageObject?.packageDetails?.weight;
+                firebasePackageObject.packageDetails.weight;
               newRecord.packageWidth =
-                firebasePackageObject?.packageDetails?.width;
+                firebasePackageObject.packageDetails.width;
               newRecord.packageLength =
-                firebasePackageObject?.packageDetails?.length;
-              //left at isfragile
+                firebasePackageObject.packageDetails.length;
+              newRecord.isFragile =
+                firebasePackageObject.packageDetails.isFragile;
+              newRecord.canBeOpened =
+                firebasePackageObject.packageDetails.canBeOpened;
+
+              //package price
+              newRecord.paymentAmount = firebasePackageObject.paymentAmount;
+              newRecord.shippingCost = firebasePackageObject.shippingCost;
+              newRecord.cashOnDelivery = firebasePackageObject.cashOnDelivery;
+
+              //package company location
+              newRecord.companyLocationLat =
+                firebasePackageObject.companyLocation?.coordinates.latitude;
+              newRecord.companyLocationLng =
+                firebasePackageObject.companyLocation?.coordinates.longitude;
+              newRecord.companyLocationDescription =
+                firebasePackageObject.companyLocation?.description;
+
+              //package courier
             });
         }
       });

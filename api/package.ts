@@ -1,9 +1,7 @@
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
-import { GeoPoint } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
-import { db } from "@/utils/firebase";
 
-import { Customer, getCompanyRef } from "./company";
+import { CompanyLocation, getCompanyRef } from "./company";
 import generateCustomError from "@/utils/customError";
 
 import { mockPackageObject } from "@/mocks/packagesMock";
@@ -43,7 +41,7 @@ export interface Package {
     length: number;
     width: number;
     height: number;
-    fragile: boolean;
+    isFragile: boolean;
     canBeOpened: boolean;
   };
   paymentAmount: number;
@@ -56,6 +54,7 @@ export interface Package {
   currency: Currency;
   createdAt?: string;
   updatedAt?: string;
+  companyLocation?: CompanyLocation;
 }
 
 export async function pushMockPackages(companyID: string) {
