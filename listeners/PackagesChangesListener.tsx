@@ -116,12 +116,13 @@ const PackagesChangesListener = () => {
                 firebasePackageObject.companyAddress?.description;
 
               //package dates
-              newRecord.createdAt = firebasePackageObject.createdAt;
-              newRecord.postedAt = firebasePackageObject.postedAt;
-              newRecord.acceptedAt = firebasePackageObject.acceptedAt;
-              newRecord.pickedAt = firebasePackageObject.pickedAt;
-              newRecord.deliveredAt = firebasePackageObject.deliveredAt;
-              newRecord.returnedAt = firebasePackageObject.returnedAt;
+              newRecord.createdAt = firebasePackageObject.timeline?.createdAt;
+              newRecord.postedAt = firebasePackageObject.timeline?.postedAt;
+              newRecord.acceptedAt = firebasePackageObject.timeline?.acceptedAt;
+              newRecord.pickedAt = firebasePackageObject.timeline?.pickedAt;
+              newRecord.deliveredAt =
+                firebasePackageObject.timeline?.deliveredAt;
+              newRecord.returnedAt = firebasePackageObject.timeline?.returnedAt;
             });
         }
       });

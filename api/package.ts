@@ -34,6 +34,16 @@ export type PackageTimelineStatus =
   | "delivered"
   | "returned";
 
+export interface PackageTimeline {
+  createdAt?: number;
+  updatedAt?: number;
+  postedAt?: number;
+  acceptedAt?: number;
+  pickedAt?: number;
+  deliveredAt?: number;
+  returnedAt?: number;
+}
+
 export interface Package {
   uid?: string;
   packageName: string;
@@ -53,15 +63,9 @@ export interface Package {
   notesForPackage: string;
   status: PackageStatus;
   timelineStatus: PackageTimelineStatus;
+  timeline?: PackageTimeline;
   courier?: Courier;
   currency: Currency;
-  createdAt?: number;
-  updatedAt?: number;
-  postedAt?: number;
-  acceptedAt?: number;
-  pickedAt?: number;
-  deliveredAt?: number;
-  returnedAt?: number;
   companyAddress?: CompanyAddress;
 }
 
