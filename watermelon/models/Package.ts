@@ -26,6 +26,8 @@ class PackageModel extends Model {
   @field("pickedAt") pickedAt?: number;
   @field("deliveredAt") deliveredAt?: number;
   @field("returnedAt") returnedAt?: number;
+  @field("updatedAt") updatedAt?: number;
+
   @field("courierName") courierName?: string;
   @field("courierSurname") courierSurname?: string;
   @field("courierId") courierId?: string;

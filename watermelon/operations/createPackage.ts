@@ -73,13 +73,14 @@ export const createPackageFromFirebasePackage = async (
         newRecord.companyLocationDescription =
           firebasePackageObject.companyAddress?.description;
 
-        //package dates
+        //package timeline
         newRecord.createdAt = firebasePackageObject.timeline?.createdAt;
         newRecord.postedAt = firebasePackageObject.timeline?.postedAt;
         newRecord.acceptedAt = firebasePackageObject.timeline?.acceptedAt;
         newRecord.pickedAt = firebasePackageObject.timeline?.pickedAt;
         newRecord.deliveredAt = firebasePackageObject.timeline?.deliveredAt;
         newRecord.returnedAt = firebasePackageObject.timeline?.returnedAt;
+        newRecord.updatedAt = firebasePackageObject.timeline?.updatedAt;
       });
   });
 };

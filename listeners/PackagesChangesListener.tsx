@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-import { auth, db } from "@/utils/firebase";
+import { auth } from "@/utils/firebase";
 import useAuthStore from "@/store/auth";
 import useCompanyStore from "@/store/company";
 import { Collections } from "@/constants/Firestore";
@@ -8,9 +8,9 @@ import { QuerySnapshot, collection, doc, onSnapshot } from "firebase/firestore";
 import { getCompanyRef } from "@/api/company";
 import watermelonDB from "@/watermelon";
 import { Package } from "@/api/package";
-import { TableName } from "@/watermelon/index";
 import PackageModel from "@/watermelon/models/Package";
-import { sanitizedRaw } from "@nozbe/watermelondb/RawRecord";
+import { updateExistingPackage } from "@/watermelon/operations/updatePackage";
+import { createPackageFromFirebasePackage } from "@/watermelon/operations/createPackage";
 
 const PackagesChangesListener = () => {
   const user = useAuthStore((state) => state.user);
@@ -32,22 +32,44 @@ const PackagesChangesListener = () => {
         uid: change.doc.id,
       } as Package;
 
-      const existingPackage = await watermelonDB.collections
+      const existingPackage = (await watermelonDB.collections
         .get("packages")
-        .find(firebasePackageObject!.uid!);
+        .find(firebasePackageObject!.uid!)) as PackageModel;
 
       switch (change.type) {
         case "added":
           if (existingPackage) {
+            if (
+              existingPackage.updatedAt !==
+              firebasePackageObject.timeline?.updatedAt
+            ) {
+              await updateExistingPackage(
+                existingPackage,
+                firebasePackageObject
+              );
+            }
             return;
           } else {
+            await createPackageFromFirebasePackage(firebasePackageObject);
           }
           break;
         case "modified":
-          modifiedCount++;
+          if (existingPackage) {
+            if (
+              existingPackage.updatedAt !==
+              firebasePackageObject.timeline?.updatedAt
+            ) {
+              await updateExistingPackage(
+                existingPackage,
+                firebasePackageObject
+              );
+            }
+          }
           break;
         case "removed":
-          removedCount++;
+          if (existingPackage) {
+            await existingPackage.destroyPermanently();
+          }
           break;
         default:
           break;
