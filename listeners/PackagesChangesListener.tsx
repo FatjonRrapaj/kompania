@@ -6,11 +6,12 @@ import useCompanyStore from "@/store/company";
 import { Collections } from "@/constants/Firestore";
 import { QuerySnapshot, collection, doc, onSnapshot } from "firebase/firestore";
 import { getCompanyRef } from "@/api/company";
-import watermelonDB from "@/watermelon";
 import { Package } from "@/api/package";
-import PackageModel from "@/watermelon/models/Package";
-import { updateExistingPackage } from "@/watermelon/operations/updatePackage";
-import { createPackageFromFirebasePackage } from "@/watermelon/operations/createPackage";
+import {
+  findPackage,
+  createPackageFromFirebasePackage,
+  updateExistingPackage,
+} from "@/watermelon/operations/package";
 
 const PackagesChangesListener = () => {
   const user = useAuthStore((state) => state.user);
@@ -18,67 +19,61 @@ const PackagesChangesListener = () => {
   const mountedOnce = useRef<boolean>(false);
 
   const handleSnapshot = async (snapshot: QuerySnapshot) => {
-    let addsCount = 0;
-    let modifiedCount = 0;
-    let removedCount = 0;
+    try {
+      snapshot.docChanges().forEach(async (change) => {
+        if (!change.doc.exists) {
+          return;
+        }
 
-    snapshot.docChanges().forEach(async (change) => {
-      if (!change.doc.exists) {
-        return;
-      }
+        const firebasePackageObject = {
+          ...change.doc.data(),
+          uid: change.doc.id,
+        } as Package;
 
-      const firebasePackageObject = {
-        ...change.doc.data(),
-        uid: change.doc.id,
-      } as Package;
+        const existingPackage = await findPackage(firebasePackageObject.uid!);
 
-      const existingPackage = (await watermelonDB.collections
-        .get("packages")
-        .find(firebasePackageObject!.uid!)) as PackageModel;
-
-      switch (change.type) {
-        case "added":
-          if (existingPackage) {
-            if (
-              existingPackage.updatedAt !==
-              firebasePackageObject.timeline?.updatedAt
-            ) {
-              await updateExistingPackage(
-                existingPackage,
-                firebasePackageObject
-              );
+        switch (change.type) {
+          case "added":
+            if (existingPackage) {
+              if (
+                existingPackage.updatedAt !==
+                firebasePackageObject.timeline?.updatedAt
+              ) {
+                await updateExistingPackage(
+                  existingPackage,
+                  firebasePackageObject
+                );
+              }
+              return;
+            } else {
+              await createPackageFromFirebasePackage(firebasePackageObject);
             }
-            return;
-          } else {
-            await createPackageFromFirebasePackage(firebasePackageObject);
-          }
-          break;
-        case "modified":
-          if (existingPackage) {
-            if (
-              existingPackage.updatedAt !==
-              firebasePackageObject.timeline?.updatedAt
-            ) {
-              await updateExistingPackage(
-                existingPackage,
-                firebasePackageObject
-              );
+            break;
+          case "modified":
+            if (existingPackage) {
+              if (
+                existingPackage.updatedAt !==
+                firebasePackageObject.timeline?.updatedAt
+              ) {
+                await updateExistingPackage(
+                  existingPackage,
+                  firebasePackageObject
+                );
+              }
             }
-          }
-          break;
-        case "removed":
-          if (existingPackage) {
-            await existingPackage.destroyPermanently();
-          }
-          break;
-        default:
-          break;
-      }
-    });
-
-    console.log("addsCount: ", addsCount);
-    console.log("modifiedCount: ", modifiedCount);
-    console.log("removedCount: ", removedCount);
+            break;
+          case "removed":
+            if (existingPackage) {
+              await existingPackage.destroyPermanently();
+            }
+            break;
+          default:
+            break;
+        }
+      });
+    } catch (error) {
+      console.log("error@handleSnapshot: ", error);
+    }
   };
 
   useEffect(() => {
@@ -95,11 +90,11 @@ const PackagesChangesListener = () => {
 
     if (!mountedOnce.current) {
       const companyRef = getCompanyRef(company.uid);
-      const last2WeeksPackagesRef = collection(
+      const last7DaysPackagesRef = collection(
         companyRef,
-        Collections.last2WeeksPackages
+        Collections.last7DaysPackages
       );
-      unsubscribe = onSnapshot(last2WeeksPackagesRef, handleSnapshot);
+      unsubscribe = onSnapshot(last7DaysPackagesRef, handleSnapshot);
       mountedOnce.current = true;
     }
 

@@ -1,5 +1,5 @@
 export const Collections = {
   companies: "companies",
   users: "users",
-  last2WeeksPackages: "last2WeeksPackages",
+  last7DaysPackages: "last7DaysPackages",
 };

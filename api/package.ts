@@ -71,12 +71,12 @@ export interface Package {
 
 export async function pushMockPackages(companyID: string) {
   const companyRef = getCompanyRef(companyID);
-  const last2WeeksPackagesRef = collection(
+  const last7DaysPackagesRef = collection(
     companyRef,
-    Collections.last2WeeksPackages
+    Collections.last7DaysPackages
   );
 
   for (let i = 0; i < 1; i++) {
-    await addDoc(last2WeeksPackagesRef, mockPackageObject);
+    await addDoc(last7DaysPackagesRef, mockPackageObject);
   }
 }
