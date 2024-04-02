@@ -16,10 +16,11 @@ import {
 import PackagesListHeader from "@/components/ui/home/PackagesListHeader";
 import useAuthStore from "@/store/auth";
 import { useEffect } from "react";
-import { auth } from "@/utils/firebase";
+import { auth, db } from "@/utils/firebase";
 import { PackageStatus } from "@/api/package";
 import useCompanyStore from "@/store/company";
 import { Company } from "@/api/company";
+import { Timestamp } from "firebase/firestore";
 
 export default function HomeScreen() {
   const handlePackageOverviewPress = (packageStatus: PackageStatus) => {
@@ -40,6 +41,9 @@ export default function HomeScreen() {
   }, [user]);
 
   useEffect(() => {
+    // const superTestTimeStamp = Timestamp.fromMillis(
+    //   Timestamp.now().seconds * 1000
+    // ).toDate();
     if (profile && !company) {
       useCompanyStore.getState().getCompany();
     }
@@ -50,7 +54,7 @@ export default function HomeScreen() {
       <FlatList
         style={{ marginHorizontal: -3 }}
         showsVerticalScrollIndicator={false}
-        keyExtractor={({ uid }) => uid!}
+        keyExtractor={({ uid }, index) => index.toString()}
         renderItem={({ item: packageItem }) => (
           <SmallPackageItem {...packageItem} />
         )}

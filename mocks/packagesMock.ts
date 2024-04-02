@@ -5,13 +5,21 @@ import {
   PackageStatus,
   PackageTimelineStatus,
 } from "@/api/package";
+import { Firestore, GeoPoint, Timestamp } from "firebase/firestore";
 
 export const mockPackageObject: Package = {
+  uid: "yadkajdknljadlknmaejfla",
   packageName: "Sample Package",
-  receiverName: "John Doe",
-  receiverPhoneNumber: "123-456-7890",
-  address: "1234 Main St, City, Country",
-  notesForReceiver: "Leave at front door",
+  scanId: "1712062143",
+  receiver: {
+    name: "John doe",
+    phoneNumber: "123-456-7890",
+    profileUrl: "https://google.com",
+    notes: "Leave at front door",
+    receiverLocation: {
+      description: "Don Bosko street",
+    },
+  },
   packageDetails: {
     weight: 2.5,
     length: 20,
@@ -23,9 +31,16 @@ export const mockPackageObject: Package = {
   paymentAmount: 50,
   shippingCost: 10,
   cashOnDelivery: 20,
+  timeline: {
+    createdAt: 1712062143,
+    updatedAt: 1712062143,
+    pickedAt: 1712062143,
+    acceptedAt: 1712062143,
+    deliveredAt: 1712062143,
+    returnedAt: 1712062143,
+    postedAt: 1712062143,
+  },
   notesForPackage: "Urgent delivery",
-  createdAt: "2024-03-30T10:00:00Z",
-  updatedAt: "2024-03-30T13:30:00Z",
   status: "pending" as PackageStatus,
   timelineStatus: "available" as PackageTimelineStatus,
   courier: {
