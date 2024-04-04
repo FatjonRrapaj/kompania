@@ -4,7 +4,7 @@ import { date, field, text } from "@nozbe/watermelondb/decorators";
 import { TableName } from "../index";
 class PackageModel extends Model {
   static table: TableName = "packages";
-
+  @field("packageFirebaseId") packageFirebaseId!: string;
   @field("packageScanId") packageScanId!: string;
   @field("packageName") packageName?: string;
   @field("packageWeight") packageWeight?: number;

@@ -4,7 +4,7 @@ import { auth } from "@/utils/firebase";
 import useAuthStore from "@/store/auth";
 import useCompanyStore from "@/store/company";
 import { Collections } from "@/constants/Firestore";
-import { QuerySnapshot, collection, doc, onSnapshot } from "firebase/firestore";
+import { QuerySnapshot, collection, onSnapshot } from "firebase/firestore";
 import { getCompanyRef } from "@/api/company";
 import { Package } from "@/api/package";
 import {
@@ -31,6 +31,7 @@ const PackagesChangesListener = () => {
         } as Package;
 
         const existingPackage = await findPackage(firebasePackageObject.uid!);
+        console.log("existingPackage: ", existingPackage);
 
         switch (change.type) {
           case "added":

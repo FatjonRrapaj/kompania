@@ -22,9 +22,9 @@ export const createPackageFromFirebasePackage = async (
     await watermelonDB.write(async () => {
       watermelonDB.collections
         .get<PackageModel>("packages")
-        .prepareCreate((newRecord) => {
+        .create((newRecord) => {
           //identification
-          newRecord._setRaw("id", firebasePackageObject.uid!);
+          newRecord.packageFirebaseId = firebasePackageObject.uid!;
           newRecord.packageName = firebasePackageObject.packageName;
           newRecord.packageScanId = firebasePackageObject.scanId;
 
@@ -93,9 +93,9 @@ export const createPackageFromFirebasePackage = async (
   } catch (error) {
     console.log(
       "createPackageFromFirebasePackage error: ",
-      error,
-      "package: ",
-      firebasePackageObject
+      error
+      //   "package: ",
+      //   firebasePackageObject
     );
   }
 };
@@ -106,7 +106,7 @@ export const updateExistingPackage = async (
 ) => {
   try {
     await watermelonDB.write(async () => {
-      existingPackage.prepareUpdate((existingWatermelonPackage) => {
+      existingPackage.update((existingWatermelonPackage) => {
         existingWatermelonPackage.packageName =
           firebasePackageObject.packageName;
         existingWatermelonPackage.packageScanId = firebasePackageObject.scanId;
