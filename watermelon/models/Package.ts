@@ -30,7 +30,7 @@ class PackageModel extends Model {
   @text("pickedAt") pickedAt?: number;
   @text("deliveredAt") deliveredAt?: number;
   @text("returnedAt") returnedAt?: number;
-  @text("updatedAt") updatedAt?: number;
+  @text("updatedAtDate") updatedAtDate?: number;
 
   @text("courierName") courierName?: string;
   @text("courierSurname") courierSurname?: string;

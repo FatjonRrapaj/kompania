@@ -1,19 +1,19 @@
 // src/models/Customer.ts
 
 import { Model } from "@nozbe/watermelondb";
-import { field } from "@nozbe/watermelondb/decorators";
+import { text } from "@nozbe/watermelondb/decorators";
 
 class CustomerModel extends Model {
   static table = "customers";
 
-  @field("name") name!: string;
-  @field("phoneNumber") phoneNumber!: string;
-  @field("lat") lat?: string;
-  @field("lng") lng?: string;
-  @field("addressDescription") addressDescription?: string;
-  @field("notes") notes?: string;
-  @field("profileLink") profileLink?: string;
-  @field("createdAt") createdAt!: number;
+  @text("name") name!: string;
+  @text("phoneNumber") phoneNumber!: string;
+  @text("lat") lat?: string;
+  @text("lng") lng?: string;
+  @text("addressDescription") addressDescription?: string;
+  @text("notes") notes?: string;
+  @text("profileLink") profileLink?: string;
+  @text("createdAt") createdAt!: number;
 }
 
 export default CustomerModel;

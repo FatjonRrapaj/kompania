@@ -6,11 +6,13 @@ import schema from "./schema";
 import PackageModel from "./models/Package";
 import CustomerModel from "./models/Customer";
 import { Platform } from "react-native";
+import migrations from "./migrations";
 
 export type TableName = "packages" | "customers";
 
 const adapter = new SQLiteAdapter({
   schema,
+  migrations,
   jsi: Platform.OS === "ios",
   onSetUpError: (error) => {
     console.error(error);

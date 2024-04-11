@@ -32,7 +32,7 @@ const schema = appSchema({
         { name: "pickedAt", type: "number", isOptional: true },
         { name: "deliveredAt", type: "number", isOptional: true },
         { name: "returnedAt", type: "number", isOptional: true },
-        { name: "updatedAt", type: "number", isOptional: true },
+        { name: "updatedAtDate", type: "number", isOptional: true },
 
         { name: "courierName", type: "string", isOptional: true },
         { name: "courierSurname", type: "string", isOptional: true },

@@ -89,7 +89,8 @@ export const createPackageFromFirebasePackage = async (
           newRecord.pickedAt = firebasePackageObject.timeline?.pickedAt;
           newRecord.deliveredAt = firebasePackageObject.timeline?.deliveredAt;
           newRecord.returnedAt = firebasePackageObject.timeline?.returnedAt;
-          newRecord.updatedAt = firebasePackageObject.timeline?.updatedAt;
+          newRecord.updatedAtDate =
+            firebasePackageObject.timeline?.updatedAtDate;
         });
     });
   } catch (error) {

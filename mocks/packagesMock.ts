@@ -33,7 +33,7 @@ export const mockPackageObject: Package = {
   cashOnDelivery: 20,
   timeline: {
     createdAt: 1712062143,
-    updatedAt: 1712062143,
+    updatedAtDate: 1712062143,
     pickedAt: 1712062143,
     acceptedAt: 1712062143,
     deliveredAt: 1712062143,

@@ -36,7 +36,7 @@ export type PackageTimelineStatus =
 
 export interface PackageTimeline {
   createdAt?: number;
-  updatedAt?: number;
+  updatedAtDate?: number;
   postedAt?: number;
   acceptedAt?: number;
   pickedAt?: number;

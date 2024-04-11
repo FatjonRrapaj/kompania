@@ -1,11 +1,18 @@
 import LokiJSAdapter from "@nozbe/watermelondb/adapters/lokijs";
 
 import schema from "./schema";
+import migrations from "./migrations";
+import { Database } from "@nozbe/watermelondb";
+import PackageModel from "./models/Package";
+import CustomerModel from "./models/Customer";
+
+export type TableName = "packages" | "customers";
 
 const adapter = new LokiJSAdapter({
   schema,
   // (You might want to comment out migrations for development purposes -- see Migrations documentation)
   useWebWorker: false,
+  migrations,
   useIncrementalIndexedDB: true,
   // dbName: 'myapp', // optional db name
   // --- Optional, but recommended event handlers:
@@ -31,5 +38,12 @@ const adapter = new LokiJSAdapter({
     },
   },
 });
+
+const watermelonDB = new Database({
+  adapter,
+  modelClasses: [PackageModel, CustomerModel],
+});
+
+export default watermelonDB;
 
 // The rest is the same!

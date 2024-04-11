@@ -21,6 +21,7 @@ const PackagesChangesListener = () => {
   const handleSnapshot = async (snapshot: QuerySnapshot) => {
     try {
       snapshot.docChanges().forEach(async (change) => {
+        console.log("change: ", change);
         if (!change.doc.exists) {
           return;
         }
@@ -33,12 +34,12 @@ const PackagesChangesListener = () => {
         const existingPackage = await findPackage(firebasePackageObject.uid!);
         console.log("existingPackage: ", existingPackage);
 
-        switch (change.type) {
+        switch (change?.type) {
           case "added":
             if (existingPackage) {
               if (
-                existingPackage.updatedAt !==
-                firebasePackageObject.timeline?.updatedAt
+                existingPackage.updatedAtDate !==
+                firebasePackageObject.timeline?.updatedAtDate
               ) {
                 await updateExistingPackage(
                   existingPackage,
@@ -53,8 +54,8 @@ const PackagesChangesListener = () => {
           case "modified":
             if (existingPackage) {
               if (
-                existingPackage.updatedAt !==
-                firebasePackageObject.timeline?.updatedAt
+                existingPackage.updatedAtDate !==
+                firebasePackageObject.timeline?.updatedAtDate
               ) {
                 await updateExistingPackage(
                   existingPackage,
