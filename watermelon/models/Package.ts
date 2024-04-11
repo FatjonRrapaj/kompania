@@ -1,50 +1,55 @@
 import { Model } from "@nozbe/watermelondb";
-import { date, field, text } from "@nozbe/watermelondb/decorators";
+import { text } from "@nozbe/watermelondb/decorators";
 
 import { TableName } from "../index";
 class PackageModel extends Model {
   static table: TableName = "packages";
-  @field("packageFirebaseId") packageFirebaseId!: string;
-  @field("packageScanId") packageScanId!: string;
-  @field("packageName") packageName?: string;
-  @field("packageWeight") packageWeight?: number;
-  @field("packageLength") packageLength?: number;
-  @field("packageWidth") packageWidth?: number;
-  @field("packageHeight") packageHeight?: number;
-  @field("paymentAmount") paymentAmount!: number;
-  @field("shippingCost") shippingCost!: number;
-  @field("cashOnDelivery") cashOnDelivery!: number;
-  @field("currencySymbol") currencySymbol!: string;
-  @field("currencyName") currencyName!: string;
-  @field("isFragile") isFragile?: boolean;
-  @field("canBeOpened") canBeOpened?: boolean;
-  @field("packageStatus") packageStatus!: string;
-  @field("packageTimeLineStatus") packageTimeLineStatus!: string;
-  @field("createdAt") createdAt?: number;
-  @field("postedAt") postedAt?: number;
-  @field("acceptedAt") acceptedAt?: number;
-  @field("pickedAt") pickedAt?: number;
-  @field("deliveredAt") deliveredAt?: number;
-  @field("returnedAt") returnedAt?: number;
-  @field("updatedAt") updatedAt?: number;
+  @text("packageFirebaseId") packageFirebaseId!: string;
+  @text("packageScanId") packageScanId!: string;
 
-  @field("courierName") courierName?: string;
-  @field("courierSurname") courierSurname?: string;
-  @field("courierId") courierId?: string;
-  @field("courierProfilePicture") courierProfilePicture?: string;
-  @field("courierPhoneNumber") courierPhoneNumber?: string;
+  @text("packageName") packageName?: string;
+  @text("packageWeight") packageWeight?: number;
+  @text("packageLength") packageLength?: number;
+  @text("packageWidth") packageWidth?: number;
+  @text("packageHeight") packageHeight?: number;
+  @text("isFragile") isFragile?: boolean;
+  @text("canBeOpened") canBeOpened?: boolean;
 
-  @field("receiverId") receiverId?: string;
-  @field("receiverName") receiverName?: string;
-  @field("receiverProfileUrl") receiverProfileUrl?: string;
-  @field("receiverAddressDescription") receiverAddressDescription?: string;
-  @field("receiverAddressLat") receiverAddressLat?: number;
-  @field("receiverAddressLng") receiverAddressLng?: number;
-  @field("receiverPhoneNumber") receiverPhoneNumber?: string;
-  @field("notesForReceiver") notesForReceiver?: string;
-  @field("companyLocationLat") companyLocationLat?: number;
-  @field("companyLocationLng") companyLocationLng?: number;
-  @field("companyLocationDescription") companyLocationDescription?: string;
+  @text("paymentAmount") paymentAmount!: number;
+  @text("shippingCost") shippingCost!: number;
+  @text("cashOnDelivery") cashOnDelivery!: number;
+  @text("currencySymbol") currencySymbol!: string;
+  @text("currencyName") currencyName!: string;
+
+  @text("packageStatus") packageStatus!: string;
+  @text("packageTimeLineStatus") packageTimeLineStatus!: string;
+
+  @text("createdAt") createdAt?: number;
+  @text("postedAt") postedAt?: number;
+  @text("acceptedAt") acceptedAt?: number;
+  @text("pickedAt") pickedAt?: number;
+  @text("deliveredAt") deliveredAt?: number;
+  @text("returnedAt") returnedAt?: number;
+  @text("updatedAt") updatedAt?: number;
+
+  @text("courierName") courierName?: string;
+  @text("courierSurname") courierSurname?: string;
+  @text("courierId") courierId?: string;
+  @text("courierProfilePicture") courierProfilePicture?: string;
+  @text("courierPhoneNumber") courierPhoneNumber?: string;
+
+  @text("receiverId") receiverId?: string;
+  @text("receiverName") receiverName?: string;
+  @text("receiverProfileUrl") receiverProfileUrl?: string;
+  @text("receiverAddressDescription") receiverAddressDescription?: string;
+  @text("receiverAddressLat") receiverAddressLat?: number;
+  @text("receiverAddressLng") receiverAddressLng?: number;
+  @text("receiverPhoneNumber") receiverPhoneNumber?: string;
+  @text("notesForReceiver") notesForReceiver?: string;
+
+  @text("companyLocationLat") companyLocationLat?: number;
+  @text("companyLocationLng") companyLocationLng?: number;
+  @text("companyLocationDescription") companyLocationDescription?: string;
 }
 
 export default PackageModel;

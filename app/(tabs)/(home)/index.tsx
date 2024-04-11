@@ -16,11 +16,9 @@ import {
 import PackagesListHeader from "@/components/ui/home/PackagesListHeader";
 import useAuthStore from "@/store/auth";
 import { useEffect } from "react";
-import { auth, db } from "@/utils/firebase";
 import { PackageStatus } from "@/api/package";
 import useCompanyStore from "@/store/company";
 import { Company } from "@/api/company";
-import { Timestamp } from "firebase/firestore";
 
 export default function HomeScreen() {
   const handlePackageOverviewPress = (packageStatus: PackageStatus) => {
@@ -78,20 +76,3 @@ export default function HomeScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

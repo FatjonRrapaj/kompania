@@ -12,6 +12,10 @@ export type TableName = "packages" | "customers";
 const adapter = new SQLiteAdapter({
   schema,
   jsi: Platform.OS === "ios",
+  onSetUpError: (error) => {
+    console.error(error);
+    // Database failed to load -- offer the user to reload the app or log out
+  },
 });
 
 const watermelonDB = new Database({
@@ -20,20 +24,3 @@ const watermelonDB = new Database({
 });
 
 export default watermelonDB;
-
-//TODO: create package operations
-//QUERY package operations
-//ADD MULTIPLE PACKAGES OPERATIONS
-//CAREFUL SYNCIN W FIREBASE OPERATIONS (last updated dates comparison & queries)
-
-// async function createPackage() {
-//   await database.action(async () => {
-//     const newPackage = await database.collections
-//       .get<Package>("packages")
-//       .create((pkg) => {
-//         pkg.packageId = ""
-//         pkg.packageName = \\        pkg.packageWeight = packageData.packageWeight;
-//       });
-//     console.log("Created package:", newPackage);
-//   });
-// }

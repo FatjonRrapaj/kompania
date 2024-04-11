@@ -1,16 +1,18 @@
 import { Package } from "@/api/package";
 import watermelonDB from "..";
 import PackageModel from "../models/Package";
+import { Q } from "@nozbe/watermelondb";
 
 export const findPackage = async (
   uid: string
 ): Promise<PackageModel | undefined> => {
   try {
     const packagesCollection = watermelonDB.get("packages");
-    const existingPackage: PackageModel = (await packagesCollection.find(
-      uid
-    )) as PackageModel;
+    const existingPackageArray = await packagesCollection.query().fetch();
+    console.log("existingPackageArray: ", existingPackageArray);
+    return existingPackageArray?.[0] as PackageModel;
   } catch (error) {
+    console.log("findPackage error: ", error);
     return undefined;
   }
 };

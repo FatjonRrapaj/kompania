@@ -17,6 +17,8 @@ const AuthStateChangeListener = () => {
         if (screenName !== "(tabs)") {
           router.replace("/(tabs)/(home)");
         }
+      } else {
+        router.replace("/(auth)/login");
       }
     });
     return unsubscribe;
