@@ -16,7 +16,6 @@ import {
 const PackagesChangesListener = () => {
   const user = useAuthStore((state) => state.user);
   const company = useCompanyStore((state) => state.company);
-  const mountedOnce = useRef<boolean>(false);
 
   const handleSnapshot = async (snapshot: QuerySnapshot) => {
     try {
@@ -90,15 +89,12 @@ const PackagesChangesListener = () => {
 
     let unsubscribe: any;
 
-    if (!mountedOnce.current) {
-      const companyRef = getCompanyRef(company.uid);
-      const last7DaysPackagesRef = collection(
-        companyRef,
-        Collections.last7DaysPackages
-      );
-      unsubscribe = onSnapshot(last7DaysPackagesRef, handleSnapshot);
-      mountedOnce.current = true;
-    }
+    const companyRef = getCompanyRef(company.uid);
+    const last7DaysPackagesRef = collection(
+      companyRef,
+      Collections.last7DaysPackages
+    );
+    unsubscribe = onSnapshot(last7DaysPackagesRef, handleSnapshot);
 
     return () => {
       unsubscribe?.();
