@@ -31,7 +31,11 @@ const PackagesChangesListener = () => {
         } as Package;
 
         const existingPackage = await findPackage(firebasePackageObject.uid!);
-        console.log("existingPackage: ", existingPackage);
+        console.log(
+          "existingPackage: ",
+          existingPackage?.packageName,
+          existingPackage?.courierName
+        );
 
         switch (change?.type) {
           case "added":

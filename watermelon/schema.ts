@@ -6,7 +6,6 @@ const schema = appSchema({
     tableSchema({
       name: "packages",
       columns: [
-        { name: "packageFirebaseId", type: "string" },
         { name: "packageScanId", type: "string" },
 
         { name: "packageName", type: "string", isOptional: true },

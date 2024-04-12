@@ -8,9 +8,8 @@ export const findPackage = async (
 ): Promise<PackageModel | undefined> => {
   try {
     const packagesCollection = watermelonDB.get("packages");
-    const existingPackageArray = await packagesCollection.query().fetch();
-    console.log("existingPackageArray: ", existingPackageArray);
-    return existingPackageArray?.[0] as PackageModel;
+    const existingPackage = await packagesCollection.find(uid);
+    return existingPackage as PackageModel;
   } catch (error) {
     console.log("findPackage error: ", error);
     return undefined;
@@ -26,7 +25,7 @@ export const createPackageFromFirebasePackage = async (
         .get<PackageModel>("packages")
         .create((newRecord) => {
           //identification
-          newRecord.packageFirebaseId = firebasePackageObject.uid!;
+          newRecord._raw.id = firebasePackageObject.uid!;
           newRecord.packageName = firebasePackageObject.packageName;
           newRecord.packageScanId = firebasePackageObject.scanId;
 

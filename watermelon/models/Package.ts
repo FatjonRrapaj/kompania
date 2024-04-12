@@ -4,7 +4,6 @@ import { text } from "@nozbe/watermelondb/decorators";
 import { TableName } from "../index";
 class PackageModel extends Model {
   static table: TableName = "packages";
-  @text("packageFirebaseId") packageFirebaseId!: string;
   @text("packageScanId") packageScanId!: string;
 
   @text("packageName") packageName?: string;
