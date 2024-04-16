@@ -81,7 +81,6 @@ export const createPackageFromFirebasePackage = async (
 
         //package timeline
         newRecord.createdAtDate = firebasePackageObject.timeline?.createdAtDate;
-
         newRecord.postedAtDate = firebasePackageObject.timeline?.postedAtDate;
         newRecord.acceptedAtDate =
           firebasePackageObject.timeline?.acceptedAtDate;
@@ -176,19 +175,21 @@ export const updateExistingPackage = async (
         existingWatermelonPackage.companyLocationDescription =
           firebasePackageObject.companyAddress?.description;
 
-        //package dates
-        existingWatermelonPackage.createdAtDate =
+        //package timeline
+        existingPackage.createdAtDate =
           firebasePackageObject.timeline?.createdAtDate;
-        existingWatermelonPackage.postedAtDate =
+        existingPackage.postedAtDate =
           firebasePackageObject.timeline?.postedAtDate;
-        existingWatermelonPackage.acceptedAtDate =
+        existingPackage.acceptedAtDate =
           firebasePackageObject.timeline?.acceptedAtDate;
-        existingWatermelonPackage.pickedAtDate =
+        existingPackage.pickedAtDate =
           firebasePackageObject.timeline?.pickedAtDate;
-        existingWatermelonPackage.deliveredAtDate =
+        existingPackage.deliveredAtDate =
           firebasePackageObject.timeline?.deliveredAtDate;
-        existingWatermelonPackage.returnedAtDate =
+        existingPackage.returnedAtDate =
           firebasePackageObject.timeline?.returnedAtDate;
+        existingPackage.updatedAtDate =
+          firebasePackageObject.timeline?.updatedAtDate;
       });
     });
   } catch (error) {

@@ -26,7 +26,7 @@ const PackageItemLargeComponent = ({
       <PackageStatusTimeline
         status={packageObject.packageTimeLineStatus as PackageTimelineStatus}
       />
-      <Caption>{packageObject.createdAtDate}</Caption>
+      <Caption>{packageObject.updatedAtDate}</Caption>
     </View>
   );
 };

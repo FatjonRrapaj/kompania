@@ -23,13 +23,13 @@ class PackageModel extends Model {
   @field("packageStatus") packageStatus!: string;
   @field("packageTimeLineStatus") packageTimeLineStatus!: string;
 
-  @field("createdAtDate") createdAtDate?: string;
-  @field("postedAtDate") postedAtDate?: string;
-  @field("acceptedAtDate") acceptedAtDate?: string;
-  @field("pickedAtDate") pickedAtDate?: string;
-  @field("deliveredAtDate") deliveredAtDate?: string;
-  @field("returnedAtDate") returnedAtDate?: string;
-  @field("updatedAtDate") updatedAtDate?: string;
+  @field("createdAtDate") createdAtDate?: number;
+  @field("postedAtDate") postedAtDate?: number;
+  @field("acceptedAtDate") acceptedAtDate?: number;
+  @field("pickedAtDate") pickedAtDate?: number;
+  @field("deliveredAtDate") deliveredAtDate?: number;
+  @field("returnedAtDate") returnedAtDate?: number;
+  @field("updatedAtDate") updatedAtDate?: number;
 
   @field("courierName") courierName?: string;
   @field("courierId") courierId?: string;
