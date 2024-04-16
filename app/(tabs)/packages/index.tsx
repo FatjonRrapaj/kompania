@@ -3,21 +3,16 @@ import { Pressable, StyleSheet } from "react-native";
 import { Text, View } from "@/components/Themed";
 import { Link } from "expo-router";
 import PackagesList from "@/components/ui/packages/PackagesList";
+import globalStyles from "@/components/globalStyles";
 
 export default function TabTwoScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <Link asChild href={"/(tabs)/packages/123"}>
+    <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>
+      {/* <Link asChild href={"/(tabs)/packages/123"}>
         <Pressable>
           <Text>Go to 123</Text>
         </Pressable>
-      </Link>
+      </Link> */}
       <PackagesList />
     </View>
   );
@@ -26,8 +21,6 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
   title: {
     fontSize: 20,

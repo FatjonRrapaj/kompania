@@ -1,6 +1,5 @@
 import { Body1Bold, Body2 } from "@/components/StyledText";
 import { gray } from "@/constants/Colors";
-import en from "@/translations/en";
 import PackageModel from "@/watermelon/models/Package";
 import * as React from "react";
 import i18next from "i18next";

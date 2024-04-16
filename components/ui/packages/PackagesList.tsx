@@ -17,7 +17,8 @@ const PackagesListComponent = ({ packages }: PackagesListProps) => {
       <FlashList
         data={packages}
         estimatedItemSize={packages.length}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) => item.id}
+        ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         renderItem={({ item: packageObject }) => (
           <PackageItemLarge packageObject={packageObject} />
         )}
