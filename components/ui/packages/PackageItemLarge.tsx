@@ -1,5 +1,5 @@
 import { Body1Bold, Body2, Caption } from "@/components/StyledText";
-import { gray } from "@/constants/Colors";
+import { gray, primary, white } from "@/constants/Colors";
 import PackageModel from "@/watermelon/models/Package";
 import * as React from "react";
 import i18next from "i18next";
@@ -16,17 +16,28 @@ interface PackageItemLargeProps {
 const PackageItemLargeComponent = ({
   packageObject,
 }: PackageItemLargeProps) => {
-  console.log("packageObject: ", packageObject);
   return (
     <View style={styles.container}>
-      <View style={styles.titleContainer}>
+      <View style={[styles.horizontalContainer, { marginBottom: 4 }]}>
         <Body2>{i18next.t("package:client")}</Body2>
         <Body1Bold>{packageObject.receiverName}</Body1Bold>
       </View>
       <PackageStatusTimeline
         status={packageObject.packageTimeLineStatus as PackageTimelineStatus}
       />
-      <Caption>{packageObject.updatedAtDate}</Caption>
+      <Caption style={{ marginVertical: 4 }}>
+        {packageObject.updatedAtDate}
+      </Caption>
+      <View style={[styles.horizontalContainer]}>
+        <Body1Bold>
+          {packageObject.paymentAmount} {packageObject.currencySymbol}
+        </Body1Bold>
+        <View style={styles.timelineStatusContainer}>
+          <Caption style={{ color: white[500] }}>
+            {i18next.t(`package:${packageObject.packageTimeLineStatus}`)}
+          </Caption>
+        </View>
+      </View>
     </View>
   );
 };
@@ -46,10 +57,15 @@ const styles = StyleSheet.create({
     padding: 16,
     alignSelf: "stretch",
   },
-  titleContainer: {
+  horizontalContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 16,
+  },
+  timelineStatusContainer: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    backgroundColor: primary[500],
   },
 });

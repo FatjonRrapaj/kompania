@@ -23,6 +23,7 @@ const PackagesListComponent = ({ packages }: PackagesListProps) => {
   return (
     <View style={styles.container}>
       <FlashList
+        showsVerticalScrollIndicator={false}
         data={packages}
         estimatedItemSize={packages?.length}
         keyExtractor={(item, index) => item.id}
