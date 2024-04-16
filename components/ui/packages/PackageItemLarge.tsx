@@ -13,6 +13,7 @@ interface PackageItemLargeProps {
 }
 
 const PackageItemLarge = ({ packageObject }: PackageItemLargeProps) => {
+  console.log("packageObject: ", packageObject);
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>

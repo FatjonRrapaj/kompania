@@ -16,6 +16,15 @@ module.exports = function (api) {
               },
             ],
           ]
-        : [],
+        : [
+            ["@babel/plugin-proposal-decorators", { legacy: true }],
+            [
+              "@babel/plugin-transform-runtime",
+              {
+                helpers: true,
+                regenerator: false,
+              },
+            ],
+          ],
   };
 };

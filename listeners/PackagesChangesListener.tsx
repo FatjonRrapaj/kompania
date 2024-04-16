@@ -30,11 +30,17 @@ const PackagesChangesListener = () => {
           uid: change.doc.id,
         } as Package;
 
+        console.log(
+          "firebasePackageObject timeline*: ",
+          firebasePackageObject?.timeline
+        );
+
         const existingPackage = await findPackage(firebasePackageObject.uid!);
         console.log(
           "existingPackage: ",
           existingPackage?.packageName,
-          existingPackage?.courierName
+          existingPackage?.courierName,
+          existingPackage?.createdAtDate
         );
 
         switch (change?.type) {
