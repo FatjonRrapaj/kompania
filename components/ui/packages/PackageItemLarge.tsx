@@ -6,6 +6,7 @@ import i18next from "i18next";
 
 import { Text, View, StyleSheet } from "react-native";
 import PackageStatusTimeline from "./PackageStatusTimeline";
+import { PackageTimelineStatus } from "@/api/package";
 
 interface PackageItemLargeProps {
   packageObject: PackageModel;
@@ -18,7 +19,9 @@ const PackageItemLarge = ({ packageObject }: PackageItemLargeProps) => {
         <Body2>{i18next.t("package:client")}</Body2>
         <Body1Bold>{packageObject.receiverName}</Body1Bold>
       </View>
-      <PackageStatusTimeline />
+      <PackageStatusTimeline
+        status={packageObject.packageTimeLineStatus as PackageTimelineStatus}
+      />
     </View>
   );
 };

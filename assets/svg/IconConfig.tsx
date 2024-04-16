@@ -19,6 +19,7 @@ import NoPackage from "./noPackage.svg";
 import PackageSize from "./packageSize.svg";
 import WhiteBox from "./whiteBox.svg";
 import WhiteTruck from "./whiteTruck.svg";
+import WhiteBoxDelivered from "./whiteBoxDelivered.svg";
 
 //actions
 import Scan from "./scan.svg";
@@ -43,6 +44,7 @@ const IconConfig = {
   PackageSize,
   WhiteBox,
   WhiteTruck,
+  WhiteBoxDelivered,
   Scan,
   CloseCircle,
   Package,
