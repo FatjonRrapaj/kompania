@@ -2,6 +2,7 @@ import { Pressable, StyleSheet } from "react-native";
 
 import { Text, View } from "@/components/Themed";
 import { Link } from "expo-router";
+import PackagesList from "@/components/ui/packages/PackagesList";
 
 export default function TabTwoScreen() {
   return (
@@ -17,6 +18,7 @@ export default function TabTwoScreen() {
           <Text>Go to 123</Text>
         </Pressable>
       </Link>
+      <PackagesList />
     </View>
   );
 }

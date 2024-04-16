@@ -212,6 +212,8 @@ export const getAllPackagesCount = async () => {
 export const observePackages = () =>
   packagesCollection.query(Q.sortBy("updatedAtDate", Q.desc)).observe();
 
+//Maybe you do not need a second packages table just one that queries and gets the fresh packages, last week or last 30.
+
 //TODO: I think from here you can change the query type and fetch specific packages
 // export const observePackages = () =>
 //   packagesCollection.query(Q.sortBy("updatedAtDate", Q.desc)).observe();
