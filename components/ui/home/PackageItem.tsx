@@ -38,7 +38,7 @@ const SmallPackageItemComponent = ({
       </View>
       <View style={styles.infoContainer}>
         <Body1Bold>{packageObject.receiverName}</Body1Bold>
-        <Caption>{packageObject.createdAtDate}</Caption>
+        <Caption>{packageObject.updatedAtDate}</Caption>
       </View>
       <View style={styles.priceContainer}>
         <Body2Bold>

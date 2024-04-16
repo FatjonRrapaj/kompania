@@ -7,7 +7,7 @@ import { Company } from "@/api/company";
 import useAuthStore from "@/store/auth";
 import { PackageStatus } from "@/api/package";
 import useCompanyStore from "@/store/company";
-import { observePackages } from "@/watermelon/operations/package/getPackage";
+import { observeLastWeekPackages } from "@/watermelon/operations/package/getPackage";
 import PackageModel from "@/watermelon/models/Package";
 import {
   ItemLoaderList,
@@ -79,7 +79,7 @@ const PackagesListComponent = ({ packages }: PackageListProps) => {
 };
 
 const enhance = withObservables([], () => ({
-  packages: observePackages(),
+  packages: observeLastWeekPackages(),
 }));
 
 const PackagesList = enhance(PackagesListComponent);
