@@ -50,6 +50,22 @@ const PackagesListComponent = ({ packages }: PackageListProps) => {
     }
   }, [profile]);
 
+  if (!packages?.length) {
+    return (
+      <>
+        <GreetingComponent />
+        <PackagesOverView
+          company={company}
+          loading={loadingGetCompany}
+          onPackageTypePress={handlePackageOverviewPress}
+        />
+        <PackageActions />
+        {packages?.length ? <PackagesListHeader /> : null}
+        {loadingPackages ? <ItemLoaderList /> : <ListEmptyComponent />}
+      </>
+    );
+  }
+
   return (
     <FlashList
       showsVerticalScrollIndicator={false}
@@ -58,12 +74,9 @@ const PackagesListComponent = ({ packages }: PackageListProps) => {
         <SmallPackageItem packageObject={packageObject} />
       )}
       estimatedItemSize={packages.length}
-      data={packages}
-      ListEmptyComponent={
-        loadingPackages ? <ItemLoaderList /> : <ListEmptyComponent />
-      }
+      data={packages ?? []}
       ListHeaderComponent={
-        <View style={{ marginHorizontal: 3 }}>
+        <>
           <GreetingComponent />
           <PackagesOverView
             company={company}
@@ -71,8 +84,8 @@ const PackagesListComponent = ({ packages }: PackageListProps) => {
             onPackageTypePress={handlePackageOverviewPress}
           />
           <PackageActions />
-          {packages?.length && <PackagesListHeader />}
-        </View>
+          {packages?.length ? <PackagesListHeader /> : null}
+        </>
       }
     />
   );

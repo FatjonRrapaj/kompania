@@ -6,6 +6,7 @@ import { FlashList } from "@shopify/flash-list";
 import { observePackages } from "@/watermelon/operations/package/getPackage";
 import PackageModel from "@/watermelon/models/Package";
 import PackageItemLarge from "./PackageItemLarge";
+import { ListEmptyComponent } from "../home/PackageItem";
 
 interface PackagesListProps {
   packages: PackageModel[];
@@ -13,20 +14,16 @@ interface PackagesListProps {
 
 const PackagesListComponent = ({ packages }: PackagesListProps) => {
   if (!packages?.length) {
-    //TODO replace this with good component
-    return (
-      <View>
-        <Text>No packages!</Text>
-      </View>
-    );
+    return <ListEmptyComponent />;
   }
+
   return (
     <View style={styles.container}>
       <FlashList
         showsVerticalScrollIndicator={false}
         data={packages}
         estimatedItemSize={packages?.length}
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         renderItem={({ item: packageObject }) => (
           <PackageItemLarge packageObject={packageObject} />
