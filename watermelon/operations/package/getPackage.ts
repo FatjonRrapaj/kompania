@@ -12,7 +12,6 @@ export const findPackage = async (
     const existingPackage = await packagesCollection.find(uid);
     return existingPackage as PackageModel;
   } catch (error) {
-    console.log("findPackage error: ", error);
     return undefined;
   }
 };
