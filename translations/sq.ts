@@ -45,6 +45,7 @@ export default {
     pending: "Në pritje",
     completed: "Përfunduar",
     problematic: "Problematike",
+    client: "Klienti: ",
   },
   createPackage: {
     receiverDetails: "Detajet e Marrësit",

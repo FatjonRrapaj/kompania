@@ -45,7 +45,9 @@ export default {
     pending: "Pending",
     completed: "Completed",
     problematic: "Problematic",
+    client: "Client: ",
   },
+
   createPackage: {
     receiverDetails: "Receiver Details",
     receiverNamePlaceHolder: "Receiver Name (auto suggestion)",

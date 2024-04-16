@@ -5,6 +5,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import { observePackages } from "@/watermelon/operations/package";
 import PackageModel from "@/watermelon/models/Package";
+import PackageItemLarge from "./PackageItemLarge";
 
 interface PackagesListProps {
   packages: PackageModel[];
@@ -13,12 +14,12 @@ interface PackagesListProps {
 const PackagesListComponent = ({ packages }: PackagesListProps) => {
   return (
     <View style={styles.container}>
-      <Text>PackagesList</Text>
       <FlashList
         data={packages}
         estimatedItemSize={packages.length}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({ item: packageObject }) => (
-          <Text>{packageObject.packageName}</Text>
+          <PackageItemLarge packageObject={packageObject} />
         )}
       />
     </View>
@@ -34,5 +35,5 @@ const PackagesList = enhance(PackagesListComponent);
 export default PackagesList;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { flex: 1 },
 });
