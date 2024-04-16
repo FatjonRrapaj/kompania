@@ -7,12 +7,10 @@ import { Collections } from "@/constants/Firestore";
 import { QuerySnapshot, collection, onSnapshot } from "firebase/firestore";
 import { getCompanyRef } from "@/api/company";
 import { Package } from "@/api/package";
-import {
-  findPackage,
-  createPackageFromFirebasePackage,
-  updateExistingPackage,
-  deleteExistingPackage,
-} from "@/watermelon/operations/package";
+import { findPackage } from "@/watermelon/operations/package/getPackage";
+import { deleteExistingPackage } from "@/watermelon/operations/package/deletePackage";
+import { createPackageFromFirebasePackage } from "@/watermelon/operations/package/createPackage";
+import { updateExistingPackage } from "@/watermelon/operations/package/updatePackage";
 
 const PackagesChangesListener = () => {
   const user = useAuthStore((state) => state.user);

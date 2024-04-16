@@ -1,7 +1,14 @@
-import PackageModel from "@/watermelon/models/Package";
-import { FlashList } from "@shopify/flash-list";
 import { useEffect } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { View } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import { withObservables } from "@nozbe/watermelondb/react";
+
+import { Company } from "@/api/company";
+import useAuthStore from "@/store/auth";
+import { PackageStatus } from "@/api/package";
+import useCompanyStore from "@/store/company";
+import { observePackages } from "@/watermelon/operations/package/getPackage";
+import PackageModel from "@/watermelon/models/Package";
 import {
   ItemLoaderList,
   ListEmptyComponent,
@@ -11,12 +18,6 @@ import GreetingComponent from "./Greeting";
 import PackagesOverView from "./PackagesOverview";
 import PackageActions from "./PackageActions";
 import PackagesListHeader from "./PackagesListHeader";
-import { Company } from "@/api/company";
-import useAuthStore from "@/store/auth";
-import { PackageStatus } from "@/api/package";
-import useCompanyStore from "@/store/company";
-import { withObservables } from "@nozbe/watermelondb/react";
-import { observePackages } from "@/watermelon/operations/package";
 
 interface PackageListProps {
   packages: PackageModel[];
@@ -27,6 +28,7 @@ const PackagesListComponent = ({ packages }: PackageListProps) => {
     //TODO: go to packages w status filter as parameter
   };
 
+  //TODO: implement loading
   const loadingPackages = false;
   const user = useAuthStore((store) => store.user);
   const profile = useAuthStore((store) => store.profile);
@@ -51,7 +53,7 @@ const PackagesListComponent = ({ packages }: PackageListProps) => {
   return (
     <FlashList
       showsVerticalScrollIndicator={false}
-      keyExtractor={(item, index) => item.id}
+      keyExtractor={(item) => item.id}
       renderItem={({ item: packageObject }) => (
         <SmallPackageItem packageObject={packageObject} />
       )}

@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { FlashList } from "@shopify/flash-list";
 
-import { observePackages } from "@/watermelon/operations/package";
+import { observePackages } from "@/watermelon/operations/package/getPackage";
 import PackageModel from "@/watermelon/models/Package";
 import PackageItemLarge from "./PackageItemLarge";
 
@@ -13,7 +13,7 @@ interface PackagesListProps {
 
 const PackagesListComponent = ({ packages }: PackagesListProps) => {
   if (!packages?.length) {
-    //TODO r
+    //TODO replace this with good component
     return (
       <View>
         <Text>No packages!</Text>
