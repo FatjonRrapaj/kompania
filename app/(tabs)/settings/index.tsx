@@ -52,7 +52,7 @@ export default function TabTwoScreen() {
       <GiantButton
         title="Push PACKAGES For Last 2 Months"
         icon="TotalPackages"
-        onPress={() => handlePushPackagesButtonPress(1)}
+        onPress={() => handlePushPackagesButtonPress(2)}
       ></GiantButton>
 
       <Pressable

@@ -25,12 +25,11 @@ export const observePackages = () =>
   packagesCollection.query(Q.sortBy("updatedAtDate", Q.desc)).observe();
 
 export const observeLastWeekPackages = () => {
-  const currentTimestamp = new Date().getTime();
-  const lastWeekTimestamp = currentTimestamp - 7 * 24 * 60 * 60 * 1000;
+  const lastWeekTimeStamp = new Date().setDate(new Date().getDate() - 7);
 
   return packagesCollection
     .query(
-      Q.where("updatedAtDate", Q.gte(lastWeekTimestamp)),
+      Q.where("updatedAtDate", Q.gte(lastWeekTimeStamp)),
       Q.sortBy("updatedAtDate", Q.desc)
     )
     .observe();

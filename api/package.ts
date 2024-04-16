@@ -82,7 +82,6 @@ export async function pushMockPackages(
   );
 
   const currentDate = new Date();
-  currentDate.setDate(1);
   currentDate.setMonth(currentDate.getMonth() - previousMonths);
   const timeStamp = currentDate.getTime();
 
