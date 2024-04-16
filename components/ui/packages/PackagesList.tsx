@@ -35,7 +35,7 @@ const PackagesListComponent = ({ packages }: PackagesListProps) => {
   );
 };
 
-const enhance = withObservables([], () => ({
+const enhance = withObservables(["packages"], () => ({
   packages: observePackages(),
 }));
 

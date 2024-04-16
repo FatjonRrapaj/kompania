@@ -7,12 +7,15 @@ import i18next from "i18next";
 import { Text, View, StyleSheet } from "react-native";
 import PackageStatusTimeline from "./PackageStatusTimeline";
 import { PackageTimelineStatus } from "@/api/package";
+import { withObservables } from "@nozbe/watermelondb/react";
 
 interface PackageItemLargeProps {
   packageObject: PackageModel;
 }
 
-const PackageItemLarge = ({ packageObject }: PackageItemLargeProps) => {
+const PackageItemLargeComponent = ({
+  packageObject,
+}: PackageItemLargeProps) => {
   console.log("packageObject: ", packageObject);
   return (
     <View style={styles.container}>
@@ -28,6 +31,11 @@ const PackageItemLarge = ({ packageObject }: PackageItemLargeProps) => {
   );
 };
 
+const enhance = withObservables(["packageObject"], ({ packageObject }) => ({
+  packageObject,
+}));
+
+const PackageItemLarge = enhance(PackageItemLargeComponent);
 export default PackageItemLarge;
 
 const styles = StyleSheet.create({
