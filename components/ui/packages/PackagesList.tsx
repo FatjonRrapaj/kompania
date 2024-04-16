@@ -12,11 +12,19 @@ interface PackagesListProps {
 }
 
 const PackagesListComponent = ({ packages }: PackagesListProps) => {
+  if (!packages?.length) {
+    //TODO r
+    return (
+      <View>
+        <Text>No packages!</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <FlashList
         data={packages}
-        estimatedItemSize={packages.length}
+        estimatedItemSize={packages?.length}
         keyExtractor={(item, index) => item.id}
         ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         renderItem={({ item: packageObject }) => (

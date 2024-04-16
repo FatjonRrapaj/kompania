@@ -35,13 +35,13 @@ export type PackageTimelineStatus =
   | "returned";
 
 export interface PackageTimeline {
-  createdAt?: number;
-  updatedAtDate?: number;
-  postedAt?: number;
-  acceptedAt?: number;
-  pickedAt?: number;
-  deliveredAt?: number;
-  returnedAt?: number;
+  createdAtDate?: string;
+  updatedAtDate?: string;
+  postedAtDate?: string;
+  acceptedAtDate?: string;
+  pickedAtDate?: string;
+  deliveredAtDate?: string;
+  returnedAtDate?: string;
 }
 
 export interface Package {

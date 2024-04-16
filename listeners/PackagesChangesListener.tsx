@@ -11,6 +11,7 @@ import {
   findPackage,
   createPackageFromFirebasePackage,
   updateExistingPackage,
+  deleteExistingPackage,
 } from "@/watermelon/operations/package";
 
 const PackagesChangesListener = () => {
@@ -68,7 +69,7 @@ const PackagesChangesListener = () => {
             break;
           case "removed":
             if (existingPackage) {
-              await existingPackage.destroyPermanently();
+              await deleteExistingPackage(existingPackage);
             }
             break;
           default:

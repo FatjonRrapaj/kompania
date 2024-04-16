@@ -1,4 +1,4 @@
-import { Body1Bold, Body2 } from "@/components/StyledText";
+import { Body1Bold, Body2, Caption } from "@/components/StyledText";
 import { gray } from "@/constants/Colors";
 import PackageModel from "@/watermelon/models/Package";
 import * as React from "react";
@@ -22,6 +22,7 @@ const PackageItemLarge = ({ packageObject }: PackageItemLargeProps) => {
       <PackageStatusTimeline
         status={packageObject.packageTimeLineStatus as PackageTimelineStatus}
       />
+      <Caption>{packageObject.createdAtDate}</Caption>
     </View>
   );
 };

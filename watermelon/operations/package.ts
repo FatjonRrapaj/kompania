@@ -80,12 +80,15 @@ export const createPackageFromFirebasePackage = async (
           firebasePackageObject.companyAddress?.description;
 
         //package timeline
-        newRecord.createdAt = firebasePackageObject.timeline?.createdAt;
-        newRecord.postedAt = firebasePackageObject.timeline?.postedAt;
-        newRecord.acceptedAt = firebasePackageObject.timeline?.acceptedAt;
-        newRecord.pickedAt = firebasePackageObject.timeline?.pickedAt;
-        newRecord.deliveredAt = firebasePackageObject.timeline?.deliveredAt;
-        newRecord.returnedAt = firebasePackageObject.timeline?.returnedAt;
+        newRecord.createdAtDate = firebasePackageObject.timeline?.createdAtDate;
+        newRecord.postedAtDate = firebasePackageObject.timeline?.postedAtDate;
+        newRecord.acceptedAtDate =
+          firebasePackageObject.timeline?.acceptedAtDate;
+        newRecord.pickedAtDate = firebasePackageObject.timeline?.pickedAtDate;
+        newRecord.deliveredAtDate =
+          firebasePackageObject.timeline?.deliveredAtDate;
+        newRecord.returnedAtDate =
+          firebasePackageObject.timeline?.returnedAtDate;
         newRecord.updatedAtDate = firebasePackageObject.timeline?.updatedAtDate;
       });
     });
@@ -178,18 +181,18 @@ export const updateExistingPackage = async (
           firebasePackageObject.companyAddress?.description;
 
         //package dates
-        existingWatermelonPackage.createdAt =
-          firebasePackageObject.timeline?.createdAt;
-        existingWatermelonPackage.postedAt =
-          firebasePackageObject.timeline?.postedAt;
-        existingWatermelonPackage.acceptedAt =
-          firebasePackageObject.timeline?.acceptedAt;
-        existingWatermelonPackage.pickedAt =
-          firebasePackageObject.timeline?.pickedAt;
-        existingWatermelonPackage.deliveredAt =
-          firebasePackageObject.timeline?.deliveredAt;
-        existingWatermelonPackage.returnedAt =
-          firebasePackageObject.timeline?.returnedAt;
+        existingWatermelonPackage.createdAtDate =
+          firebasePackageObject.timeline?.createdAtDate;
+        existingWatermelonPackage.postedAtDate =
+          firebasePackageObject.timeline?.postedAtDate;
+        existingWatermelonPackage.acceptedAtDate =
+          firebasePackageObject.timeline?.acceptedAtDate;
+        existingWatermelonPackage.pickedAtDate =
+          firebasePackageObject.timeline?.pickedAtDate;
+        existingWatermelonPackage.deliveredAtDate =
+          firebasePackageObject.timeline?.deliveredAtDate;
+        existingWatermelonPackage.returnedAtDate =
+          firebasePackageObject.timeline?.returnedAtDate;
       });
     });
   } catch (error) {
@@ -202,6 +205,14 @@ export const updateExistingPackage = async (
       existingPackage
     );
   }
+};
+
+export const deleteExistingPackage = async (existingPackage: PackageModel) => {
+  try {
+    await watermelonDB.write(async () => {
+      existingPackage.destroyPermanently();
+    });
+  } catch (error) {}
 };
 
 export const getAllPackagesCount = async () => {

@@ -13,7 +13,7 @@ class CustomerModel extends Model {
   @text("addressDescription") addressDescription?: string;
   @text("notes") notes?: string;
   @text("profileLink") profileLink?: string;
-  @text("createdAt") createdAt!: number;
+  @text("createdAtDate") createdAtDate!: number;
 }
 
 export default CustomerModel;

@@ -25,12 +25,12 @@ const schema = appSchema({
         { name: "packageStatus", type: "string" },
         { name: "packageTimeLineStatus", type: "string" },
 
-        { name: "createdAt", type: "number" },
-        { name: "postedAt", type: "number" },
-        { name: "acceptedAt", type: "number", isOptional: true },
-        { name: "pickedAt", type: "number", isOptional: true },
-        { name: "deliveredAt", type: "number", isOptional: true },
-        { name: "returnedAt", type: "number", isOptional: true },
+        { name: "createdAtDate", type: "number" },
+        { name: "postedAtDate", type: "number" },
+        { name: "acceptedAtDate", type: "number", isOptional: true },
+        { name: "pickedAtDate", type: "number", isOptional: true },
+        { name: "deliveredAtDate", type: "number", isOptional: true },
+        { name: "returnedAtDate", type: "number", isOptional: true },
         { name: "updatedAtDate", type: "number", isOptional: true },
 
         { name: "courierName", type: "string", isOptional: true },

@@ -41,12 +41,10 @@ const StatusDot = ({ index, status }: StatusPartProps) => {
   if (index <= statusIndexMapper[status]) {
     if (statusIndexMapper[status] === index) {
       return (
-        <>
-          <View style={styles.iconContainer}>
-            <View style={styles.iconContainerOverlay} />
-            {statusDotIconMapper[status]}
-          </View>
-        </>
+        <View style={styles.iconContainer}>
+          <View style={styles.iconContainerOverlay} />
+          {statusDotIconMapper[status]}
+        </View>
       );
     } else {
       return <View style={[styles.dot, { backgroundColor: primary[500] }]} />;
@@ -69,12 +67,12 @@ const PackageStatusTimeline = ({ status }: PackageStatusTimelineProps) => {
     <View style={styles.container}>
       {[1, 2, 3, 4].map((_, index) => {
         return (
-          <>
+          <React.Fragment key={index}>
             <StatusDot index={index} status={status} />
             {index >= 0 && index < 3 && (
               <StatusLine index={index} status={status} />
             )}
-          </>
+          </React.Fragment>
         );
       })}
     </View>
