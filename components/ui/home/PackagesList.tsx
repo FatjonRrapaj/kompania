@@ -73,7 +73,7 @@ const PackagesListComponent = ({ packages }: PackageListProps) => {
       renderItem={({ item: packageObject }) => (
         <SmallPackageItem packageObject={packageObject} />
       )}
-      estimatedItemSize={packages.length}
+      estimatedItemSize={100}
       data={packages ?? []}
       ListHeaderComponent={
         <>
