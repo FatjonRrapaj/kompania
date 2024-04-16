@@ -69,14 +69,27 @@ export interface Package {
   companyAddress?: CompanyAddress;
 }
 
-export async function pushMockPackages(companyID: string) {
+export type PreviousMonths = 2 | 1 | 0;
+
+export async function pushMockPackages(
+  companyID: string,
+  previousMonths: PreviousMonths = 0
+) {
   const companyRef = getCompanyRef(companyID);
   const last7DaysPackagesRef = collection(
     companyRef,
     Collections.last7DaysPackages
   );
 
+  const currentDate = new Date();
+  currentDate.setDate(1);
+  currentDate.setMonth(currentDate.getMonth() - previousMonths);
+  const timeStamp = currentDate.getTime();
+
+  const mockPackageObjectWithUpdatedAt = { ...mockPackageObject };
+  mockPackageObjectWithUpdatedAt.timeline!.updatedAtDate = timeStamp;
+
   for (let i = 0; i < 1; i++) {
-    await addDoc(last7DaysPackagesRef, mockPackageObject);
+    await addDoc(last7DaysPackagesRef, mockPackageObjectWithUpdatedAt);
   }
 }
