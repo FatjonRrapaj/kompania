@@ -17,6 +17,8 @@ import ProblematicPackages from "./problematicPackages.svg";
 import AddPackage from "./addPackage.svg";
 import NoPackage from "./noPackage.svg";
 import PackageSize from "./packageSize.svg";
+import WhiteBox from "./whiteBox.svg";
+import WhiteTruck from "./whiteTruck.svg";
 
 //actions
 import Scan from "./scan.svg";
@@ -39,6 +41,8 @@ const IconConfig = {
   ProblematicPackages,
   AddPackage,
   PackageSize,
+  WhiteBox,
+  WhiteTruck,
   Scan,
   CloseCircle,
   Package,
