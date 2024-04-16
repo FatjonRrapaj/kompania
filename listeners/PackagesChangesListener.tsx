@@ -30,18 +30,7 @@ const PackagesChangesListener = () => {
           uid: change.doc.id,
         } as Package;
 
-        console.log(
-          "firebasePackageObject timeline*: ",
-          firebasePackageObject?.timeline
-        );
-
         const existingPackage = await findPackage(firebasePackageObject.uid!);
-        console.log(
-          "existingPackage: ",
-          existingPackage?.packageName,
-          existingPackage?.courierName,
-          existingPackage?.createdAtDate
-        );
 
         switch (change?.type) {
           case "added":
@@ -62,15 +51,11 @@ const PackagesChangesListener = () => {
             break;
           case "modified":
             if (existingPackage) {
-              if (
-                existingPackage.updatedAtDate !==
-                firebasePackageObject.timeline?.updatedAtDate
-              ) {
-                await updateExistingPackage(
-                  existingPackage,
-                  firebasePackageObject
-                );
-              }
+              console.log("existingPackage: ", existingPackage);
+              await updateExistingPackage(
+                existingPackage,
+                firebasePackageObject
+              );
             }
             break;
           case "removed":

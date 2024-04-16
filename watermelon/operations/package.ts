@@ -81,10 +81,7 @@ export const createPackageFromFirebasePackage = async (
 
         //package timeline
         newRecord.createdAtDate = firebasePackageObject.timeline?.createdAtDate;
-        console.log(
-          " firebasePackageObject.timeline?.createdAtDate: ",
-          firebasePackageObject.timeline?.createdAtDate?.toString()
-        );
+
         newRecord.postedAtDate = firebasePackageObject.timeline?.postedAtDate;
         newRecord.acceptedAtDate =
           firebasePackageObject.timeline?.acceptedAtDate;
@@ -97,12 +94,7 @@ export const createPackageFromFirebasePackage = async (
       });
     });
   } catch (error) {
-    console.log(
-      "createPackageFromFirebasePackage error: ",
-      error
-      //   "package: ",
-      //   firebasePackageObject
-    );
+    console.log("createPackageFromFirebasePackage error: ", error);
   }
 };
 
@@ -187,7 +179,6 @@ export const updateExistingPackage = async (
         //package dates
         existingWatermelonPackage.createdAtDate =
           firebasePackageObject.timeline?.createdAtDate;
-
         existingWatermelonPackage.postedAtDate =
           firebasePackageObject.timeline?.postedAtDate;
         existingWatermelonPackage.acceptedAtDate =
