@@ -4,6 +4,7 @@ import {
   initializeAuth,
   Auth,
   getReactNativePersistence,
+  //TODO: This is a TS error, ignore for now
   browserLocalPersistence,
 } from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
