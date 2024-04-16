@@ -1,4 +1,4 @@
-import { StyleSheet, View as RnView } from "react-native";
+import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import IconConfig from "@/assets/svg/IconConfig";
@@ -17,11 +17,17 @@ import Pressable from "@/components/Pressable";
 
 import { Skeleton, Spacer } from "../../Skeleton";
 import { Skeleton as DefaultSkeleton } from "moti/skeleton";
-import { Package } from "@/api/package";
+import PackageModel from "@/watermelon/models/Package";
+import { withObservables } from "@nozbe/watermelondb/react";
+import { PackageStatus } from "@/api/package";
 
-interface SmallPackageItemProps extends Package {}
+interface SmallPackageItemProps {
+  packageObject: PackageModel;
+}
 
-const SmallPackageItem = (props: SmallPackageItemProps) => {
+const SmallPackageItemComponent = ({
+  packageObject,
+}: SmallPackageItemProps) => {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.package) => t(`package:${key}`);
 
@@ -31,21 +37,32 @@ const SmallPackageItem = (props: SmallPackageItemProps) => {
         <IconConfig.Package />
       </View>
       <View style={styles.infoContainer}>
-        <Body1Bold>{props.customer.name}</Body1Bold>
-        <Caption>{props.creationDate.toLocaleDateString()}</Caption>
+        <Body1Bold>{packageObject.receiverName}</Body1Bold>
+        <Caption>{packageObject.updatedAtDate}</Caption>
       </View>
       <View style={styles.priceContainer}>
         <Body2Bold>
-          {props.currency.symbol}
-          {props.price}
+          {packageObject.currencySymbol}
+          {packageObject.paymentAmount}
         </Body2Bold>
-        <Caption style={{ color: normalColorMapper[props.status] }}>
-          {translate(props.status)}
+        <Caption
+          style={{
+            color:
+              normalColorMapper[packageObject.packageStatus as PackageStatus],
+          }}
+        >
+          {translate(packageObject.packageStatus as PackageStatus)}
         </Caption>
       </View>
     </Pressable>
   );
 };
+
+const enhance = withObservables(["packageObject"], ({ packageObject }) => ({
+  packageObject,
+}));
+
+const SmallPackageItem = enhance(SmallPackageItemComponent);
 
 const SmallPackageItemLoader = () => {
   return (

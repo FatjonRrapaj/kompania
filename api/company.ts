@@ -10,9 +10,14 @@ interface Totals {
   problematic: number;
 }
 
-interface CompanyLocation {
+export interface CompanyAddress {
   coordinates: GeoPoint;
   name: string;
+  description?: string;
+}
+
+export interface CustomerAddress {
+  coordinates?: GeoPoint;
   description?: string;
 }
 
@@ -22,20 +27,22 @@ interface CompanyTotals {
 }
 
 export interface Company {
+  uid: string;
   email: string;
   companyName: string;
   totals: CompanyTotals;
-  locations: CompanyLocation[];
+  locations: CompanyAddress[];
 }
 
 export interface Customer {
+  uid?: string;
   name: string;
   phoneNumber: string;
-  address: string;
+  profileUrl?: string;
+  //TODO: never save the notes on the customers location.
   notes?: string;
-  profileLink?: string;
+  receiverLocation?: CustomerAddress;
 }
-
 export const getCompanyRef = (companyID: string) =>
   doc(db, Collections.companies, companyID);
 
@@ -47,8 +54,9 @@ export const callGetCompany = async ({
   try {
     const companyDocReference = getCompanyRef(companyID);
     const companyDocSnapshot = await getDoc(companyDocReference);
+    const uid = companyDocSnapshot.id;
     if (companyDocSnapshot.exists()) {
-      return companyDocSnapshot.data() as Company;
+      return { ...companyDocSnapshot.data(), uid } as Company;
     } else {
       throw generateCustomError({ errorKey: "companyIdNotFound" });
     }

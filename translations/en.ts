@@ -45,6 +45,12 @@ export default {
     pending: "Pending",
     completed: "Completed",
     problematic: "Problematic",
+    client: "Client: ",
+    available: "Ready",
+    accepted: "Accepted",
+    picked: "Picked",
+    delivered: "Delivered",
+    returned: "Returned",
   },
   createPackage: {
     receiverDetails: "Receiver Details",

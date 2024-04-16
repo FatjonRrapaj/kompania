@@ -45,6 +45,12 @@ export default {
     pending: "Në pritje",
     completed: "Përfunduar",
     problematic: "Problematike",
+    client: "Klienti: ",
+    available: "Gati",
+    accepted: "Pranuar",
+    picked: "Marrë",
+    delivered: "Dorëzuar",
+    returned: "Kthyer",
   },
   createPackage: {
     receiverDetails: "Detajet e Marrësit",

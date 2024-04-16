@@ -1,0 +1,100 @@
+import { useEffect, useRef } from "react";
+
+import { auth } from "@/utils/firebase";
+import useAuthStore from "@/store/auth";
+import useCompanyStore from "@/store/company";
+import { Collections } from "@/constants/Firestore";
+import { QuerySnapshot, collection, onSnapshot } from "firebase/firestore";
+import { getCompanyRef } from "@/api/company";
+import { Package } from "@/api/package";
+import { findPackage } from "@/watermelon/operations/package/getPackage";
+import { deleteExistingPackage } from "@/watermelon/operations/package/deletePackage";
+import { createPackageFromFirebasePackage } from "@/watermelon/operations/package/createPackage";
+import { updateExistingPackage } from "@/watermelon/operations/package/updatePackage";
+
+const PackagesChangesListener = () => {
+  const user = useAuthStore((state) => state.user);
+  const company = useCompanyStore((state) => state.company);
+
+  const handleSnapshot = async (snapshot: QuerySnapshot) => {
+    try {
+      snapshot.docChanges().forEach(async (change) => {
+        if (!change.doc.exists) {
+          return;
+        }
+
+        const firebasePackageObject = {
+          ...change.doc.data(),
+          uid: change.doc.id,
+        } as Package;
+
+        const existingPackage = await findPackage(firebasePackageObject.uid!);
+
+        switch (change?.type) {
+          case "added":
+            if (existingPackage) {
+              if (
+                existingPackage.updatedAtDate !==
+                firebasePackageObject.timeline?.updatedAtDate
+              ) {
+                await updateExistingPackage(
+                  existingPackage,
+                  firebasePackageObject
+                );
+              }
+              return;
+            } else {
+              await createPackageFromFirebasePackage(firebasePackageObject);
+            }
+            break;
+          case "modified":
+            if (existingPackage) {
+              console.log("existingPackage: ", existingPackage);
+              await updateExistingPackage(
+                existingPackage,
+                firebasePackageObject
+              );
+            }
+            break;
+          case "removed":
+            if (existingPackage) {
+              await deleteExistingPackage(existingPackage);
+            }
+            break;
+          default:
+            break;
+        }
+      });
+    } catch (error) {
+      console.log("error@handleSnapshot: ", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!auth?.currentUser || !user) {
+      console.log("PackagesChangesListener Not logged in****");
+      return;
+    }
+    if (!company?.uid) {
+      console.log("PackagesChangesListener company not okkkk in****");
+      return;
+    }
+
+    let unsubscribe: any;
+
+    const companyRef = getCompanyRef(company.uid);
+    const last7DaysPackagesRef = collection(
+      companyRef,
+      Collections.last7DaysPackages
+    );
+    unsubscribe = onSnapshot(last7DaysPackagesRef, handleSnapshot);
+
+    return () => {
+      unsubscribe?.();
+    };
+  }, [user, company]);
+
+  return <></>;
+};
+
+export default PackagesChangesListener;
