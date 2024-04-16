@@ -3,11 +3,12 @@ import watermelonDB from "..";
 import PackageModel from "../models/Package";
 import { Q } from "@nozbe/watermelondb";
 
+const packagesCollection = watermelonDB.get<PackageModel>("packages");
+
 export const findPackage = async (
   uid: string
 ): Promise<PackageModel | undefined> => {
   try {
-    const packagesCollection = watermelonDB.get("packages");
     const existingPackage = await packagesCollection.find(uid);
     return existingPackage as PackageModel;
   } catch (error) {
@@ -21,76 +22,72 @@ export const createPackageFromFirebasePackage = async (
 ) => {
   try {
     await watermelonDB.write(async () => {
-      watermelonDB.collections
-        .get<PackageModel>("packages")
-        .create((newRecord) => {
-          //identification
-          newRecord._raw.id = firebasePackageObject.uid!;
-          newRecord.packageName = firebasePackageObject.packageName;
-          newRecord.packageScanId = firebasePackageObject.scanId;
+      packagesCollection.create((newRecord) => {
+        //identification
+        newRecord._raw.id = firebasePackageObject.uid!;
+        newRecord.packageName = firebasePackageObject.packageName;
+        newRecord.packageScanId = firebasePackageObject.scanId;
 
-          //package status
-          newRecord.packageStatus = firebasePackageObject.status;
-          newRecord.packageTimeLineStatus =
-            firebasePackageObject.timelineStatus;
+        //package status
+        newRecord.packageStatus = firebasePackageObject.status;
+        newRecord.packageTimeLineStatus = firebasePackageObject.timelineStatus;
 
-          //receiver
-          newRecord.receiverId = firebasePackageObject?.receiver?.uid;
-          newRecord.receiverName = firebasePackageObject.receiver?.name;
-          newRecord.receiverPhoneNumber =
-            firebasePackageObject.receiver?.phoneNumber;
-          newRecord.receiverProfileUrl =
-            firebasePackageObject.receiver?.profileUrl;
-          newRecord.notesForReceiver = firebasePackageObject.receiver?.notes;
-          newRecord.receiverAddressLat =
-            firebasePackageObject.receiver?.receiverLocation?.coordinates?.latitude;
-          newRecord.receiverAddressLng =
-            firebasePackageObject.receiver?.receiverLocation?.coordinates?.longitude;
-          newRecord.receiverAddressDescription =
-            firebasePackageObject.receiver?.receiverLocation?.description;
+        //receiver
+        newRecord.receiverId = firebasePackageObject?.receiver?.uid;
+        newRecord.receiverName = firebasePackageObject.receiver?.name;
+        newRecord.receiverPhoneNumber =
+          firebasePackageObject.receiver?.phoneNumber;
+        newRecord.receiverProfileUrl =
+          firebasePackageObject.receiver?.profileUrl;
+        newRecord.notesForReceiver = firebasePackageObject.receiver?.notes;
+        newRecord.receiverAddressLat =
+          firebasePackageObject.receiver?.receiverLocation?.coordinates?.latitude;
+        newRecord.receiverAddressLng =
+          firebasePackageObject.receiver?.receiverLocation?.coordinates?.longitude;
+        newRecord.receiverAddressDescription =
+          firebasePackageObject.receiver?.receiverLocation?.description;
 
-          //package courier
-          newRecord.courierId = firebasePackageObject.courier?.uid;
-          newRecord.courierName = firebasePackageObject?.courier?.name;
-          newRecord.courierPhoneNumber =
-            firebasePackageObject?.courier?.phoneNumber;
-          newRecord.courierProfilePicture =
-            firebasePackageObject?.courier?.profilePicture;
+        //package courier
+        newRecord.courierId = firebasePackageObject.courier?.uid;
+        newRecord.courierName = firebasePackageObject?.courier?.name;
+        newRecord.courierPhoneNumber =
+          firebasePackageObject?.courier?.phoneNumber;
+        newRecord.courierProfilePicture =
+          firebasePackageObject?.courier?.profilePicture;
 
-          //package size & speficics
-          newRecord.packageHeight = firebasePackageObject.packageDetails.height;
-          newRecord.packageWeight = firebasePackageObject.packageDetails.weight;
-          newRecord.packageWidth = firebasePackageObject.packageDetails.width;
-          newRecord.packageLength = firebasePackageObject.packageDetails.length;
-          newRecord.isFragile = firebasePackageObject.packageDetails.isFragile;
-          newRecord.canBeOpened =
-            firebasePackageObject.packageDetails.canBeOpened;
+        //package size & speficics
+        newRecord.packageHeight = firebasePackageObject.packageDetails.height;
+        newRecord.packageWeight = firebasePackageObject.packageDetails.weight;
+        newRecord.packageWidth = firebasePackageObject.packageDetails.width;
+        newRecord.packageLength = firebasePackageObject.packageDetails.length;
+        newRecord.isFragile = firebasePackageObject.packageDetails.isFragile;
+        newRecord.canBeOpened =
+          firebasePackageObject.packageDetails.canBeOpened;
 
-          //package price
-          newRecord.paymentAmount = firebasePackageObject.paymentAmount;
-          newRecord.shippingCost = firebasePackageObject.shippingCost;
-          newRecord.cashOnDelivery = firebasePackageObject.cashOnDelivery;
-          newRecord.currencyName = firebasePackageObject?.currency?.name;
-          newRecord.currencySymbol = firebasePackageObject?.currency?.symbol;
+        //package price
+        newRecord.paymentAmount = firebasePackageObject.paymentAmount;
+        newRecord.shippingCost = firebasePackageObject.shippingCost;
+        newRecord.cashOnDelivery = firebasePackageObject.cashOnDelivery;
+        newRecord.currencyName = firebasePackageObject?.currency?.name;
+        newRecord.currencySymbol = firebasePackageObject?.currency?.symbol;
 
-          //package company location
-          newRecord.companyLocationLat =
-            firebasePackageObject.companyAddress?.coordinates.latitude;
-          newRecord.companyLocationLng =
-            firebasePackageObject.companyAddress?.coordinates.longitude;
-          newRecord.companyLocationDescription =
-            firebasePackageObject.companyAddress?.description;
+        //package company location
+        newRecord.companyLocationLat =
+          firebasePackageObject.companyAddress?.coordinates.latitude;
+        newRecord.companyLocationLng =
+          firebasePackageObject.companyAddress?.coordinates.longitude;
+        newRecord.companyLocationDescription =
+          firebasePackageObject.companyAddress?.description;
 
-          //package timeline
-          newRecord.createdAt = firebasePackageObject.timeline?.createdAt;
-          newRecord.postedAt = firebasePackageObject.timeline?.postedAt;
-          newRecord.acceptedAt = firebasePackageObject.timeline?.acceptedAt;
-          newRecord.pickedAt = firebasePackageObject.timeline?.pickedAt;
-          newRecord.deliveredAt = firebasePackageObject.timeline?.deliveredAt;
-          newRecord.returnedAt = firebasePackageObject.timeline?.returnedAt;
-          newRecord.updatedAtDate =
-            firebasePackageObject.timeline?.updatedAtDate;
-        });
+        //package timeline
+        newRecord.createdAt = firebasePackageObject.timeline?.createdAt;
+        newRecord.postedAt = firebasePackageObject.timeline?.postedAt;
+        newRecord.acceptedAt = firebasePackageObject.timeline?.acceptedAt;
+        newRecord.pickedAt = firebasePackageObject.timeline?.pickedAt;
+        newRecord.deliveredAt = firebasePackageObject.timeline?.deliveredAt;
+        newRecord.returnedAt = firebasePackageObject.timeline?.returnedAt;
+        newRecord.updatedAtDate = firebasePackageObject.timeline?.updatedAtDate;
+      });
     });
   } catch (error) {
     console.log(
@@ -206,3 +203,15 @@ export const updateExistingPackage = async (
     );
   }
 };
+
+export const getAllPackagesCount = async () => {
+  const count = packagesCollection.query().fetchCount();
+  return count;
+};
+
+export const observePackages = () =>
+  packagesCollection.query(Q.sortBy("updatedAtDate", Q.desc)).observe();
+
+//TODO: I think from here you can change the query type and fetch specific packages
+// export const observePackages = () =>
+//   packagesCollection.query(Q.sortBy("updatedAtDate", Q.desc)).observe();

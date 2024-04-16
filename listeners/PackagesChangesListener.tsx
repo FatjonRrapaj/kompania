@@ -20,7 +20,6 @@ const PackagesChangesListener = () => {
   const handleSnapshot = async (snapshot: QuerySnapshot) => {
     try {
       snapshot.docChanges().forEach(async (change) => {
-        console.log("change: ", change);
         if (!change.doc.exists) {
           return;
         }
