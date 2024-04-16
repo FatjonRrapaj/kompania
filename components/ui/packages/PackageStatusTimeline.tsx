@@ -26,7 +26,7 @@ const statusIndexMapper: StatusIndexMapper = {
   accepted: 2,
   picked: 2,
   delivered: 3,
-  returned: 1,
+  returned: 0,
 };
 
 const statusDotIconMapper: StatusDotIconMapperType = {
@@ -34,13 +34,11 @@ const statusDotIconMapper: StatusDotIconMapperType = {
   accepted: <IconConfig.WhiteTruck />,
   picked: <IconConfig.WhiteTruck />,
   delivered: <IconConfig.WhiteBoxDelivered />,
-  returned: <IconConfig.Sun />,
+  returned: <IconConfig.WhiteBoxReturned />,
 };
 
 const StatusDot = ({ index, status }: StatusPartProps) => {
-  if (index === 0) {
-    return <View style={[styles.dot, { backgroundColor: primary[500] }]} />;
-  } else if (index > 0 && index <= statusIndexMapper[status]) {
+  if (index <= statusIndexMapper[status]) {
     if (statusIndexMapper[status] === index) {
       return (
         <>
@@ -59,7 +57,7 @@ const StatusDot = ({ index, status }: StatusPartProps) => {
 };
 
 const StatusLine = ({ index, status }: StatusPartProps) => {
-  if (index === 0 || index <= statusIndexMapper[status] - 1) {
+  if (index <= statusIndexMapper[status] - 1) {
     return <View style={[styles.line, { backgroundColor: primary[500] }]} />;
   } else {
     return <View style={styles.line} />;
@@ -72,9 +70,9 @@ const PackageStatusTimeline = ({ status }: PackageStatusTimelineProps) => {
       {[1, 2, 3, 4].map((_, index) => {
         return (
           <>
-            <StatusDot index={index} status={"delivered"} />
+            <StatusDot index={index} status={status} />
             {index >= 0 && index < 3 && (
-              <StatusLine index={index} status={"delivered"} />
+              <StatusLine index={index} status={status} />
             )}
           </>
         );
