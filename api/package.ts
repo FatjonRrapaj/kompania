@@ -6,6 +6,7 @@ import {
   increment,
   runTransaction,
   serverTimestamp,
+  writeBatch,
 } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 import { db } from "@/utils/firebase";
@@ -167,44 +168,61 @@ export async function callCreatePackage(
       createdAt: serverTimestamp(),
     };
 
-    await runTransaction(db, async (transaction) => {
-      const companyRef = getCompanyRef(company.uid!);
-      const allTotalsRef = doc(companyRef, "totals", "allTotals");
-      const periodKey = `packages-${year}-${month}`;
-      const periodTotalsRef = doc(companyRef, "totals", periodKey);
+    const batch = writeBatch(db);
 
-      const packagesRef = doc(companyRef, Collections.packages);
-      const logsRef = doc(db, Collections.logs);
+    const aggregatorRef = doc(
+      db,
+      Collections.companies,
+      company.uid!,
+      Collections.aggregator
+    );
 
-      const availablePackagesRef = collection(
-        db,
-        Collections.availablePackages
-      );
-      const newAvailablePackage = doc(availablePackagesRef);
+    const companyRef = getCompanyRef(company.uid!);
 
-      transaction.set(
-        allTotalsRef,
-        {
+    const periodKey = `packages-${year}-${month}`;
+
+    const packageRefForCompany = doc(
+      db,
+      Collections.companies,
+      company.uid!,
+      Collections.packages
+    );
+    const logsRef = doc(db, Collections.logs);
+
+    const packageRefForAvailablePackages = doc(
+      db,
+      Collections.availablePackages
+    );
+
+    batch.set(
+      aggregatorRef,
+      {
+        totalPending: increment(1),
+      },
+      { merge: true }
+    );
+
+    batch.set(
+      companyRef,
+      {
+        totals: {
           pending: increment(1),
         },
-        { merge: true }
-      );
-
-      transaction.set(
-        periodTotalsRef,
-        {
+        [periodKey]: {
           pending: increment(1),
         },
-        { merge: true }
-      );
+      },
+      { merge: true }
+    );
 
-      transaction.set(packagesRef, packageToUpload);
-      transaction.set(newAvailablePackage, packageToUpload);
-      transaction.set(logsRef, packageLog);
+    batch.set(packageRefForCompany, packageToUpload);
+    batch.set(packageRefForAvailablePackages, packageToUpload);
+    batch.set(logsRef, packageLog);
 
-      //TODO: link to zustand, add loading & toast messages & error handling
-      //TODO: do the updatedAtListener.
-    });
+    await batch.commit();
+
+    //TODO: link to zustand, add loading & toast messages & error handling
+    //TODO: do the updatedAtListener.
   } catch (error) {
     throw error;
   }

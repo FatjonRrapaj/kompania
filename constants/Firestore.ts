@@ -4,4 +4,7 @@ export const Collections = {
   packages: "packages",
   availablePackages: "availablePackages",
   logs: "logs",
+  aggregator: "aggregator",
+  totals: "totals",
+  allTotals: "allTotals",
 };
