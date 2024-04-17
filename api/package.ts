@@ -15,6 +15,7 @@ import { CompanyAddress, getCompanyRef, Customer, Company } from "./company";
 import { mockPackageObject } from "@/mocks/packagesMock";
 import { FieldValue } from "react-hook-form";
 import { UserProfile } from "firebase/auth";
+import { CompanyUserProfile } from "./auth";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -76,7 +77,7 @@ export interface PackageLog {
   action: PackageLogAction;
   package: Package;
   company: Company;
-  user: UserProfile;
+  user: CompanyUserProfile;
   createdAt: FieldValue<Timestamp>;
 }
 
@@ -108,10 +109,10 @@ export interface Package {
 
 export type PreviousMonths = 2 | 1 | 0;
 
-export async function createPackage(
+export async function callCreatePackage(
   packageData: CreatePackageData,
   company: Company,
-  profile: UserProfile
+  profile: CompanyUserProfile
 ) {
   //TODO: the logs collection boi (the user who posted this & timestamps & everything.)
   //TODO: check internet connectivity before posting to make sure you are online, if not put as draft....
@@ -174,6 +175,8 @@ export async function createPackage(
       transaction.set(packagesRef, packageToUpload);
       transaction.set(newAvailablePackage, packageToUpload);
       transaction.set(logsRef, packageLog);
+      //TODO: link to zustand, add loading & toast messages & error handling
+      //TODO: do the updatedAtListener.
     });
   } catch (error) {
     throw error;
