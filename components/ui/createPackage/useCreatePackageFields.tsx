@@ -4,12 +4,26 @@ import validateField from "@/utils/form";
 import TextInput, { TextInputType } from "@/components/Form/TextInput";
 import { useEffect, useRef, useState } from "react";
 import en from "@/translations/en";
-import {
-  FieldValues,
-  UseFormResetField,
-  UseFormSetValue,
-} from "react-hook-form";
+import { UseFormResetField, UseFormSetValue } from "react-hook-form";
 import { Customer } from "@/api/company";
+
+export interface CreatePackageData {
+  receiverName: string;
+  phoneNumber: string;
+  profileLink: string;
+  address: string;
+  notesForReceiver: string;
+  packageId: string;
+  packageName: string;
+  packageWeight: string;
+  packageWidth: string;
+  packageLength: string;
+  packageHeight: string;
+  paymentAmount: string;
+  shippingCost: string;
+  cashOnDelivery: string;
+  notesForPackage: string;
+}
 
 type FormElementTypes =
   | "sectionLabel"
@@ -53,8 +67,8 @@ type CreatePackageFieldsType = Array<
 
 interface PackageFieldsProps {
   isStandardPackage: boolean;
-  resetField: UseFormResetField<FieldValues>;
-  setValue: UseFormSetValue<FieldValues>;
+  resetField: UseFormResetField<CreatePackageData>;
+  setValue: UseFormSetValue<CreatePackageData>;
 }
 
 function useCreatePackageFields({
@@ -95,7 +109,7 @@ function useCreatePackageFields({
 
     setValue("receiverName", name);
     setValue("phoneNumber", phoneNumber.toString());
-    setValue("address", receiverLocation?.description);
+    setValue("address", receiverLocation!.description!);
     if (profileUrl) {
       setValue("profileLink", profileUrl);
     }

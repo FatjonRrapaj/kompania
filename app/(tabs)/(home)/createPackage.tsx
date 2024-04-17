@@ -11,7 +11,9 @@ import { View } from "@/components/Themed";
 import globalStyles from "@/components/globalStyles";
 import PageHeader from "@/components/PageHeader";
 import { GiantButton } from "@/components/StyledButton";
-import useCreatePackageFields from "@/components/ui/createPackage/useCreatePackageFields";
+import useCreatePackageFields, {
+  CreatePackageData,
+} from "@/components/ui/createPackage/useCreatePackageFields";
 import en from "@/translations/en";
 import { Body1Bold } from "@/components/StyledText";
 import TextInput from "@/components/Form/TextInput";
@@ -31,10 +33,24 @@ const CreatePackage = () => {
     handleSubmit,
     resetField,
     setValue,
-    formState: { errors, isValid },
-  } = useForm({
+    formState: { isValid },
+  } = useForm<CreatePackageData>({
     defaultValues: {
-      ste: "",
+      receiverName: "Fatjon Rrapaj",
+      phoneNumber: "0685919978",
+      profileLink: "http://www.google.com",
+      address: "Rruga Don Bosko, kullat hawaiii",
+      notesForReceiver: "E do shpejte",
+      packageId: "8123129312",
+      packageName: "Pako e kuqe",
+      packageWeight: "2",
+      packageWidth: "3",
+      packageLength: "4",
+      packageHeight: "5",
+      paymentAmount: "2000",
+      shippingCost: "300",
+      cashOnDelivery: "2300",
+      notesForPackage: "Kujdes se thyhett",
     },
   });
 
@@ -50,7 +66,7 @@ const CreatePackage = () => {
     setValue,
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: CreatePackageData) => {
     console.log("data: ", JSON.stringify("data"));
     if (isValid) {
       console.log("data: ", data);
