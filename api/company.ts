@@ -31,7 +31,7 @@ export interface Company {
   email: string;
   companyName: string;
   totals: CompanyTotals;
-  location: CompanyAddress;
+  locations: CompanyAddress[];
   lastUpdatedPackage: number;
 }
 

@@ -4,7 +4,6 @@ import {
   collection,
   doc,
   increment,
-  runTransaction,
   serverTimestamp,
   writeBatch,
 } from "firebase/firestore";
@@ -12,11 +11,8 @@ import { Collections } from "@/constants/Firestore";
 import { db } from "@/utils/firebase";
 
 import { CompanyAddress, getCompanyRef, Customer, Company } from "./company";
-
 import { mockPackageObject } from "@/mocks/packagesMock";
-import { UserProfile } from "firebase/auth";
 import { CompanyUserProfile } from "./auth";
-import { merge } from "@nozbe/watermelondb/utils/rx";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -115,6 +111,8 @@ export async function callCreatePackage(
   company: Company,
   profile: CompanyUserProfile
 ) {
+  console.log("company: ", company);
+
   //TODO: the logs collection boi (the user who posted this & timestamps & everything.)
   //TODO: check internet connectivity before posting to make sure you are online, if not put as draft....
 
@@ -156,7 +154,7 @@ export async function callCreatePackage(
         postedAtDate: serverTimestamp(),
       },
       currency: packageData.currency,
-      companyAddress: company.location,
+      companyAddress: company!.locations![0] as CompanyAddress,
       companyId: company?.uid,
     };
 
@@ -173,7 +171,6 @@ export async function callCreatePackage(
     const aggregatorRef = doc(
       db,
       Collections.companies,
-      company.uid!,
       Collections.aggregator
     );
 
@@ -181,23 +178,22 @@ export async function callCreatePackage(
 
     const periodKey = `packages-${year}-${month}`;
 
-    const packageRefForCompany = doc(
-      db,
-      Collections.companies,
-      company.uid!,
-      Collections.packages
+    const newPackageForInsideCompany = doc(
+      collection(db, Collections.companies, company.uid!, Collections.packages)
     );
-    const logsRef = doc(db, Collections.logs);
+
+    const totalsRef = doc(db, Collections.logs, Collections.totals);
 
     const packageRefForAvailablePackages = doc(
       db,
-      Collections.availablePackages
+      Collections.availablePackages,
+      newPackageForInsideCompany.id
     );
 
     batch.set(
       aggregatorRef,
       {
-        totalPending: increment(1),
+        pending: increment(1),
       },
       { merge: true }
     );
@@ -215,9 +211,9 @@ export async function callCreatePackage(
       { merge: true }
     );
 
-    batch.set(packageRefForCompany, packageToUpload);
+    batch.set(newPackageForInsideCompany, packageToUpload);
     batch.set(packageRefForAvailablePackages, packageToUpload);
-    batch.set(logsRef, packageLog);
+    batch.set(totalsRef, packageLog);
 
     await batch.commit();
 

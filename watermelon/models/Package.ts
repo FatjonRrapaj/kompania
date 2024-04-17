@@ -7,16 +7,16 @@ class PackageModel extends Model {
   @field("packageScanId") packageScanId!: string;
 
   @field("packageName") packageName?: string;
-  @field("packageWeight") packageWeight?: number;
-  @field("packageLength") packageLength?: number;
-  @field("packageWidth") packageWidth?: number;
-  @field("packageHeight") packageHeight?: number;
+  @field("packageWeight") packageWeight?: string;
+  @field("packageLength") packageLength?: string;
+  @field("packageWidth") packageWidth?: string;
+  @field("packageHeight") packageHeight?: string;
   @field("isFragile") isFragile?: boolean;
   @field("canBeOpened") canBeOpened?: boolean;
 
-  @field("paymentAmount") paymentAmount!: number;
-  @field("shippingCost") shippingCost!: number;
-  @field("cashOnDelivery") cashOnDelivery!: number;
+  @field("paymentAmount") paymentAmount!: string;
+  @field("shippingCost") shippingCost!: string;
+  @field("cashOnDelivery") cashOnDelivery!: string;
   @field("currencySymbol") currencySymbol!: string;
   @field("currencyName") currencyName!: string;
 
@@ -24,12 +24,12 @@ class PackageModel extends Model {
   @field("packageTimeLineStatus") packageTimeLineStatus!: string;
 
   @field("createdAtDate") createdAtDate?: number;
-  @field("postedAtDate") postedAtDate?: number;
-  @field("acceptedAtDate") acceptedAtDate?: number;
-  @field("pickedAtDate") pickedAtDate?: number;
-  @field("deliveredAtDate") deliveredAtDate?: number;
-  @field("returnedAtDate") returnedAtDate?: number;
-  @field("updatedAtDate") updatedAtDate?: number;
+  @field("postedAtDate") postedAtDate?: string;
+  @field("acceptedAtDate") acceptedAtDate?: string;
+  @field("pickedAtDate") pickedAtDate?: string;
+  @field("deliveredAtDate") deliveredAtDate?: string;
+  @field("returnedAtDate") returnedAtDate?: string;
+  @field("updatedAtDate") updatedAtDate?: string;
 
   @field("courierName") courierName?: string;
   @field("courierId") courierId?: string;
@@ -40,8 +40,8 @@ class PackageModel extends Model {
   @field("receiverName") receiverName?: string;
   @field("receiverProfileUrl") receiverProfileUrl?: string;
   @field("receiverAddressDescription") receiverAddressDescription?: string;
-  @field("receiverAddressLat") receiverAddressLat?: number;
-  @field("receiverAddressLng") receiverAddressLng?: number;
+  @field("receiverAddressLat") receiverAddressLat?: string;
+  @field("receiverAddressLng") receiverAddressLng?: string;
   @field("receiverPhoneNumber") receiverPhoneNumber?: string;
   @field("notesForReceiver") notesForReceiver?: string;
 
