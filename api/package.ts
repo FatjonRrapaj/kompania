@@ -15,6 +15,7 @@ import { CompanyAddress, getCompanyRef, Customer, Company } from "./company";
 import { mockPackageObject } from "@/mocks/packagesMock";
 import { UserProfile } from "firebase/auth";
 import { CompanyUserProfile } from "./auth";
+import { merge } from "@nozbe/watermelondb/utils/rx";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -181,9 +182,13 @@ export async function callCreatePackage(
       );
       const newAvailablePackage = doc(availablePackagesRef);
 
-      transaction.update(allTotalsRef, {
-        pending: increment(1),
-      });
+      transaction.set(
+        allTotalsRef,
+        {
+          pending: increment(1),
+        },
+        { merge: true }
+      );
 
       transaction.set(
         periodTotalsRef,
