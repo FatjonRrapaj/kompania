@@ -20,11 +20,16 @@ import PackageSizeSelector from "@/components/ui/createPackage/PackageSizeSelect
 import Checkboxes from "@/components/ui/createPackage/Checkboxes";
 import CurrencySelector from "@/components/ui/createPackage/CurrencySelector";
 import { CreatePackageData, CurrencyShortValue } from "@/api/package";
+import usePackageStore from "@/store/package";
 
 const CreatePackage = () => {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.createPackage) =>
     t(`createPackage:${key}`);
+
+  const loadingCreatePackage = usePackageStore(
+    (state) => state.loadingCreatePackage
+  );
 
   const {
     control,
@@ -67,10 +72,11 @@ const CreatePackage = () => {
   const onSubmit = (data: CreatePackageData) => {
     console.log("data: ", JSON.stringify("data"));
     if (isValid) {
-      const packageDataToSend = { ...data };
-      packageDataToSend.isFragile = isFragile;
-      packageDataToSend.canBeOpened = canBeOpened;
-      packageDataToSend.currency = selectedCurrency;
+      const cretePackageData = { ...data };
+      cretePackageData.isFragile = isFragile;
+      cretePackageData.canBeOpened = canBeOpened;
+      cretePackageData.currency = selectedCurrency;
+      usePackageStore.getState().createPackage(cretePackageData);
     }
   };
 
@@ -134,6 +140,7 @@ const CreatePackage = () => {
             }
           })}
           <GiantButton
+            loading={loadingCreatePackage}
             inactive={!isValid}
             title={translate("publishNow")}
             onPress={handleSubmit(onSubmit)}
