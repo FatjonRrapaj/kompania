@@ -22,6 +22,7 @@ const PackagesChangesListener = () => {
   //Start form the input then move to the db both schema and model,
   //then do the conversion of a package correctly from the firebasetimestamp to watermelon timestamp....
   // maybe check the date field of watermelon
+  //after this you can maybe work on the listener function for available packages (firebase admin project & functions repo.)
   const user = useAuthStore((state) => state.user);
   const company = useCompanyStore((state) => state.company);
 
