@@ -1,13 +1,13 @@
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 
-import {
-  CompanyAddress,
-  CustomerAddress,
-  getCompanyRef,
-  Customer,
-} from "./company";
-import generateCustomError from "@/utils/customError";
+import { CompanyAddress, getCompanyRef, Customer } from "./company";
 
 import { mockPackageObject } from "@/mocks/packagesMock";
 
@@ -71,6 +71,8 @@ export interface Package {
 
 export type PreviousMonths = 2 | 1 | 0;
 
+export async function createPackage(params: any) {}
+
 export async function pushMockPackages(
   companyID: string,
   previousMonths: PreviousMonths = 0
@@ -84,6 +86,12 @@ export async function pushMockPackages(
   const currentDate = new Date();
   currentDate.setMonth(currentDate.getMonth() - previousMonths);
   const timeStamp = currentDate.getTime();
+
+  const firebaseTimeStamp = serverTimestamp();
+  console.log("firebaseTimeStamp: ", firebaseTimeStamp);
+  console.log("timeStamp: ", timeStamp);
+
+  //get date from timeStamp
 
   const mockPackageObjectWithUpdatedAt = { ...mockPackageObject };
   mockPackageObjectWithUpdatedAt.timeline!.updatedAtDate = timeStamp;

@@ -32,7 +32,11 @@ const CreatePackage = () => {
     resetField,
     setValue,
     formState: { errors, isValid },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      ste: "",
+    },
+  });
 
   const [isStandardPackage, setIsStandardPackage] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] =
