@@ -70,7 +70,6 @@ const CreatePackage = () => {
   });
 
   const onSubmit = (data: CreatePackageData) => {
-    console.log("data: ", JSON.stringify("data"));
     if (isValid) {
       const cretePackageData = { ...data };
       cretePackageData.isFragile = isFragile;

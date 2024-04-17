@@ -1,9 +1,9 @@
 import {
-  Timestamp,
+  FieldValue,
   addDoc,
   collection,
   doc,
-  getDoc,
+  increment,
   runTransaction,
   serverTimestamp,
 } from "firebase/firestore";
@@ -13,7 +13,6 @@ import { db } from "@/utils/firebase";
 import { CompanyAddress, getCompanyRef, Customer, Company } from "./company";
 
 import { mockPackageObject } from "@/mocks/packagesMock";
-import { FieldValue } from "react-hook-form";
 import { UserProfile } from "firebase/auth";
 import { CompanyUserProfile } from "./auth";
 
@@ -41,13 +40,13 @@ export type PackageTimelineStatus =
   | "returned";
 
 export interface PackageTimeline {
-  createdAtDate?: FieldValue<Timestamp>;
-  updatedAtDate?: FieldValue<Timestamp>;
-  postedAtDate?: FieldValue<Timestamp>;
-  acceptedAtDate?: FieldValue<Timestamp>;
-  pickedAtDate?: FieldValue<Timestamp>;
-  deliveredAtDate?: FieldValue<Timestamp>;
-  returnedAtDate?: FieldValue<Timestamp>;
+  createdAtDate?: number;
+  updatedAtDate?: FieldValue;
+  postedAtDate?: FieldValue;
+  acceptedAtDate?: FieldValue;
+  pickedAtDate?: FieldValue;
+  deliveredAtDate?: FieldValue;
+  returnedAtDate?: FieldValue;
 }
 
 export interface CreatePackageData {
@@ -78,7 +77,7 @@ export interface PackageLog {
   package: Package;
   company: Company;
   user: CompanyUserProfile;
-  createdAt: FieldValue<Timestamp>;
+  createdAt: FieldValue;
 }
 
 export interface Package {
@@ -117,6 +116,11 @@ export async function callCreatePackage(
   //TODO: the logs collection boi (the user who posted this & timestamps & everything.)
   //TODO: check internet connectivity before posting to make sure you are online, if not put as draft....
 
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const nowTimestamp = now.getTime();
+
   try {
     const packageToUpload: Package = {
       scanId: packageData.packageId,
@@ -145,7 +149,7 @@ export async function callCreatePackage(
       status: "pending",
       timelineStatus: "available",
       timeline: {
-        createdAtDate: new Date().getTime(),
+        createdAtDate: nowTimestamp,
         updatedAtDate: serverTimestamp(),
         postedAtDate: serverTimestamp(),
       },
@@ -164,6 +168,10 @@ export async function callCreatePackage(
 
     await runTransaction(db, async (transaction) => {
       const companyRef = getCompanyRef(company.uid!);
+      const allTotalsRef = doc(companyRef, "totals", "allTotals");
+      const periodKey = `packages-${year}-${month}`;
+      const periodTotalsRef = doc(companyRef, "totals", periodKey);
+
       const packagesRef = doc(companyRef, Collections.packages);
       const logsRef = doc(db, Collections.logs);
 
@@ -172,9 +180,23 @@ export async function callCreatePackage(
         Collections.availablePackages
       );
       const newAvailablePackage = doc(availablePackagesRef);
+
+      transaction.update(allTotalsRef, {
+        pending: increment(1),
+      });
+
+      transaction.set(
+        periodTotalsRef,
+        {
+          pending: increment(1),
+        },
+        { merge: true }
+      );
+
       transaction.set(packagesRef, packageToUpload);
       transaction.set(newAvailablePackage, packageToUpload);
       transaction.set(logsRef, packageLog);
+
       //TODO: link to zustand, add loading & toast messages & error handling
       //TODO: do the updatedAtListener.
     });
@@ -201,7 +223,7 @@ export async function pushMockPackages(
   //get date from timeStamp
 
   const mockPackageObjectWithUpdatedAt = { ...mockPackageObject };
-  mockPackageObjectWithUpdatedAt.timeline!.updatedAtDate = timeStamp;
+  mockPackageObjectWithUpdatedAt.timeline!.updatedAtDate = serverTimestamp();
 
   for (let i = 0; i < 1; i++) {
     await addDoc(packagesRef, mockPackageObjectWithUpdatedAt);
