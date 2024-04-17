@@ -14,6 +14,7 @@ import { CompanyAddress, getCompanyRef, Customer, Company } from "./company";
 
 import { mockPackageObject } from "@/mocks/packagesMock";
 import { FieldValue } from "react-hook-form";
+import { UserProfile } from "firebase/auth";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -69,6 +70,16 @@ export interface CreatePackageData {
   isFragile: boolean;
 }
 
+type PackageLogAction = "created" | "updated" | "deleted";
+
+export interface PackageLog {
+  action: PackageLogAction;
+  package: Package;
+  company: Company;
+  user: UserProfile;
+  createdAt: FieldValue<Timestamp>;
+}
+
 export interface Package {
   uid?: string;
   packageName?: string;
@@ -99,10 +110,9 @@ export type PreviousMonths = 2 | 1 | 0;
 
 export async function createPackage(
   packageData: CreatePackageData,
-  company: Company
+  company: Company,
+  profile: UserProfile
 ) {
-  //TODO: here compose the package and deal with all the company updates.
-  //TODO: transactional: post this to the collections that will listen to this boi.
   //TODO: the logs collection boi (the user who posted this & timestamps & everything.)
   //TODO: check internet connectivity before posting to make sure you are online, if not put as draft....
 
@@ -134,7 +144,7 @@ export async function createPackage(
       status: "pending",
       timelineStatus: "available",
       timeline: {
-        createdAtDate: serverTimestamp(),
+        createdAtDate: new Date().getTime(),
         updatedAtDate: serverTimestamp(),
         postedAtDate: serverTimestamp(),
       },
@@ -143,8 +153,31 @@ export async function createPackage(
       companyId: company?.uid,
     };
 
-    await runTransaction(db, async (transaction) => {});
-  } catch (error) {}
+    const packageLog: PackageLog = {
+      action: "created",
+      package: packageToUpload,
+      company: company,
+      user: profile,
+      createdAt: serverTimestamp(),
+    };
+
+    await runTransaction(db, async (transaction) => {
+      const companyRef = getCompanyRef(company.uid!);
+      const packagesRef = doc(companyRef, Collections.packages);
+      const logsRef = doc(db, Collections.logs);
+
+      const availablePackagesRef = collection(
+        db,
+        Collections.availablePackages
+      );
+      const newAvailablePackage = doc(availablePackagesRef);
+      transaction.set(packagesRef, packageToUpload);
+      transaction.set(newAvailablePackage, packageToUpload);
+      transaction.set(logsRef, packageLog);
+    });
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function pushMockPackages(
