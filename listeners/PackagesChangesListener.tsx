@@ -83,11 +83,8 @@ const PackagesChangesListener = () => {
     let unsubscribe: any;
 
     const companyRef = getCompanyRef(company.uid);
-    const last7DaysPackagesRef = collection(
-      companyRef,
-      Collections.last7DaysPackages
-    );
-    unsubscribe = onSnapshot(last7DaysPackagesRef, handleSnapshot);
+    const packagesRef = collection(companyRef, Collections.packages);
+    unsubscribe = onSnapshot(packagesRef, handleSnapshot);
 
     return () => {
       unsubscribe?.();
