@@ -11,9 +11,7 @@ import { View } from "@/components/Themed";
 import globalStyles from "@/components/globalStyles";
 import PageHeader from "@/components/PageHeader";
 import { GiantButton } from "@/components/StyledButton";
-import useCreatePackageFields, {
-  CreatePackageData,
-} from "@/components/ui/createPackage/useCreatePackageFields";
+import useCreatePackageFields from "@/components/ui/createPackage/useCreatePackageFields";
 import en from "@/translations/en";
 import { Body1Bold } from "@/components/StyledText";
 import TextInput from "@/components/Form/TextInput";
@@ -21,7 +19,7 @@ import { useState } from "react";
 import PackageSizeSelector from "@/components/ui/createPackage/PackageSizeSelector";
 import Checkboxes from "@/components/ui/createPackage/Checkboxes";
 import CurrencySelector from "@/components/ui/createPackage/CurrencySelector";
-import { CurrencyShortValue } from "@/api/package";
+import { CreatePackageData, CurrencyShortValue } from "@/api/package";
 
 const CreatePackage = () => {
   const { t } = useTranslation();
@@ -69,7 +67,10 @@ const CreatePackage = () => {
   const onSubmit = (data: CreatePackageData) => {
     console.log("data: ", JSON.stringify("data"));
     if (isValid) {
-      console.log("data: ", data);
+      const packageDataToSend = { ...data };
+      packageDataToSend.isFragile = isFragile;
+      packageDataToSend.canBeOpened = canBeOpened;
+      packageDataToSend.currency = selectedCurrency;
     }
   };
 

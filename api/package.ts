@@ -1,4 +1,5 @@
 import {
+  Timestamp,
   addDoc,
   collection,
   doc,
@@ -7,9 +8,10 @@ import {
 } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 
-import { CompanyAddress, getCompanyRef, Customer } from "./company";
+import { CompanyAddress, getCompanyRef, Customer, Company } from "./company";
 
 import { mockPackageObject } from "@/mocks/packagesMock";
+import { FieldValue } from "react-hook-form";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -35,43 +37,103 @@ export type PackageTimelineStatus =
   | "returned";
 
 export interface PackageTimeline {
-  createdAtDate?: number;
-  updatedAtDate?: number;
-  postedAtDate?: number;
-  acceptedAtDate?: number;
-  pickedAtDate?: number;
-  deliveredAtDate?: number;
-  returnedAtDate?: number;
+  createdAtDate?: FieldValue<Timestamp>;
+  updatedAtDate?: FieldValue<Timestamp>;
+  postedAtDate?: FieldValue<Timestamp>;
+  acceptedAtDate?: FieldValue<Timestamp>;
+  pickedAtDate?: FieldValue<Timestamp>;
+  deliveredAtDate?: FieldValue<Timestamp>;
+  returnedAtDate?: FieldValue<Timestamp>;
+}
+
+export interface CreatePackageData {
+  receiverName: string;
+  phoneNumber: string;
+  profileLink: string;
+  address: string;
+  notesForReceiver: string;
+  packageId: string;
+  packageName?: string;
+  packageWeight?: string;
+  packageWidth?: string;
+  packageLength?: string;
+  packageHeight?: string;
+  paymentAmount: string;
+  shippingCost: string;
+  cashOnDelivery: string;
+  notesForPackage: string;
+  canBeOpened: boolean;
+  currency?: CurrencyShortValue;
+  isFragile: boolean;
 }
 
 export interface Package {
   uid?: string;
-  packageName: string;
+  packageName?: string;
   scanId: string;
-  receiver?: Customer;
+  receiver: Customer;
   packageDetails: {
-    weight: number;
-    length: number;
-    width: number;
-    height: number;
+    weight?: string;
+    length?: string;
+    width?: string;
+    height?: string;
     isFragile: boolean;
     canBeOpened: boolean;
   };
-  paymentAmount: number;
-  shippingCost: number;
-  cashOnDelivery: number;
+  paymentAmount: string;
+  shippingCost: string;
+  cashOnDelivery: string;
   notesForPackage: string;
   status: PackageStatus;
   timelineStatus: PackageTimelineStatus;
   timeline?: PackageTimeline;
   courier?: Courier;
-  currency: Currency;
+  currency?: CurrencyShortValue;
   companyAddress?: CompanyAddress;
 }
 
 export type PreviousMonths = 2 | 1 | 0;
 
-export async function createPackage(params: any) {}
+export async function createPackage(
+  packageData: CreatePackageData,
+  company: Company
+) {
+  //TODO: here compose the package and deal with all the company updates.
+  const packageToUpload: Package = {
+    scanId: packageData.packageId,
+    packageName: packageData.packageName,
+    receiver: {
+      name: packageData.receiverName,
+      uid: packageData.profileLink,
+      phoneNumber: packageData.phoneNumber,
+      notes: packageData.notesForReceiver,
+      receiverLocation: {
+        description: packageData.address,
+      },
+    },
+    packageDetails: {
+      canBeOpened: packageData.canBeOpened,
+      isFragile: packageData.isFragile,
+      weight: packageData.packageWeight,
+      width: packageData.packageWidth,
+      height: packageData.packageHeight,
+      length: packageData.packageLength,
+    },
+    paymentAmount: packageData.paymentAmount,
+    shippingCost: packageData.shippingCost,
+    cashOnDelivery: packageData.cashOnDelivery,
+    notesForPackage: packageData.notesForPackage,
+    status: "pending",
+    timelineStatus: "available",
+    timeline: {
+      createdAtDate: serverTimestamp(),
+      updatedAtDate: serverTimestamp(),
+      postedAtDate: serverTimestamp(),
+    },
+    currency: packageData.currency,
+    companyAddress: company.location,
+  };
+}
 
 export async function pushMockPackages(
   companyID: string,

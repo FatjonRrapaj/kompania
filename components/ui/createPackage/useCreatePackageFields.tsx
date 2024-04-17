@@ -6,24 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import en from "@/translations/en";
 import { UseFormResetField, UseFormSetValue } from "react-hook-form";
 import { Customer } from "@/api/company";
-
-export interface CreatePackageData {
-  receiverName: string;
-  phoneNumber: string;
-  profileLink: string;
-  address: string;
-  notesForReceiver: string;
-  packageId: string;
-  packageName: string;
-  packageWeight: string;
-  packageWidth: string;
-  packageLength: string;
-  packageHeight: string;
-  paymentAmount: string;
-  shippingCost: string;
-  cashOnDelivery: string;
-  notesForPackage: string;
-}
+import { CreatePackageData } from "@/api/package";
 
 type FormElementTypes =
   | "sectionLabel"
