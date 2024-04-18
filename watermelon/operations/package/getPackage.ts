@@ -21,7 +21,7 @@ export const getAllPackagesCount = async () => {
   return count;
 };
 
-export const getLastLocalUpdatedAt = async () => {
+export const getLocalLastUpdatedAt = async () => {
   const latestPackages: PackageModel[] = await packagesCollection
     .query(Q.sortBy("updatedAtDate", Q.desc), Q.take(1))
     .fetch();

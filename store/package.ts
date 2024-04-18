@@ -2,11 +2,19 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { Immutable } from "immer";
 
-import { CreatePackageData, callCreatePackage } from "@/api/package";
+import {
+  CreatePackageData,
+  Package,
+  callCreatePackage,
+  callSyncPackages,
+} from "@/api/package";
 import { showToastFromError } from "@/utils/toast";
 import useAuthStore from "./auth";
 import useCompanyStore from "./company";
 import { Company } from "@/api/company";
+import { findPackage } from "@/watermelon/operations/package/getPackage";
+import { updateExistingPackage } from "@/watermelon/operations/package/updatePackage";
+import { createPackageFromFirebasePackage } from "@/watermelon/operations/package/createPackage";
 
 type PackageState = {
   loadingCreatePackage: boolean;
@@ -16,6 +24,7 @@ type PackageState = {
 type PackageActions = {
   createPackage: (createPackageData: CreatePackageData) => Promise<void>;
   syncPackages: (localLastUpdatedAt: number) => Promise<void>;
+  setLoadingSyncPackages: (loading: boolean) => void;
 };
 
 type PackageStore = PackageState & PackageActions;
@@ -24,6 +33,21 @@ type ImmutablePackageStore = Immutable<PackageStore>;
 const initialState: PackageState = {
   loadingCreatePackage: false,
   loadingSyncPackages: true,
+};
+
+const syncNewPackagesWDb = async (newPackages: Package[]) => {
+  newPackages.forEach(async (firebasePackage) => {
+    const existingPackageInDb = await findPackage(firebasePackage.uid!);
+    if (existingPackageInDb) {
+      //package already exists, update it.
+      await updateExistingPackage(existingPackageInDb, firebasePackage);
+    } else {
+      //package is new, create it.
+      await createPackageFromFirebasePackage(firebasePackage);
+      //TODO: deal w package deletion. from app -> on package click send to package screen & delete locally & globally.
+      //from dashboard -> notification or a deleted packages listener.
+    }
+  });
 };
 
 const usePackageStore = create<ImmutablePackageStore>()(
@@ -57,12 +81,23 @@ const usePackageStore = create<ImmutablePackageStore>()(
         set((state) => {
           state.loadingSyncPackages = true;
         });
+        const company = useCompanyStore.getState().company as Company;
+        const newPackages = await callSyncPackages(
+          localLastUpdatedAt,
+          company.uid!
+        );
+        await syncNewPackagesWDb(newPackages);
       } catch (error) {
       } finally {
         set((state) => {
           state.loadingSyncPackages = false;
         });
       }
+    },
+    setLoadingSyncPackages: (loading: boolean) => {
+      set((state) => {
+        state.loadingSyncPackages = loading;
+      });
     },
   }))
 );

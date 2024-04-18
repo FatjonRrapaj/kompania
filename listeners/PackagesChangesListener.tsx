@@ -4,16 +4,17 @@ import { auth, db } from "@/utils/firebase";
 import useAuthStore from "@/store/auth";
 import useCompanyStore from "@/store/company";
 import { Collections } from "@/constants/Firestore";
-import { QuerySnapshot, collection, doc, onSnapshot } from "firebase/firestore";
-import { Company, getCompanyRef } from "@/api/company";
+import { QuerySnapshot, doc, onSnapshot } from "firebase/firestore";
+import { Company } from "@/api/company";
 import { Package } from "@/api/package";
 import {
   findPackage,
-  getLastLocalUpdatedAt,
+  getLocalLastUpdatedAt,
 } from "@/watermelon/operations/package/getPackage";
 import { deleteExistingPackage } from "@/watermelon/operations/package/deletePackage";
 import { createPackageFromFirebasePackage } from "@/watermelon/operations/package/createPackage";
 import { updateExistingPackage } from "@/watermelon/operations/package/updatePackage";
+import usePackageStore from "@/store/package";
 
 const PackagesChangesListener = () => {
   //TODO: convert this to company listener, fix the totals.
@@ -108,13 +109,17 @@ const PackagesChangesListener = () => {
           lastServerUpdatedAt = { seconds: 0, nanoseconds: 0 };
         }
 
-        let lastLocalUpdatedAt = await getLastLocalUpdatedAt();
-        if (!lastLocalUpdatedAt) {
-          lastLocalUpdatedAt = 0;
+        let localLastUpdatedAt = await getLocalLastUpdatedAt();
+        if (!localLastUpdatedAt) {
+          localLastUpdatedAt = 0;
         }
 
-        if (lastServerUpdatedAt > lastLocalUpdatedAt) {
-          //We have online changes that do not exist locally.
+        if (lastServerUpdatedAt > localLastUpdatedAt) {
+          //we have new packages on the server, need to sync
+          usePackageStore.getState().syncPackages(localLastUpdatedAt);
+        } else {
+          //no packages to sync, just turn off the loading
+          usePackageStore.getState().setLoadingSyncPackages(false);
         }
       }
     );
