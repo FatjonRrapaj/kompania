@@ -1,4 +1,5 @@
 import { Package } from "@/api/package";
+import { isReceivedFirebaseServerTimestamp } from "@/utils/date";
 import watermelonDB from "@/watermelon";
 import PackageModel from "@/watermelon/models/Package";
 
@@ -66,16 +67,60 @@ export const createPackageFromFirebasePackage = async (
           firebasePackageObject.companyAddress?.description;
 
         //package timeline
-        // newRecord.createdAtDate = firebasePackageObject.timeline?.createdAtDate;
-        // newRecord.postedAtDate = firebasePackageObject.timeline?.postedAtDate;
-        // newRecord.acceptedAtDate =
-        //   firebasePackageObject.timeline?.acceptedAtDate;
-        // newRecord.pickedAtDate = firebasePackageObject.timeline?.pickedAtDate;
-        // newRecord.deliveredAtDate =
-        //   firebasePackageObject.timeline?.deliveredAtDate;
-        // newRecord.returnedAtDate =
-        //   firebasePackageObject.timeline?.returnedAtDate;
-        // newRecord.updatedAtDate = firebasePackageObject.timeline?.updatedAtDate;
+        newRecord.createdAtDate = firebasePackageObject.timeline?.createdAtDate;
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.postedAtDate
+          )
+        ) {
+          newRecord.postedAtDate =
+            firebasePackageObject.timeline?.postedAtDate.seconds * 1000;
+        }
+
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.acceptedAtDate
+          )
+        ) {
+          newRecord.acceptedAtDate =
+            firebasePackageObject.timeline?.acceptedAtDate.seconds * 1000;
+        }
+
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.pickedAtDate
+          )
+        ) {
+          newRecord.pickedAtDate =
+            firebasePackageObject.timeline?.pickedAtDate.seconds * 1000;
+        }
+
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.deliveredAtDate
+          )
+        ) {
+          newRecord.deliveredAtDate =
+            firebasePackageObject.timeline?.deliveredAtDate.seconds * 1000;
+        }
+
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.returnedAtDate
+          )
+        ) {
+          newRecord.returnedAtDate =
+            firebasePackageObject.timeline?.returnedAtDate.seconds * 1000;
+        }
+
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.updatedAtDate
+          )
+        ) {
+          newRecord.updatedAtDate =
+            firebasePackageObject.timeline?.updatedAtDate.seconds * 1000;
+        }
       });
     });
   } catch (error) {

@@ -78,6 +78,8 @@ export const updateExistingPackage = async (
           firebasePackageObject.companyAddress?.description;
 
         //package timeline
+        existingPackage.createdAtDate =
+          firebasePackageObject.timeline?.createdAtDate;
         if (
           isReceivedFirebaseServerTimestamp(
             firebasePackageObject?.timeline?.postedAtDate
@@ -131,9 +133,6 @@ export const updateExistingPackage = async (
           existingPackage.updatedAtDate =
             firebasePackageObject.timeline?.updatedAtDate.seconds * 1000;
         }
-
-        existingPackage.createdAtDate =
-          firebasePackageObject.timeline?.createdAtDate;
       });
     });
   } catch (error) {
