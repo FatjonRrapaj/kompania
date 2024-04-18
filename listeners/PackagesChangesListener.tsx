@@ -1,13 +1,16 @@
 import { useEffect, useRef } from "react";
 
-import { auth } from "@/utils/firebase";
+import { auth, db } from "@/utils/firebase";
 import useAuthStore from "@/store/auth";
 import useCompanyStore from "@/store/company";
 import { Collections } from "@/constants/Firestore";
-import { QuerySnapshot, collection, onSnapshot } from "firebase/firestore";
-import { getCompanyRef } from "@/api/company";
+import { QuerySnapshot, collection, doc, onSnapshot } from "firebase/firestore";
+import { Company, getCompanyRef } from "@/api/company";
 import { Package } from "@/api/package";
-import { findPackage } from "@/watermelon/operations/package/getPackage";
+import {
+  findPackage,
+  getLastLocalUpdatedAt,
+} from "@/watermelon/operations/package/getPackage";
 import { deleteExistingPackage } from "@/watermelon/operations/package/deletePackage";
 import { createPackageFromFirebasePackage } from "@/watermelon/operations/package/createPackage";
 import { updateExistingPackage } from "@/watermelon/operations/package/updatePackage";
@@ -96,9 +99,25 @@ const PackagesChangesListener = () => {
 
     let unsubscribe: any;
 
-    const companyRef = getCompanyRef(company.uid);
-    const packagesRef = collection(companyRef, Collections.packages);
-    unsubscribe = onSnapshot(packagesRef, handleSnapshot);
+    unsubscribe = onSnapshot(
+      doc(db, Collections.companies, company.uid!),
+      async (doc) => {
+        const company = doc.data() as Company;
+        let lastServerUpdatedAt = company.lastUpdatedAt;
+        if (!lastServerUpdatedAt) {
+          lastServerUpdatedAt = { seconds: 0, nanoseconds: 0 };
+        }
+
+        let lastLocalUpdatedAt = await getLastLocalUpdatedAt();
+        if (!lastLocalUpdatedAt) {
+          lastLocalUpdatedAt = 0;
+        }
+
+        if (lastServerUpdatedAt.seconds * 1000 > lastLocalUpdatedAt) {
+          //We have online changes that do not exist locally.
+        }
+      }
+    );
 
     return () => {
       unsubscribe?.();

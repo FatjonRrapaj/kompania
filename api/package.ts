@@ -14,6 +14,7 @@ import { db } from "@/utils/firebase";
 import { CompanyAddress, getCompanyRef, Customer, Company } from "./company";
 import { mockPackageObject } from "@/mocks/packagesMock";
 import { CompanyUserProfile } from "./auth";
+import { ReceivedFirebaseServerTimestamp } from "@/utils/date";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -37,11 +38,6 @@ export type PackageTimelineStatus =
   | "picked"
   | "delivered"
   | "returned";
-
-export type ReceivedFirebaseServerTimestamp = {
-  seconds: number;
-  nanoseconds: number;
-};
 
 export interface PackageTimeline {
   createdAtDate?: number;
@@ -204,6 +200,7 @@ export async function callCreatePackage(
     batch.set(
       companyRef,
       {
+        lastUpdatedAt: serverTimestamp(),
         totals: {
           pending: increment(1),
         },

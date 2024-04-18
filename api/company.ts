@@ -3,6 +3,7 @@ import { GeoPoint } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 import { db } from "@/utils/firebase";
 import generateCustomError from "@/utils/customError";
+import { ReceivedFirebaseServerTimestamp } from "@/utils/date";
 
 interface Totals {
   completed: number;
@@ -32,7 +33,7 @@ export interface Company {
   companyName: string;
   totals: CompanyTotals;
   locations: CompanyAddress[];
-  lastUpdatedPackage: number;
+  lastUpdatedAt: ReceivedFirebaseServerTimestamp;
 }
 
 export interface Customer {
