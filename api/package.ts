@@ -1,11 +1,11 @@
 import {
-  FieldValue,
-  Timestamp,
   addDoc,
   collection,
   doc,
+  getDocs,
   increment,
-  serverTimestamp,
+  query,
+  where,
   writeBatch,
 } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
@@ -14,7 +14,6 @@ import { db } from "@/utils/firebase";
 import { CompanyAddress, getCompanyRef, Customer, Company } from "./company";
 import { mockPackageObject } from "@/mocks/packagesMock";
 import { CompanyUserProfile } from "./auth";
-import { ReceivedFirebaseServerTimestamp } from "@/utils/date";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -41,12 +40,12 @@ export type PackageTimelineStatus =
 
 export interface PackageTimeline {
   createdAtDate?: number;
-  updatedAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
-  postedAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
-  acceptedAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
-  pickedAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
-  deliveredAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
-  returnedAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
+  updatedAtDate?: number;
+  postedAtDate?: number;
+  acceptedAtDate?: number;
+  pickedAtDate?: number;
+  deliveredAtDate?: number;
+  returnedAtDate?: number;
 }
 
 export interface CreatePackageData {
@@ -77,7 +76,7 @@ export interface PackageLog {
   package: Package;
   company: Company;
   user: CompanyUserProfile;
-  createdAt: FieldValue;
+  createdAt: number;
 }
 
 export interface Package {
@@ -105,8 +104,6 @@ export interface Package {
   companyAddress?: CompanyAddress;
   companyId?: string;
 }
-
-export type PreviousMonths = 2 | 1 | 0;
 
 export async function callCreatePackage(
   packageData: CreatePackageData,
@@ -157,8 +154,8 @@ export async function callCreatePackage(
       timelineStatus: "available",
       timeline: {
         createdAtDate: nowTimestamp,
-        updatedAtDate: serverTimestamp(),
-        postedAtDate: serverTimestamp(),
+        updatedAtDate: nowTimestamp,
+        postedAtDate: nowTimestamp,
       },
       currency: packageData.currency,
       companyAddress: company!.locations![0] as CompanyAddress,
@@ -170,7 +167,7 @@ export async function callCreatePackage(
       package: packageToUpload,
       company: company,
       user: profile,
-      createdAt: serverTimestamp(),
+      createdAt: nowTimestamp,
     };
 
     const batch = writeBatch(db);
@@ -200,7 +197,7 @@ export async function callCreatePackage(
     batch.set(
       companyRef,
       {
-        lastUpdatedAt: serverTimestamp(),
+        lastUpdatedAt: nowTimestamp,
         totals: {
           pending: increment(1),
         },
@@ -220,6 +217,28 @@ export async function callCreatePackage(
   }
 }
 
+export async function callSyncPackages(
+  localLastUpdatedAt: number,
+  companyId: string
+): Promise<Package[]> {
+  try {
+    const companyRef = getCompanyRef(companyId);
+    const packagesRef = collection(companyRef, Collections.packages);
+    const q = query(
+      packagesRef,
+      where("timeline.updatedAtDate", ">", localLastUpdatedAt)
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(
+      (doc) => ({ uid: doc.id, ...doc.data() } as Package)
+    );
+  } catch (error) {
+    throw error;
+  }
+}
+
+export type PreviousMonths = 2 | 1 | 0;
+
 export async function pushMockPackages(
   companyID: string,
   previousMonths: PreviousMonths = 0
@@ -231,7 +250,8 @@ export async function pushMockPackages(
   currentDate.setMonth(currentDate.getMonth() - previousMonths);
 
   const mockPackageObjectWithUpdatedAt = { ...mockPackageObject };
-  mockPackageObjectWithUpdatedAt.timeline!.updatedAtDate = serverTimestamp();
+  mockPackageObjectWithUpdatedAt.timeline!.updatedAtDate =
+    currentDate.getTime();
 
   for (let i = 0; i < 1; i++) {
     await addDoc(packagesRef, mockPackageObjectWithUpdatedAt);

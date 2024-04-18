@@ -13,7 +13,7 @@ interface Totals {
 
 export interface CompanyAddress {
   coordinates: GeoPoint;
-  name: string;
+  name?: string;
   description?: string;
 }
 

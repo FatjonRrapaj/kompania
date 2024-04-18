@@ -113,7 +113,7 @@ const PackagesChangesListener = () => {
           lastLocalUpdatedAt = 0;
         }
 
-        if (lastServerUpdatedAt.seconds * 1000 > lastLocalUpdatedAt) {
+        if (lastServerUpdatedAt > lastLocalUpdatedAt) {
           //We have online changes that do not exist locally.
         }
       }
