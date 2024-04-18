@@ -43,42 +43,42 @@ const PackagesChangesListener = () => {
           JSON.stringify(firebasePackageObject)
         );
 
-        // const existingPackage = await findPackage(firebasePackageObject.uid!);
-        // console.log("existingPackage: ", existingPackage);
+        const existingPackage = await findPackage(firebasePackageObject.uid!);
+        console.log("existingPackage: ", existingPackage);
 
-        // switch (change?.type) {
-        //   case "added":
-        //     if (existingPackage) {
-        //       if (
-        //         existingPackage.updatedAtDate !==
-        //         firebasePackageObject.timeline?.updatedAtDate
-        //       ) {
-        //         await updateExistingPackage(
-        //           existingPackage,
-        //           firebasePackageObject
-        //         );
-        //       }
-        //       return;
-        //     } else {
-        //       await createPackageFromFirebasePackage(firebasePackageObject);
-        //     }
-        //     break;
-        //   case "modified":
-        //     if (existingPackage) {
-        //       await updateExistingPackage(
-        //         existingPackage,
-        //         firebasePackageObject
-        //       );
-        //     }
-        //     break;
-        //   case "removed":
-        //     if (existingPackage) {
-        //       await deleteExistingPackage(existingPackage);
-        //     }
-        //     break;
-        //   default:
-        //     break;
-        // }
+        switch (change?.type) {
+          case "added":
+            if (existingPackage) {
+              if (
+                existingPackage.updatedAtDate !==
+                firebasePackageObject.timeline?.updatedAtDate
+              ) {
+                await updateExistingPackage(
+                  existingPackage,
+                  firebasePackageObject
+                );
+              }
+              return;
+            } else {
+              await createPackageFromFirebasePackage(firebasePackageObject);
+            }
+            break;
+          case "modified":
+            if (existingPackage) {
+              await updateExistingPackage(
+                existingPackage,
+                firebasePackageObject
+              );
+            }
+            break;
+          case "removed":
+            if (existingPackage) {
+              await deleteExistingPackage(existingPackage);
+            }
+            break;
+          default:
+            break;
+        }
       });
     } catch (error) {
       console.log("error@handleSnapshot: ", error);

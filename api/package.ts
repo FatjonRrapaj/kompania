@@ -70,7 +70,7 @@ export interface CreatePackageData {
   cashOnDelivery: string;
   notesForPackage: string;
   canBeOpened: boolean;
-  currency?: CurrencyShortValue;
+  currency: CurrencyShortValue;
   isFragile: boolean;
 }
 
@@ -105,7 +105,7 @@ export interface Package {
   timelineStatus: PackageTimelineStatus;
   timeline?: PackageTimeline;
   courier?: Courier;
-  currency?: CurrencyShortValue;
+  currency: CurrencyShortValue;
   companyAddress?: CompanyAddress;
   companyId?: string;
 }

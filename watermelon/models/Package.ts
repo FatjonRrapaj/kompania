@@ -17,7 +17,7 @@ class PackageModel extends Model {
   @field("paymentAmount") paymentAmount!: number;
   @field("shippingCost") shippingCost!: number;
   @field("cashOnDelivery") cashOnDelivery!: number;
-  @field("currencyShortValue") currencySymbol!: string;
+  @field("currencyShortValue") currencyShortValue!: string;
 
   @field("packageStatus") packageStatus!: string;
   @field("packageTimeLineStatus") packageTimeLineStatus!: string;
