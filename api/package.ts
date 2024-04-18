@@ -1,5 +1,6 @@
 import {
   FieldValue,
+  Timestamp,
   addDoc,
   collection,
   doc,
@@ -37,14 +38,19 @@ export type PackageTimelineStatus =
   | "delivered"
   | "returned";
 
+export type ReceivedFirebaseServerTimestamp = {
+  seconds: number;
+  nanoseconds: number;
+};
+
 export interface PackageTimeline {
   createdAtDate?: number;
-  updatedAtDate?: FieldValue;
-  postedAtDate?: FieldValue;
-  acceptedAtDate?: FieldValue;
-  pickedAtDate?: FieldValue;
-  deliveredAtDate?: FieldValue;
-  returnedAtDate?: FieldValue;
+  updatedAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
+  postedAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
+  acceptedAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
+  pickedAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
+  deliveredAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
+  returnedAtDate?: FieldValue | ReceivedFirebaseServerTimestamp;
 }
 
 export interface CreatePackageData {
@@ -226,9 +232,6 @@ export async function pushMockPackages(
 
   const currentDate = new Date();
   currentDate.setMonth(currentDate.getMonth() - previousMonths);
-  const timeStamp = currentDate.getTime();
-
-  const firebaseTimeStamp = serverTimestamp();
 
   const mockPackageObjectWithUpdatedAt = { ...mockPackageObject };
   mockPackageObjectWithUpdatedAt.timeline!.updatedAtDate = serverTimestamp();

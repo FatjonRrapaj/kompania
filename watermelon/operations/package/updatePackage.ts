@@ -1,4 +1,5 @@
 import { Package } from "@/api/package";
+import { isReceivedFirebaseServerTimestamp } from "@/utils/date";
 import watermelonDB from "@/watermelon";
 import PackageModel from "@/watermelon/models/Package";
 
@@ -67,11 +68,7 @@ export const updateExistingPackage = async (
           firebasePackageObject.shippingCost;
         existingWatermelonPackage.cashOnDelivery =
           firebasePackageObject.cashOnDelivery;
-        existingWatermelonPackage.currencyName =
-          firebasePackageObject?.currency?.name;
-        existingWatermelonPackage.currencySymbol =
-          firebasePackageObject?.currency?.symbol;
-
+        existingPackage.currencyShortValue = firebasePackageObject.currency;
         //package company location
         existingWatermelonPackage.companyLocationLat =
           firebasePackageObject.companyAddress?.coordinates.latitude;
@@ -81,20 +78,62 @@ export const updateExistingPackage = async (
           firebasePackageObject.companyAddress?.description;
 
         //package timeline
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.postedAtDate
+          )
+        ) {
+          existingPackage.postedAtDate =
+            firebasePackageObject.timeline?.postedAtDate.seconds * 1000;
+        }
+
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.acceptedAtDate
+          )
+        ) {
+          existingPackage.acceptedAtDate =
+            firebasePackageObject.timeline?.acceptedAtDate.seconds * 1000;
+        }
+
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.pickedAtDate
+          )
+        ) {
+          existingPackage.pickedAtDate =
+            firebasePackageObject.timeline?.pickedAtDate.seconds * 1000;
+        }
+
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.deliveredAtDate
+          )
+        ) {
+          existingPackage.deliveredAtDate =
+            firebasePackageObject.timeline?.deliveredAtDate.seconds * 1000;
+        }
+
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.returnedAtDate
+          )
+        ) {
+          existingPackage.returnedAtDate =
+            firebasePackageObject.timeline?.returnedAtDate.seconds * 1000;
+        }
+
+        if (
+          isReceivedFirebaseServerTimestamp(
+            firebasePackageObject?.timeline?.updatedAtDate
+          )
+        ) {
+          existingPackage.updatedAtDate =
+            firebasePackageObject.timeline?.updatedAtDate.seconds * 1000;
+        }
+
         existingPackage.createdAtDate =
           firebasePackageObject.timeline?.createdAtDate;
-        existingPackage.postedAtDate =
-          firebasePackageObject.timeline?.postedAtDate;
-        existingPackage.acceptedAtDate =
-          firebasePackageObject.timeline?.acceptedAtDate;
-        existingPackage.pickedAtDate =
-          firebasePackageObject.timeline?.pickedAtDate;
-        existingPackage.deliveredAtDate =
-          firebasePackageObject.timeline?.deliveredAtDate;
-        existingPackage.returnedAtDate =
-          firebasePackageObject.timeline?.returnedAtDate;
-        existingPackage.updatedAtDate =
-          firebasePackageObject.timeline?.updatedAtDate;
       });
     });
   } catch (error) {
