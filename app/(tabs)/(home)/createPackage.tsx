@@ -79,8 +79,6 @@ const CreatePackage = () => {
     }
   };
 
-  //TODO: fix the input so it shows the placeholder somewhere else where value is added.
-
   return (
     <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>
       <PageHeader title="newPackage" />

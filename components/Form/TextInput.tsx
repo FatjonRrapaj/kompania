@@ -5,7 +5,6 @@ import {
   TextInputProps as DefaultTextInputProps,
   ViewStyle,
   View,
-  FlatList,
   ActivityIndicator,
 } from "react-native";
 import {
