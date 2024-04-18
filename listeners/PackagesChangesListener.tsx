@@ -18,7 +18,6 @@ const PackagesChangesListener = () => {
   //në proces = pending
   //(completed) = completed => this is not developed.
   //problematike = problematic
-  //fix the linking and the dates, and the numbers for weight, width, length, height and prices.
   //Start form the input then move to the db both schema and model,
   //then do the conversion of a package correctly from the firebasetimestamp to watermelon timestamp....
   // maybe check the date field of watermelon

@@ -177,6 +177,11 @@ const TextInput = forwardRef(
         }) => {
           return (
             <View style={containerStyle}>
+              {value && (
+                <Label style={{ position: "absolute", top: -16 }}>
+                  {placeholder}
+                </Label>
+              )}
               <View
                 style={[
                   styles.inputContainer,

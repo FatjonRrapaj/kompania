@@ -117,7 +117,7 @@ function useCreatePackageFields({
       elementKey: "receiverName",
       keyboardType: "default",
       placeholder: translate("receiverNamePlaceHolder"),
-      containerStyle: { marginBottom: 16 },
+      containerStyle: { marginVertical: 16 },
       rightIcon: "ArrowDown",
       onAutoSuggestResultClicked: handleInputAutoSuggestClicked,
       onClearAutoSuggest: handleAutoSuggestCleared,
@@ -136,7 +136,7 @@ function useCreatePackageFields({
       elementKey: "phoneNumber",
       keyboardType: "phone-pad",
       placeholder: translate("receiverPhoneNumberPlaceholder"),
-      containerStyle: { marginBottom: 16 },
+      containerStyle: { marginVertical: 16 },
       rightIcon: "ArrowDown",
       validate: validateField({
         fieldName: translate("receiverPhone"),
@@ -154,7 +154,7 @@ function useCreatePackageFields({
       elementKey: "profileLink",
       keyboardType: "url",
       placeholder: translate("profileLink"),
-      containerStyle: { marginBottom: 16 },
+      containerStyle: { marginVertical: 16 },
       validate: validateField({
         fieldName: translate("profileLink"),
         required: true,
@@ -171,7 +171,7 @@ function useCreatePackageFields({
       elementKey: "address",
       keyboardType: "default",
       placeholder: translate("addressPlaceholder"),
-      containerStyle: { marginBottom: 16 },
+      containerStyle: { marginVertical: 16 },
       validate: validateField({
         fieldName: translate("address"),
         required: true,
@@ -188,7 +188,7 @@ function useCreatePackageFields({
       elementKey: "notesForReceiver",
       keyboardType: "default",
       placeholder: translate("notesForReceiverPlaceholder"),
-      containerStyle: { marginBottom: 16 },
+      containerStyle: { marginVertical: 16 },
       multiline: true,
       numberOfLines: 6,
       validate: validateField({
@@ -207,7 +207,7 @@ function useCreatePackageFields({
       elementKey: "packageId",
       keyboardType: "default",
       placeholder: translate("packageIdScanPlaceholder"),
-      containerStyle: { marginBottom: 16 },
+      containerStyle: { marginVertical: 16 },
       validate: validateField({
         fieldName: translate("packageId"),
         required: true,
@@ -224,7 +224,7 @@ function useCreatePackageFields({
       elementKey: "packageName",
       keyboardType: "default",
       placeholder: translate("packageNamePlaceholder"),
-      containerStyle: { marginBottom: 16 },
+      containerStyle: { marginVertical: 16 },
       validate: validateField({
         fieldName: translate("packageName"),
         required: false,
@@ -248,7 +248,7 @@ function useCreatePackageFields({
           elementKey: "packageWeight",
           keyboardType: "number-pad",
           placeholder: translate("weightPlaceholder"),
-          containerStyle: { marginBottom: 16 },
+          containerStyle: { marginVertical: 16 },
           validate: validateField({
             fieldName: translate("weight"),
             required: !isStandardPackage,
@@ -264,7 +264,7 @@ function useCreatePackageFields({
           elementKey: "packageWidth",
           keyboardType: "number-pad",
           placeholder: translate("widPlaceholder"),
-          containerStyle: { marginBottom: 16 },
+          containerStyle: { marginVertical: 16 },
           validate: validateField({
             fieldName: translate("wid"),
             required: !isStandardPackage,
@@ -280,7 +280,7 @@ function useCreatePackageFields({
           elementKey: "packageLength",
           keyboardType: "number-pad",
           placeholder: translate("lenPlaceholder"),
-          containerStyle: { marginBottom: 16 },
+          containerStyle: { marginVertical: 16 },
           validate: validateField({
             fieldName: translate("len"),
             required: !isStandardPackage,
@@ -296,7 +296,7 @@ function useCreatePackageFields({
           elementKey: "packageHeight",
           keyboardType: "number-pad",
           placeholder: translate("heiPlaceholder"),
-          containerStyle: { marginBottom: 16 },
+          containerStyle: { marginVertical: 16 },
           validate: validateField({
             fieldName: translate("hei"),
             required: !isStandardPackage,
@@ -319,7 +319,7 @@ function useCreatePackageFields({
       elementKey: "paymentAmount",
       keyboardType: "number-pad",
       placeholder: translate("paymentAmountPlaceholder"),
-      containerStyle: { marginBottom: 16 },
+      containerStyle: { marginVertical: 16 },
       validate: validateField({
         fieldName: translate("paymentAmount"),
         required: true,
@@ -335,7 +335,7 @@ function useCreatePackageFields({
       elementKey: "shippingCost",
       keyboardType: "number-pad",
       placeholder: translate("shippingCostPlaceholder"),
-      containerStyle: { marginBottom: 16 },
+      containerStyle: { marginVertical: 16 },
       validate: validateField({
         fieldName: translate("shippingCost"),
         required: true,
@@ -351,7 +351,7 @@ function useCreatePackageFields({
       elementKey: "cashOnDelivery",
       keyboardType: "number-pad",
       placeholder: translate("cashOnDeliveryPlaceholder"),
-      containerStyle: { marginBottom: 16 },
+      containerStyle: { marginVertical: 16 },
       validate: validateField({
         fieldName: translate("cashOnDelivery"),
         required: true,
@@ -369,7 +369,7 @@ function useCreatePackageFields({
       elementKey: "notesForPackage",
       keyboardType: "default",
       placeholder: translate("notesForPackagePlaceholder"),
-      containerStyle: { marginBottom: 16 },
+      containerStyle: { marginVertical: 16 },
       validate: validateField({
         fieldName: translate("notesForPackage"),
         required: true,
