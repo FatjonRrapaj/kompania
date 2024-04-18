@@ -76,9 +76,11 @@ const CreatePackage = () => {
       cretePackageData.isFragile = isFragile;
       cretePackageData.canBeOpened = canBeOpened;
       cretePackageData.currency = selectedCurrency;
-      // usePackageStore.getState().createPackage(cretePackageData);
+      usePackageStore.getState().createPackage(cretePackageData);
     }
   };
+
+  //TODO: fix the input so it shows the placeholder somewhere else where value is added.
 
   return (
     <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>

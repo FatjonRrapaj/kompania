@@ -111,7 +111,6 @@ export async function callCreatePackage(
   company: Company,
   profile: CompanyUserProfile
 ) {
-  //TODO: the logs collection boi (the user who posted this & timestamps & everything.)
   //TODO: check internet connectivity before posting to make sure you are online, if not put as draft....
 
   const now = new Date();
@@ -173,29 +172,22 @@ export async function callCreatePackage(
     };
 
     const batch = writeBatch(db);
-
     const aggregatorRef = doc(
       db,
       Collections.companies,
       Collections.aggregator
     );
-
     const companyRef = getCompanyRef(company.uid!);
-
     const periodKey = `packages-${year}-${month}`;
-
     const newPackageForInsideCompany = doc(
       collection(db, Collections.companies, company.uid!, Collections.packages)
     );
-
     const totalsRef = doc(collection(db, Collections.logs));
-
     const packageRefForAvailablePackages = doc(
       db,
       Collections.availablePackages,
       newPackageForInsideCompany.id
     );
-
     batch.set(
       aggregatorRef,
       {
@@ -203,7 +195,6 @@ export async function callCreatePackage(
       },
       { merge: true }
     );
-
     batch.set(
       companyRef,
       {
@@ -216,15 +207,11 @@ export async function callCreatePackage(
       },
       { merge: true }
     );
-
     batch.set(newPackageForInsideCompany, packageToUpload);
     batch.set(packageRefForAvailablePackages, packageToUpload);
     batch.set(totalsRef, packageLog);
 
     await batch.commit();
-
-    //TODO: link to zustand, add loading & toast messages & error handling
-    //TODO: do the updatedAtListener.
   } catch (error) {
     throw error;
   }
