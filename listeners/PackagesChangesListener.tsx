@@ -29,72 +29,11 @@ const PackagesChangesListener = () => {
   const user = useAuthStore((state) => state.user);
   const company = useCompanyStore((state) => state.company);
 
-  const handleSnapshot = async (snapshot: QuerySnapshot) => {
-    try {
-      snapshot.docChanges().forEach(async (change) => {
-        if (!change.doc.exists) {
-          return;
-        }
-
-        const firebasePackageObject = {
-          ...change.doc.data(),
-          uid: change.doc.id,
-        } as Package;
-
-        console.log(
-          "firebasePackageObject: ",
-          JSON.stringify(firebasePackageObject)
-        );
-
-        const existingPackage = await findPackage(firebasePackageObject.uid!);
-        console.log("existingPackage: ", existingPackage);
-
-        switch (change?.type) {
-          case "added":
-            if (existingPackage) {
-              if (
-                existingPackage.updatedAtDate !==
-                firebasePackageObject.timeline?.updatedAtDate
-              ) {
-                await updateExistingPackage(
-                  existingPackage,
-                  firebasePackageObject
-                );
-              }
-              return;
-            } else {
-              await createPackageFromFirebasePackage(firebasePackageObject);
-            }
-            break;
-          case "modified":
-            if (existingPackage) {
-              await updateExistingPackage(
-                existingPackage,
-                firebasePackageObject
-              );
-            }
-            break;
-          case "removed":
-            if (existingPackage) {
-              await deleteExistingPackage(existingPackage);
-            }
-            break;
-          default:
-            break;
-        }
-      });
-    } catch (error) {
-      console.log("error@handleSnapshot: ", error);
-    }
-  };
-
   useEffect(() => {
     if (!auth?.currentUser || !user) {
-      console.log("PackagesChangesListener Not logged in****");
       return;
     }
     if (!company?.uid) {
-      console.log("PackagesChangesListener company not okkkk in****");
       return;
     }
 

@@ -46,6 +46,7 @@ const syncNewPackagesWDb = async (newPackages: Package[]) => {
       await createPackageFromFirebasePackage(firebasePackage);
       //TODO: deal w package deletion. from app -> on package click send to package screen & delete locally & globally.
       //from dashboard -> notification or a deleted packages listener.
+      //TODO: the same logic when updating from another dashboard. Need to change the updated at or else the ap won't get the updates.
     }
   });
 };

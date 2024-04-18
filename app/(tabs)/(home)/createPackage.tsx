@@ -71,7 +71,6 @@ const CreatePackage = () => {
 
   const onSubmit = (data: CreatePackageData) => {
     if (isValid) {
-      console.log(typeof data.packageHeight);
       const cretePackageData = { ...data };
       cretePackageData.isFragile = isFragile;
       cretePackageData.canBeOpened = canBeOpened;

@@ -34,7 +34,6 @@ const useCompanyStore = create<ImmutableCompanyStore>()(
         const company = await callGetCompany({
           companyID: useAuthStore.getState().profile?.companyID!,
         });
-        console.log("company: ", company);
 
         set((state) => {
           state.company = company;
