@@ -4,4 +4,4 @@ import { FieldValue } from "firebase/firestore";
 export const isReceivedFirebaseServerTimestamp = (
   date?: FieldValue | ReceivedFirebaseServerTimestamp
 ): date is ReceivedFirebaseServerTimestamp =>
-  (date as ReceivedFirebaseServerTimestamp).seconds !== undefined;
+  (date as ReceivedFirebaseServerTimestamp)?.seconds !== undefined;

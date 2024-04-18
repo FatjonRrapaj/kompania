@@ -20,8 +20,6 @@ import AuthStateChangeListener from "@/listeners/AuthStateChagesListener";
 import useAuthStore from "@/store/auth";
 import PackagesChangesListener from "@/listeners/PackagesChangesListener";
 
-import watermelonDB from "@/watermelon";
-
 export const unstable_settings = {
   initialRouteName: "(auth)",
 };
