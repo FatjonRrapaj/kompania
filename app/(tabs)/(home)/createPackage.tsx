@@ -71,11 +71,12 @@ const CreatePackage = () => {
 
   const onSubmit = (data: CreatePackageData) => {
     if (isValid) {
+      console.log(typeof data.packageHeight);
       const cretePackageData = { ...data };
       cretePackageData.isFragile = isFragile;
       cretePackageData.canBeOpened = canBeOpened;
       cretePackageData.currency = selectedCurrency;
-      usePackageStore.getState().createPackage(cretePackageData);
+      // usePackageStore.getState().createPackage(cretePackageData);
     }
   };
 

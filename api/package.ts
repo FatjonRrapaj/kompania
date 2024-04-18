@@ -84,16 +84,16 @@ export interface Package {
   scanId: string;
   receiver: Customer;
   packageDetails: {
-    weight?: string;
-    length?: string;
-    width?: string;
-    height?: string;
+    weight?: number;
+    length?: number;
+    width?: number;
+    height?: number;
     isFragile: boolean;
     canBeOpened: boolean;
   };
-  paymentAmount: string;
-  shippingCost: string;
-  cashOnDelivery: string;
+  paymentAmount: number;
+  shippingCost: number;
+  cashOnDelivery: number;
   notesForPackage: string;
   status: PackageStatus;
   timelineStatus: PackageTimelineStatus;
@@ -111,8 +111,6 @@ export async function callCreatePackage(
   company: Company,
   profile: CompanyUserProfile
 ) {
-  console.log("company: ", company);
-
   //TODO: the logs collection boi (the user who posted this & timestamps & everything.)
   //TODO: check internet connectivity before posting to make sure you are online, if not put as draft....
 
@@ -137,14 +135,22 @@ export async function callCreatePackage(
       packageDetails: {
         canBeOpened: packageData.canBeOpened,
         isFragile: packageData.isFragile,
-        weight: packageData.packageWeight,
-        width: packageData.packageWidth,
-        height: packageData.packageHeight,
-        length: packageData.packageLength,
+        ...(packageData.packageWeight && {
+          weight: parseInt(packageData.packageWeight),
+        }),
+        ...(packageData.packageWidth && {
+          width: parseInt(packageData.packageWidth),
+        }),
+        ...(packageData.packageHeight && {
+          height: parseInt(packageData.packageHeight),
+        }),
+        ...(packageData.packageLength && {
+          length: parseInt(packageData.packageLength),
+        }),
       },
-      paymentAmount: packageData.paymentAmount,
-      shippingCost: packageData.shippingCost,
-      cashOnDelivery: packageData.cashOnDelivery,
+      paymentAmount: parseInt(packageData.paymentAmount),
+      shippingCost: parseInt(packageData.shippingCost),
+      cashOnDelivery: parseInt(packageData.cashOnDelivery),
       notesForPackage: packageData.notesForPackage,
       status: "pending",
       timelineStatus: "available",
@@ -182,7 +188,7 @@ export async function callCreatePackage(
       collection(db, Collections.companies, company.uid!, Collections.packages)
     );
 
-    const totalsRef = doc(db, Collections.logs, Collections.totals);
+    const totalsRef = doc(collection(db, Collections.logs));
 
     const packageRefForAvailablePackages = doc(
       db,
@@ -236,10 +242,6 @@ export async function pushMockPackages(
   const timeStamp = currentDate.getTime();
 
   const firebaseTimeStamp = serverTimestamp();
-  console.log("firebaseTimeStamp: ", firebaseTimeStamp);
-  console.log("timeStamp: ", timeStamp);
-
-  //get date from timeStamp
 
   const mockPackageObjectWithUpdatedAt = { ...mockPackageObject };
   mockPackageObjectWithUpdatedAt.timeline!.updatedAtDate = serverTimestamp();

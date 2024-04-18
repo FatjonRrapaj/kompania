@@ -55,8 +55,7 @@ export const createPackageFromFirebasePackage = async (
         newRecord.paymentAmount = firebasePackageObject.paymentAmount;
         newRecord.shippingCost = firebasePackageObject.shippingCost;
         newRecord.cashOnDelivery = firebasePackageObject.cashOnDelivery;
-        newRecord.currencyName = firebasePackageObject?.currency?.name;
-        newRecord.currencySymbol = firebasePackageObject?.currency?.symbol;
+        newRecord.currencyShortValue = firebasePackageObject.currency;
 
         //package company location
         newRecord.companyLocationLat =
@@ -67,16 +66,16 @@ export const createPackageFromFirebasePackage = async (
           firebasePackageObject.companyAddress?.description;
 
         //package timeline
-        newRecord.createdAtDate = firebasePackageObject.timeline?.createdAtDate;
-        newRecord.postedAtDate = firebasePackageObject.timeline?.postedAtDate;
-        newRecord.acceptedAtDate =
-          firebasePackageObject.timeline?.acceptedAtDate;
-        newRecord.pickedAtDate = firebasePackageObject.timeline?.pickedAtDate;
-        newRecord.deliveredAtDate =
-          firebasePackageObject.timeline?.deliveredAtDate;
-        newRecord.returnedAtDate =
-          firebasePackageObject.timeline?.returnedAtDate;
-        newRecord.updatedAtDate = firebasePackageObject.timeline?.updatedAtDate;
+        // newRecord.createdAtDate = firebasePackageObject.timeline?.createdAtDate;
+        // newRecord.postedAtDate = firebasePackageObject.timeline?.postedAtDate;
+        // newRecord.acceptedAtDate =
+        //   firebasePackageObject.timeline?.acceptedAtDate;
+        // newRecord.pickedAtDate = firebasePackageObject.timeline?.pickedAtDate;
+        // newRecord.deliveredAtDate =
+        //   firebasePackageObject.timeline?.deliveredAtDate;
+        // newRecord.returnedAtDate =
+        //   firebasePackageObject.timeline?.returnedAtDate;
+        // newRecord.updatedAtDate = firebasePackageObject.timeline?.updatedAtDate;
       });
     });
   } catch (error) {

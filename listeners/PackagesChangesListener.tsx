@@ -38,7 +38,10 @@ const PackagesChangesListener = () => {
           uid: change.doc.id,
         } as Package;
 
+        console.log("firebasePackageObject: ", firebasePackageObject);
+
         const existingPackage = await findPackage(firebasePackageObject.uid!);
+        console.log("existingPackage: ", existingPackage);
 
         switch (change?.type) {
           case "added":
@@ -59,7 +62,6 @@ const PackagesChangesListener = () => {
             break;
           case "modified":
             if (existingPackage) {
-              console.log("existingPackage: ", existingPackage);
               await updateExistingPackage(
                 existingPackage,
                 firebasePackageObject
