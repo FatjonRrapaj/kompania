@@ -10,12 +10,9 @@ import useCompanyStore from "@/store/company";
 import usePackageStore from "@/store/package";
 
 const PackagesChangesListener = () => {
-  //TODO: convert this to company listener, fix the totals.
-  //Në total = pending + problematic + completed
-  //në proces = pending
-  //(completed) = completed => this is not developed.
-  //problematike = problematic
-  //after this you can maybe work on the listener function for available packages (firebase admin project & functions repo.)
+  //TODO: this thing does not listen for deleted packages. How to solve: Build the admin on React,
+  //      and create a listener on each package that lets them know for deleted packages as an array.
+  //      and then never delete packages directly from firebase console.
   const user = useAuthStore((state) => state.user);
   const company = useCompanyStore((state) => state.company);
 
@@ -37,10 +34,7 @@ const PackagesChangesListener = () => {
         if (!lastServerUpdatedAt) {
           lastServerUpdatedAt = 0;
         }
-
         let localLastUpdatedAt = await getLocalLastUpdatedAt();
-        console.log("lastServerUpdatedAt: ", lastServerUpdatedAt);
-        console.log("localLastUpdatedAt: ", localLastUpdatedAt);
         if (!localLastUpdatedAt) {
           localLastUpdatedAt = 0;
         }
