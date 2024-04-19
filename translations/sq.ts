@@ -32,7 +32,7 @@ export default {
     goodDay: "Mirëdita",
     goodEvening: "Mirëmbrëma",
     allPackages: "Të gjitha pakot",
-    inTotal: "në total",
+    completed: "dorëzuar",
     inProcess: "në proçes",
     problematic: "problematike",
     newPackage: "Pako e re",

@@ -35,7 +35,7 @@ const PackageNumber = (props: PackageNumberProps) => {
   };
 
   const titleMapper: StatusTitleMap = {
-    completed: translate("inTotal"),
+    completed: translate("completed"),
     pending: translate("inProcess"),
     problematic: translate("problematic"),
   };

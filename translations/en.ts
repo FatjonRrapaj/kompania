@@ -32,7 +32,7 @@ export default {
     goodDay: "Good Day",
     goodEvening: "Good Evening",
     allPackages: "All packages",
-    inTotal: "in total",
+    completed: "completed",
     inProcess: "in process",
     problematic: "problematic",
     newPackage: "New package",
