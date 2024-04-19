@@ -22,7 +22,7 @@ export interface CustomerAddress {
 }
 
 interface CompanyTotals {
-  allTotals: Totals;
+  all: Totals;
   [x: string]: Totals;
 }
 

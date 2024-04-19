@@ -30,7 +30,7 @@ const PackagesOverView = (props: PackagesOverViewProps) => {
           <Skeleton>
             <PackageNumber
               status="completed"
-              number={props?.company?.totals?.allTotals?.completed}
+              number={props?.company?.totals?.all?.completed}
               onPress={props.onPackageTypePress}
             />
           </Skeleton>
@@ -38,7 +38,7 @@ const PackagesOverView = (props: PackagesOverViewProps) => {
           <Skeleton>
             <PackageNumber
               status="pending"
-              number={props?.company?.totals?.allTotals?.pending}
+              number={props?.company?.totals?.all?.pending}
               onPress={props?.onPackageTypePress}
             />
           </Skeleton>
@@ -46,7 +46,7 @@ const PackagesOverView = (props: PackagesOverViewProps) => {
           <Skeleton>
             <PackageNumber
               status="problematic"
-              number={props?.company?.totals?.allTotals?.problematic}
+              number={props?.company?.totals?.all?.problematic}
               onPress={props?.onPackageTypePress}
             />
           </Skeleton>

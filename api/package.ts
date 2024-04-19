@@ -199,10 +199,12 @@ export async function callCreatePackage(
       {
         lastUpdatedAt: nowTimestamp,
         totals: {
-          pending: increment(1),
-        },
-        [periodKey]: {
-          pending: increment(1),
+          all: {
+            pending: increment(1),
+          },
+          [periodKey]: {
+            pending: increment(1),
+          },
         },
       },
       { merge: true }
