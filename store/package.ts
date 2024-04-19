@@ -19,12 +19,14 @@ import { createPackageFromFirebasePackage } from "@/watermelon/operations/packag
 type PackageState = {
   loadingCreatePackage: boolean;
   loadingSyncPackages: boolean;
+  newCreatedPackage?: Package;
 };
 
 type PackageActions = {
   createPackage: (createPackageData: CreatePackageData) => Promise<void>;
   syncPackages: (localLastUpdatedAt: number) => Promise<void>;
   setLoadingSyncPackages: (loading: boolean) => void;
+  setNewCreatedPackage: (newCreatedPackage?: Package) => void;
 };
 
 type PackageStore = PackageState & PackageActions;
@@ -98,6 +100,11 @@ const usePackageStore = create<ImmutablePackageStore>()(
     setLoadingSyncPackages: (loading: boolean) => {
       set((state) => {
         state.loadingSyncPackages = loading;
+      });
+    },
+    setNewCreatedPackage: (newCreatedPackage?: Package) => {
+      set((state) => {
+        state.newCreatedPackage = newCreatedPackage;
       });
     },
   }))
