@@ -109,8 +109,10 @@ export async function callCreatePackage(
   packageData: CreatePackageData,
   company: Company,
   profile: CompanyUserProfile
-) {
+): Promise<string> {
   //TODO: check internet connectivity before posting to make sure you are online, if not put as draft....
+  //TODO: compose a string that contains package title, client name, client phone number, description, etc so that the user can easily search for the package...
+  //TODO: make the composed string easy to edit.
 
   const now = new Date();
   const year = now.getFullYear();
@@ -214,6 +216,7 @@ export async function callCreatePackage(
     batch.set(totalsRef, packageLog);
 
     await batch.commit();
+    return newPackageForInsideCompany.id;
   } catch (error) {
     throw error;
   }

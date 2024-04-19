@@ -19,14 +19,14 @@ import { createPackageFromFirebasePackage } from "@/watermelon/operations/packag
 type PackageState = {
   loadingCreatePackage: boolean;
   loadingSyncPackages: boolean;
-  newCreatedPackage?: Package;
+  newCreatedPackageId?: string;
 };
 
 type PackageActions = {
   createPackage: (createPackageData: CreatePackageData) => Promise<void>;
   syncPackages: (localLastUpdatedAt: number) => Promise<void>;
   setLoadingSyncPackages: (loading: boolean) => void;
-  setNewCreatedPackage: (newCreatedPackage?: Package) => void;
+  setNewCreatedPackageId: (newCreatedPackageId?: string) => void;
 };
 
 type PackageStore = PackageState & PackageActions;
@@ -54,7 +54,7 @@ const syncNewPackagesWDb = async (newPackages: Package[]) => {
 };
 
 const usePackageStore = create<ImmutablePackageStore>()(
-  immer((set) => ({
+  immer((set, get) => ({
     ...initialState,
     createPackage: async (createPackageData: CreatePackageData) => {
       try {
@@ -63,12 +63,14 @@ const usePackageStore = create<ImmutablePackageStore>()(
         });
         const company = useCompanyStore.getState().company as Company;
         const companyUserProfile = useAuthStore.getState().profile;
-        await callCreatePackage(
+        const newCreatedPackageUid = await callCreatePackage(
           createPackageData,
           company!,
           companyUserProfile!
         );
-        //TODO: send the user to create package success page
+        set((state) => {
+          state.newCreatedPackageId = newCreatedPackageUid;
+        });
       } catch (error) {
         console.log("error @createPackage: ", error);
         //TODO: crashlytics or sentry to record error.
@@ -102,9 +104,9 @@ const usePackageStore = create<ImmutablePackageStore>()(
         state.loadingSyncPackages = loading;
       });
     },
-    setNewCreatedPackage: (newCreatedPackage?: Package) => {
+    setNewCreatedPackageId: (newCreatedPackageId?: string) => {
       set((state) => {
-        state.newCreatedPackage = newCreatedPackage;
+        state.newCreatedPackageId = newCreatedPackageId;
       });
     },
   }))
