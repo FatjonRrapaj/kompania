@@ -49,6 +49,14 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="(package)"
+        options={{
+          title: "",
+          headerShown: false,
+          href: null,
+        }}
+      />
+      <Tabs.Screen
         name="notifications"
         options={{
           title: "",

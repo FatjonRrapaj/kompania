@@ -50,7 +50,7 @@ const SuccessfullyCreatedPackageModal = () => {
             title={translate("view")}
             onPress={() => {
               usePackageStore.getState().setNewCreatedPackageId(undefined);
-              router.push(`/(tabs)/(home)/${newCreatedPackageId}`);
+              router.replace(`/(tabs)/(package)/${newCreatedPackageId}`);
             }}
           />
         </View>
