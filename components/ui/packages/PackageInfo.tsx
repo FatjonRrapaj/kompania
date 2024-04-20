@@ -36,9 +36,13 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
   }, []);
 
   //TODO: the package timeline w timestamps conversion & date translation.
+  //TODO: try to deepling the whatsapp message w number & text & not use twilio for these msgs inside.
 
   return (
-    <ScrollView contentContainerStyle={globalStyles.screenContainer}>
+    <ScrollView
+      contentContainerStyle={styles.scrollViewContentContainer}
+      showsVerticalScrollIndicator={false}
+    >
       <PageHeader
         title="packageFor"
         extraTitle={` ${packageObject?.receiverName}`}
@@ -95,7 +99,6 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
             <Body1Bold>{packageObject?.courierName}</Body1Bold>
           </View>
           <GiantButton
-            style={{ marginTop: 16 }}
             icon="Call"
             type="outline"
             title={translate("callCourier")}
@@ -113,9 +116,35 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
       <View
         style={[globalStyles.horizontalContainerSpaced, { marginVertical: 16 }]}
       >
-        <Body2> {translate("courier")} </Body2>
-        <Body1Bold>{packageObject?.courierName}</Body1Bold>
+        <Body2> {translate("client")} </Body2>
+        <Body1Bold>{packageObject?.receiverName}</Body1Bold>
       </View>
+      <View
+        style={[globalStyles.horizontalContainerSpaced, { marginBottom: 16 }]}
+      >
+        <Body2> {translate("address")} </Body2>
+        <Body1Bold>{packageObject?.receiverAddressDescription}</Body1Bold>
+      </View>
+      <GiantButton
+        icon="Call"
+        type="outline"
+        title={translate("callClient")}
+        onPress={() => {}}
+      />
+      <GiantButton
+        style={{ marginTop: 16 }}
+        icon="GreenSMS"
+        type="outline"
+        title={translate("sendSmsToClient")}
+        onPress={() => {}}
+      />
+      <GiantButton
+        style={{ marginTop: 16 }}
+        icon="Insta"
+        type="outline"
+        title={translate("visitClientProfile")}
+        onPress={() => {}}
+      />
     </ScrollView>
   );
 };
@@ -128,6 +157,10 @@ const PackageDetails = enhance(PackageInfoComponent);
 export default PackageDetails;
 
 const styles = StyleSheet.create({
+  scrollViewContentContainer: {
+    paddingVertical: 40,
+    paddingHorizontal: 16,
+  },
   timelineStatusContainer: {
     paddingHorizontal: 6,
     paddingVertical: 4,

@@ -29,6 +29,7 @@ import CloseCircle from "./close-circle.svg";
 import Copy from "./copy.svg";
 import QRCode from "./qrCode.svg";
 import Call from "./call.svg";
+import Insta from "./insta.svg";
 
 //Navigation
 import ArrowLeft from "./arrow-left.svg";
@@ -55,6 +56,7 @@ const IconConfig = {
   Scan,
   Copy,
   Call,
+  Insta,
   QRCode,
   CloseCircle,
   Package,
