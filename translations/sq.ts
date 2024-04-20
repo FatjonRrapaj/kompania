@@ -78,7 +78,7 @@ export default {
     publishLater: "Publiko Më Vonë",
     publishAt: "Publiko në",
     packageCreated: "Pakoja është krijuar me sukses",
-    couriersNotified: "Kurierët tanë janë njoftuar",
+    couriersNotified: "Korrierët tanë janë njoftuar",
     view: "Shiko pakon",
     currency: "Monedha",
     receiverName: "Emri i marrësit",

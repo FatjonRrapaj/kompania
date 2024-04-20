@@ -21,6 +21,7 @@ import Checkboxes from "@/components/ui/createPackage/Checkboxes";
 import CurrencySelector from "@/components/ui/createPackage/CurrencySelector";
 import { CreatePackageData, CurrencyShortValue } from "@/api/package";
 import usePackageStore from "@/store/package";
+import SuccessfullyCreatedPackageModal from "@/components/ui/createPackage/SuccessfullyCreatedPackageModal";
 
 const CreatePackage = () => {
   const { t } = useTranslation();
@@ -145,6 +146,7 @@ const CreatePackage = () => {
             onPress={handleSubmit(onSubmit)}
           />
         </ScrollView>
+        <SuccessfullyCreatedPackageModal />
       </KeyboardAvoidingView>
     </View>
   );
