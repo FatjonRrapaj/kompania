@@ -1,13 +1,8 @@
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { View } from "@/components/Themed";
+import { View, ScrollView } from "@/components/Themed";
 import globalStyles from "@/components/globalStyles";
 import PageHeader from "@/components/PageHeader";
 import { GiantButton } from "@/components/StyledButton";

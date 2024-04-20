@@ -1,6 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
 import { StyleSheet } from "react-native";
-import PackageDetails from "@/components/ui/packages/PackageDetails";
+import PackageInfo from "@/components/ui/packages/PackageInfo";
 import usePackageStore from "@/store/package";
 
 const Package = () => {
@@ -8,7 +8,7 @@ const Package = () => {
     id: string;
   }>();
 
-  return <PackageDetails id={id} />;
+  return <PackageInfo id={id} />;
 };
 
 export default Package;

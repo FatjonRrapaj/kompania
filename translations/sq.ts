@@ -52,6 +52,12 @@ export default {
     picked: "Marrë",
     delivered: "Dorëzuar",
     returned: "Kthyer",
+    availableDescription: "Gati për tu marrë",
+    acceptedDescription: "Pranuar nga korrieri",
+    pickedDescription: "Marrë nga korrieri",
+    deliveredDescription: "Dorëzuar te klienti",
+    returnedDescription: "Kthyer",
+    checkPackageDetails: "Shiko detajet e pakos",
   },
   createPackage: {
     receiverDetails: "Detajet e Marrësit",

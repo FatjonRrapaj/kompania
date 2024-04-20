@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   timelineStatusContainer: {
     paddingHorizontal: 6,
-    paddingVertical: 2,
+    paddingVertical: 4,
     borderRadius: 4,
     backgroundColor: primary[500],
   },

@@ -52,6 +52,12 @@ export default {
     picked: "Picked",
     delivered: "Delivered",
     returned: "Returned",
+    availableDescription: "Ready to be picked up",
+    acceptedDescription: "Accepted from courier",
+    pickedDescription: "Picked from courier",
+    deliveredDescription: "Delivered to client",
+    returnedDescription: "Returned",
+    checkPackageDetails: "Check package details",
   },
   createPackage: {
     receiverDetails: "Receiver Details",
