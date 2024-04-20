@@ -38,7 +38,6 @@ const SmallPackageItemComponent = ({
       style={styles.container}
       onPress={() => {
         usePackageStore.getState().setPackageRouteOrigin("/(tabs)/(home)");
-
         router.push(`/(tabs)/(package)/${packageObject.id}`);
       }}
     >
