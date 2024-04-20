@@ -49,8 +49,11 @@ const SuccessfullyCreatedPackageModal = () => {
           <GiantButton
             title={translate("view")}
             onPress={() => {
-              usePackageStore.getState().setNewCreatedPackageId(undefined);
               router.replace(`/(tabs)/(package)/${newCreatedPackageId}`);
+              usePackageStore.getState().setNewCreatedPackageId(undefined);
+              usePackageStore
+                .getState()
+                .setPackageRouteOrigin("/(tabs)/(home)");
             }}
           />
         </View>

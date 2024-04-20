@@ -1,19 +1,14 @@
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import * as React from "react";
-import { Text, StyleSheet, Pressable } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useLocalSearchParams } from "expo-router";
+import { StyleSheet } from "react-native";
+import PackageDetails from "@/components/ui/packages/PackageDetails";
+import usePackageStore from "@/store/package";
 
 const Package = () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text>Hi: {id}</Text>
+  const { id } = useLocalSearchParams<{
+    id: string;
+  }>();
 
-      <Pressable onPress={() => router.replace("/(tabs)/(home)")}>
-        <Text>Back</Text>
-      </Pressable>
-    </SafeAreaView>
-  );
+  return <PackageDetails id={id} />;
 };
 
 export default Package;

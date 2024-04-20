@@ -20,6 +20,7 @@ type PackageState = {
   loadingCreatePackage: boolean;
   loadingSyncPackages: boolean;
   newCreatedPackageId?: string;
+  packageRouteOrigin?: string;
 };
 
 type PackageActions = {
@@ -27,6 +28,7 @@ type PackageActions = {
   syncPackages: (localLastUpdatedAt: number) => Promise<void>;
   setLoadingSyncPackages: (loading: boolean) => void;
   setNewCreatedPackageId: (newCreatedPackageId?: string) => void;
+  setPackageRouteOrigin: (packageRouteOrigin?: string) => void;
 };
 
 type PackageStore = PackageState & PackageActions;
@@ -107,6 +109,11 @@ const usePackageStore = create<ImmutablePackageStore>()(
     setNewCreatedPackageId: (newCreatedPackageId?: string) => {
       set((state) => {
         state.newCreatedPackageId = newCreatedPackageId;
+      });
+    },
+    setPackageRouteOrigin: (packageRouteOrigin?: string) => {
+      set((state) => {
+        state.packageRouteOrigin = packageRouteOrigin;
       });
     },
   }))

@@ -30,7 +30,7 @@ const PackageItemLargeComponent = ({
       </Caption>
       <View style={[styles.horizontalContainer]}>
         <Body1Bold>
-          {packageObject.paymentAmount} {packageObject.currencySymbol}
+          {packageObject.paymentAmount} {packageObject.currencyShortValue}
         </Body1Bold>
         <View style={styles.timelineStatusContainer}>
           <Caption style={{ color: white[500] }}>

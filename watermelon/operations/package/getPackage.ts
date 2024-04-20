@@ -31,6 +31,9 @@ export const getLocalLastUpdatedAt = async () => {
 export const observePackages = () =>
   packagesCollection.query(Q.sortBy("updatedAtDate", Q.desc)).observe();
 
+export const findAndObservePackage = (packageId: string) =>
+  packagesCollection.findAndObserve(packageId);
+
 export const observeLastWeekPackages = () => {
   // const lastWeekTimeStamp = new Date().setDate(new Date().getDate() - 7);
 
