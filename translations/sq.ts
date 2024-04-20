@@ -5,6 +5,7 @@ export default {
     register: "Register",
     forgotPassword: "Forgot password",
     newPackage: "Pako e re",
+    packageFor: "Pako për",
   },
   form: {
     isRequired: "kërkohet",

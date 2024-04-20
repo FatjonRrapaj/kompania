@@ -9,6 +9,8 @@ import en from "@/translations/en";
 
 interface PageHeaderProps {
   title: keyof typeof en.navigation;
+  extraTitle?: string;
+  onBackPressed?: () => void;
 }
 
 const PageHeader = (props: PageHeaderProps) => {
@@ -16,14 +18,25 @@ const PageHeader = (props: PageHeaderProps) => {
   const translate = (key: keyof typeof en.navigation) => t(`navigation:${key}`);
   return (
     <View style={styles.container}>
-      {router.canGoBack() ? (
-        <Pressable style={styles.button} onPress={() => router.back()}>
+      {props.onBackPressed || router.canGoBack() ? (
+        <Pressable
+          style={styles.button}
+          onPress={() => {
+            if (props?.onBackPressed) {
+              props?.onBackPressed();
+            } else {
+              router.back();
+            }
+          }}
+        >
           <IconConfig.ArrowLeft />
         </Pressable>
       ) : (
         <View />
       )}
-      <Body1Bold style={styles.title}>{translate(props.title)}</Body1Bold>
+      <Body1Bold style={styles.title}>
+        {translate(props.title) + props.extraTitle ?? ""}
+      </Body1Bold>
       <View style={styles.button} />
     </View>
   );

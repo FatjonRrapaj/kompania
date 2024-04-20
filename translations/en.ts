@@ -5,6 +5,7 @@ export default {
     register: "Register",
     forgotPassword: "Forgot password",
     newPackage: "New Package",
+    packageFor: "Package for",
   },
   form: {
     isRequired: "is required",

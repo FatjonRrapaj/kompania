@@ -9,6 +9,7 @@ import { findAndObservePackage } from "@/watermelon/operations/package/getPackag
 import globalStyles from "@/components/globalStyles";
 import { Body2Bold } from "@/components/StyledText";
 import Pressable from "@/components/Pressable";
+import PageHeader from "@/components/PageHeader";
 
 interface PackageDetailsComponentProps {
   id: string;
@@ -29,16 +30,13 @@ const PackageDetailsComponent = ({
 
   return (
     <View style={globalStyles.screenContainer}>
-      <Pressable
-        onPress={() => {
-          goingBackTimeout.current = setTimeout(() => {
-            usePackageStore.getState().setPackageRouteOrigin(undefined);
-          }, 0);
+      <PageHeader
+        title="packageFor"
+        extraTitle={` ${packageObject?.receiverName}`}
+        onBackPressed={() => {
           router.replace(routeOrigin as any);
         }}
-      >
-        <Body2Bold>Go BACK</Body2Bold>
-      </Pressable>
+      />
       <Text>{packageObject?.receiverName}</Text>
       <Text>{packageObject?.id}</Text>
     </View>
