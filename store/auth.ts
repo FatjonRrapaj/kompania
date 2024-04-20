@@ -89,7 +89,6 @@ const useAuthStore = create<ImmutableAuthStore>()(
       });
       try {
         const profile = await callGetProfile(uid);
-        console.log("profile @getProfile: ", profile);
         set((state) => {
           state.profile = profile;
         });

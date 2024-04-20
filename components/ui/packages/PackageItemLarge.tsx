@@ -8,6 +8,9 @@ import { Text, View, StyleSheet } from "react-native";
 import PackageStatusTimeline from "./PackageStatusTimeline";
 import { PackageTimelineStatus } from "@/api/package";
 import { withObservables } from "@nozbe/watermelondb/react";
+import Pressable from "@/components/Pressable";
+import usePackageStore from "@/store/package";
+import { router } from "expo-router";
 
 interface PackageItemLargeProps {
   packageObject: PackageModel;
@@ -17,7 +20,13 @@ const PackageItemLargeComponent = ({
   packageObject,
 }: PackageItemLargeProps) => {
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => {
+        usePackageStore.getState().setPackageRouteOrigin("/(tabs)/packages/");
+        router.push(`/(tabs)/(package)/${packageObject.id}`);
+      }}
+    >
       <View style={[styles.horizontalContainer, { marginBottom: 4 }]}>
         <Body2>{i18next.t("package:client")}</Body2>
         <Body1Bold>{packageObject.receiverName}</Body1Bold>
@@ -38,7 +47,7 @@ const PackageItemLargeComponent = ({
           </Caption>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

@@ -20,6 +20,8 @@ import { Skeleton as DefaultSkeleton } from "moti/skeleton";
 import PackageModel from "@/watermelon/models/Package";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { PackageStatus } from "@/api/package";
+import { router } from "expo-router";
+import usePackageStore from "@/store/package";
 
 interface SmallPackageItemProps {
   packageObject: PackageModel;
@@ -32,17 +34,25 @@ const SmallPackageItemComponent = ({
   const translate = (key: keyof typeof en.package) => t(`package:${key}`);
 
   return (
-    <Pressable style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => {
+        usePackageStore.getState().setPackageRouteOrigin("/(tabs)/(home)");
+
+        router.push(`/(tabs)/(package)/${packageObject.id}`);
+      }}
+    >
       <View style={styles.iconContainer}>
         <IconConfig.Package />
       </View>
       <View style={styles.infoContainer}>
         <Body1Bold>{packageObject.receiverName}</Body1Bold>
         <Caption>{packageObject.updatedAtDate}</Caption>
+        <Caption>{packageObject.id}</Caption>
       </View>
       <View style={styles.priceContainer}>
         <Body2Bold>
-          {packageObject.currencySymbol}
+          {packageObject.currencyShortValue}
           {packageObject.paymentAmount}
         </Body2Bold>
         <Caption
