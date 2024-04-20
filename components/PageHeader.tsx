@@ -13,17 +13,21 @@ interface PageHeaderProps {
   onBackPressed?: () => void;
 }
 
-const PageHeader = (props: PageHeaderProps) => {
+const PageHeader = ({
+  title,
+  extraTitle = "",
+  onBackPressed,
+}: PageHeaderProps) => {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.navigation) => t(`navigation:${key}`);
   return (
     <View style={styles.container}>
-      {props.onBackPressed || router.canGoBack() ? (
+      {onBackPressed || router.canGoBack() ? (
         <Pressable
           style={styles.button}
           onPress={() => {
-            if (props?.onBackPressed) {
-              props?.onBackPressed();
+            if (onBackPressed) {
+              onBackPressed();
             } else {
               router.back();
             }
@@ -35,7 +39,7 @@ const PageHeader = (props: PageHeaderProps) => {
         <View />
       )}
       <Body1Bold style={styles.title}>
-        {translate(props.title) + props.extraTitle ?? ""}
+        {translate(title) + extraTitle ?? ""}
       </Body1Bold>
       <View style={styles.button} />
     </View>
