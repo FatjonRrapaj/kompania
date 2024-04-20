@@ -8,7 +8,7 @@ import usePackageStore from "@/store/package";
 import PackageModel from "@/watermelon/models/Package";
 import { findAndObservePackage } from "@/watermelon/operations/package/getPackage";
 import globalStyles from "@/components/globalStyles";
-import { Body2, Caption } from "@/components/StyledText";
+import { Body1Bold, Body2, Caption } from "@/components/StyledText";
 import { View, ScrollView } from "@/components/Themed";
 import Pressable from "@/components/Pressable";
 import PageHeader from "@/components/PageHeader";
@@ -16,6 +16,7 @@ import PackageStatusTimeline from "./PackageStatusTimeline";
 import { PackageTimelineStatus } from "@/api/package";
 import en from "@/translations/en";
 import { primary, white } from "@/constants/Colors";
+import { GiantButton } from "@/components/StyledButton";
 
 interface PackageInfoComponentProps {
   id: string;
@@ -33,6 +34,8 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
       clearTimeout(goingBackTimeout.current);
     };
   }, []);
+
+  //TODO: the package timeline w timestamps conversion & date translation.
 
   return (
     <ScrollView contentContainerStyle={globalStyles.screenContainer}>
@@ -59,6 +62,59 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
             {translate("checkPackageDetails")}
           </Body2>
         </Pressable>
+      </View>
+      <View
+        style={[globalStyles.horizontalContainerSpaced, { marginVertical: 16 }]}
+      >
+        <Body2> {translate("trackingId")} </Body2>
+        <Body1Bold>{packageObject?.packageScanId}</Body1Bold>
+      </View>
+      <GiantButton
+        icon="Copy"
+        type="outline"
+        title={translate("copyTrackingId")}
+        onPress={() => {}}
+      />
+      <GiantButton
+        style={{ marginTop: 16 }}
+        icon="QRCode"
+        type="outline"
+        title={translate("showQrCode")}
+        onPress={() => {}}
+      />
+      {/* TODO: remove the exclamation mark here on !packageObject */}
+      {!packageObject?.courierId && (
+        <>
+          <View
+            style={[
+              globalStyles.horizontalContainerSpaced,
+              { marginVertical: 16 },
+            ]}
+          >
+            <Body2> {translate("courier")} </Body2>
+            <Body1Bold>{packageObject?.courierName}</Body1Bold>
+          </View>
+          <GiantButton
+            style={{ marginTop: 16 }}
+            icon="Call"
+            type="outline"
+            title={translate("callCourier")}
+            onPress={() => {}}
+          />
+          <GiantButton
+            style={{ marginTop: 16 }}
+            icon="GreenSMS"
+            type="outline"
+            title={translate("sendPackageReference")}
+            onPress={() => {}}
+          />
+        </>
+      )}
+      <View
+        style={[globalStyles.horizontalContainerSpaced, { marginVertical: 16 }]}
+      >
+        <Body2> {translate("courier")} </Body2>
+        <Body1Bold>{packageObject?.courierName}</Body1Bold>
       </View>
     </ScrollView>
   );

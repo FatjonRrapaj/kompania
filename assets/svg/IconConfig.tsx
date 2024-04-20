@@ -1,5 +1,6 @@
 //input
 import SMS from "./sms.svg";
+import GreenSMS from "./greenSMS.svg";
 import Lock from "./lock.svg";
 import Eye from "./eye.svg";
 import EyeSlash from "./eye-slash.svg";
@@ -25,6 +26,9 @@ import WhiteBoxReturned from "./whiteBoxReturned.svg";
 //actions
 import Scan from "./scan.svg";
 import CloseCircle from "./close-circle.svg";
+import Copy from "./copy.svg";
+import QRCode from "./qrCode.svg";
+import Call from "./call.svg";
 
 //Navigation
 import ArrowLeft from "./arrow-left.svg";
@@ -32,6 +36,7 @@ import ArrowDown from "./arrow-down.svg";
 
 const IconConfig = {
   SMS,
+  GreenSMS,
   Lock,
   Eye,
   EyeSlash,
@@ -48,6 +53,9 @@ const IconConfig = {
   WhiteBoxDelivered,
   WhiteBoxReturned,
   Scan,
+  Copy,
+  Call,
+  QRCode,
   CloseCircle,
   Package,
   NoPackage,

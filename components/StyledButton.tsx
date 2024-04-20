@@ -1,4 +1,4 @@
-import { gray, primary, white } from "@/constants/Colors";
+import { dark, gray, primary, white } from "@/constants/Colors";
 import {
   StyleSheet,
   View,
@@ -12,6 +12,7 @@ import Pressable, { PressableProps } from "./Pressable";
 import IconConfig from "@/assets/svg/IconConfig";
 
 export type ButtonSize = "giant" | "large" | "medium" | "small";
+export type ButtonType = "default" | "outline";
 
 export type ButtonArrangement = "iconFirst" | "iconLast";
 
@@ -24,6 +25,7 @@ interface StyledButtonProps extends PressableProps {
   iconContainerStyle?: ViewStyle;
   inactive?: boolean;
   loading?: boolean;
+  type?: ButtonType;
 }
 
 export function GiantButton({
@@ -31,6 +33,7 @@ export function GiantButton({
   icon,
   onPress,
   arrangement = "iconFirst",
+  type = "default",
   textStyle,
   iconContainerStyle,
   disabled,
@@ -47,7 +50,7 @@ export function GiantButton({
       onPress={onPress}
       disabled={disabled}
       style={[
-        styles.base,
+        type === "default" ? styles.base : styles.baseOutline,
         styles.giant,
         {
           flexDirection: arrangement === "iconFirst" ? "row" : "row-reverse",
@@ -70,7 +73,7 @@ export function GiantButton({
 
       <PoppinsText
         style={[
-          styles.textBase,
+          type === "default" ? styles.textBase : styles.textBaseOutline,
           { fontSize: 16 },
           inactive && styles.inactiveText,
           loading && styles.loadingText,
@@ -106,6 +109,7 @@ export function MediumButton({
   onPress,
   arrangement = "iconFirst",
   textStyle,
+  type = "default",
   iconContainerStyle,
   disabled,
   inactive,
@@ -120,7 +124,7 @@ export function MediumButton({
       onPress={onPress}
       disabled={disabled}
       style={[
-        styles.base,
+        type === "default" ? styles.base : styles.baseOutline,
         styles.medium,
         {
           flexDirection: arrangement === "iconFirst" ? "row" : "row-reverse",
@@ -142,7 +146,7 @@ export function MediumButton({
       ) : null}
       <JostText
         style={[
-          styles.textBase,
+          type === "default" ? styles.textBase : styles.textBaseOutline,
           { fontSize: 14 },
           inactive && styles.inactiveText,
           loading && styles.loadingText,
@@ -181,10 +185,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
+  baseOutline: {
+    borderColor: primary[500],
+    borderWidth: 1,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+  },
   iconContainerBase: { justifyContent: "center", alignItems: "center" },
   iconContainerGiant: { height: 24, width: 24 },
   textBase: {
     color: white[500],
+  },
+  textBaseOutline: {
+    color: dark[500],
   },
   giant: {
     paddingHorizontal: 20,
