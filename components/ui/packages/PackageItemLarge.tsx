@@ -1,16 +1,15 @@
+import { View, StyleSheet } from "react-native";
+import { router } from "expo-router";
+import { withObservables } from "@nozbe/watermelondb/react";
+import i18next from "i18next";
+
 import { Body1Bold, Body2, Caption } from "@/components/StyledText";
 import { gray, primary, white } from "@/constants/Colors";
 import PackageModel from "@/watermelon/models/Package";
-import * as React from "react";
-import i18next from "i18next";
-
-import { Text, View, StyleSheet } from "react-native";
 import PackageStatusTimeline from "./PackageStatusTimeline";
 import { PackageTimelineStatus } from "@/api/package";
-import { withObservables } from "@nozbe/watermelondb/react";
 import Pressable from "@/components/Pressable";
 import usePackageStore from "@/store/package";
-import { router } from "expo-router";
 
 interface PackageItemLargeProps {
   packageObject: PackageModel;
