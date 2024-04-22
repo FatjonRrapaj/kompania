@@ -51,6 +51,7 @@
     "react-native-svg": "14.1.0",
     "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.6",
+    "react-qr-code": "^2.0.12",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

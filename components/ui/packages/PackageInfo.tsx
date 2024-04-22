@@ -21,6 +21,7 @@ import { GiantButton } from "@/components/StyledButton";
 import PackageDetailsModal from "./PackageDetailsModal";
 import PackageTimelineVertical from "./PackageTimelineVertical";
 import showToast from "@/utils/toast";
+import QRCodeModal from "./QrCodeModal";
 
 interface PackageInfoComponentProps {
   id: string;
@@ -35,6 +36,7 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
 
   const [packageDetailsModalVisible, setPackageDetailsModalVisible] =
     useState(false);
+  const [qrCodeModalVisible, setQrCodeModalVisible] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -117,7 +119,9 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
           icon="QRCode"
           type="outline"
           title={translate("showQrCode")}
-          onPress={() => {}}
+          onPress={() => {
+            setQrCodeModalVisible(true);
+          }}
         />
         {packageObject?.courierId && (
           <>
@@ -185,6 +189,14 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
         <PackageDetailsModal
           packageObject={packageObject!}
           onClose={() => setPackageDetailsModalVisible(false)}
+        />
+      )}
+      {qrCodeModalVisible && (
+        <QRCodeModal
+          code={packageObject?.packageScanId!}
+          onClose={() => {
+            setQrCodeModalVisible(false);
+          }}
         />
       )}
     </>

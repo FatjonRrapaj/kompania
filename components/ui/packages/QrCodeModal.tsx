@@ -1,21 +1,16 @@
 import { Modal, Pressable, StyleSheet } from "react-native";
 import { BlurView } from "expo-blur";
-import { useTranslation } from "react-i18next";
+import QRCode from "react-qr-code";
 
 import { View } from "@/components/Themed";
-import { Body2, PoppinsText } from "@/components/StyledText";
-import { dark, primary } from "@/constants/Colors";
-import en from "@/translations/en";
-import { GiantButton } from "@/components/StyledButton";
-import { router } from "expo-router";
 import IconConfig from "@/assets/svg/IconConfig";
-import usePackageStore from "@/store/package";
 
 interface QRCodeModalProps {
   code: string;
+  onClose: () => void;
 }
 
-const QRCodeModalProps = ({ code }: QRCodeModalProps) => {
+const QRCodeModal = ({ code, onClose }: QRCodeModalProps) => {
   return (
     <Modal
       visible
@@ -25,19 +20,21 @@ const QRCodeModalProps = ({ code }: QRCodeModalProps) => {
     >
       <BlurView intensity={35} tint="dark" style={styles.blur}>
         <View style={styles.modalContainer}>
-          <Pressable style={styles.close}>
+          <Pressable style={styles.close} onPress={onClose}>
             <IconConfig.CloseCircle />
           </Pressable>
+
+          <QRCode value={code} size={256} />
         </View>
       </BlurView>
     </Modal>
   );
 };
 
-export default QRCodeModalProps;
+export default QRCodeModal;
 
 const styles = StyleSheet.create({
-  close: { alignSelf: "flex-end" },
+  close: { alignSelf: "flex-end", marginBottom: 24 },
   blur: {
     flex: 1,
     justifyContent: "center",
@@ -50,7 +47,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     padding: 24,
+    paddingBottom: 32,
     borderRadius: 20,
-    height: 360,
   },
 });
