@@ -42,9 +42,6 @@ const PackagesListComponent = ({ packages }: PackageListProps) => {
   }, [user]);
 
   useEffect(() => {
-    // const superTestTimeStamp = Timestamp.fromMillis(
-    //   Timestamp.now().seconds * 1000
-    // ).toDate();
     if (profile && !company) {
       useCompanyStore.getState().getCompany();
     }
