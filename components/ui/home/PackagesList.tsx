@@ -18,6 +18,7 @@ import GreetingComponent from "./Greeting";
 import PackagesOverView from "./PackagesOverview";
 import PackageActions from "./PackageActions";
 import PackagesListHeader from "./PackagesListHeader";
+import usePackageStore from "@/store/package";
 
 interface PackageListProps {
   packages: PackageModel[];
@@ -28,12 +29,11 @@ const PackagesListComponent = ({ packages }: PackageListProps) => {
     //TODO: go to packages w status filter as parameter
   };
 
-  //TODO: implement loading
-  const loadingPackages = false;
   const user = useAuthStore((store) => store.user);
   const profile = useAuthStore((store) => store.profile);
   const loadingGetCompany = useCompanyStore((store) => store.loadingGetCompany);
   const company = useCompanyStore((store) => store.company as Company);
+  const loadingPackages = usePackageStore((store) => store.loadingSyncPackages);
 
   useEffect(() => {
     if (user && !profile) {
