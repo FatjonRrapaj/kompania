@@ -10,6 +10,7 @@ import PackageStatusTimeline from "./PackageStatusTimeline";
 import { PackageTimelineStatus } from "@/api/package";
 import Pressable from "@/components/Pressable";
 import usePackageStore from "@/store/package";
+import { getDateFromTimestamp } from "@/utils/date";
 
 interface PackageItemLargeProps {
   packageObject: PackageModel;
@@ -34,7 +35,7 @@ const PackageItemLargeComponent = ({
         status={packageObject.packageTimeLineStatus as PackageTimelineStatus}
       />
       <Caption style={{ marginVertical: 4 }}>
-        {packageObject.updatedAtDate}
+        {getDateFromTimestamp(packageObject.createdAtDate!)}
       </Caption>
       <View style={[styles.horizontalContainer]}>
         <Body1Bold>

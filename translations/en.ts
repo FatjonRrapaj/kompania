@@ -106,6 +106,7 @@ export default {
     pickedAtDate: "Package is picked by courier",
     deliveredAtDate: "Package is delivered to client",
     returnedAtDate: "Package is returned",
+    createdAt: "Created at",
   },
   createPackage: {
     receiverDetails: "Receiver Details",

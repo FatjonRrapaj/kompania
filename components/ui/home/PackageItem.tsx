@@ -22,6 +22,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { PackageStatus } from "@/api/package";
 import { router } from "expo-router";
 import usePackageStore from "@/store/package";
+import { getDateFromTimestamp } from "@/utils/date";
 
 interface SmallPackageItemProps {
   packageObject: PackageModel;
@@ -46,8 +47,11 @@ const SmallPackageItemComponent = ({
       </View>
       <View style={styles.infoContainer}>
         <Body1Bold>{packageObject.receiverName}</Body1Bold>
-        <Caption>{packageObject.updatedAtDate}</Caption>
-        <Caption>{packageObject.id}</Caption>
+        <Caption>
+          {translate("createdAt") +
+            " " +
+            getDateFromTimestamp(packageObject.updatedAtDate!)}
+        </Caption>
       </View>
       <View style={styles.priceContainer}>
         <Body2Bold>

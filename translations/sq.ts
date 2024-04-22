@@ -106,6 +106,7 @@ export default {
     pickedAtDate: "Pakoja është marrë nga korrieri",
     deliveredAtDate: "Pakoja është dorëzuar tek klienti",
     returnedAtDate: "Pakoja është kthyer",
+    createdAt: "Krijuar në",
   },
   createPackage: {
     receiverDetails: "Detajet e Marrësit",
