@@ -54,6 +54,9 @@ export default function TabLayout() {
           title: "",
           headerShown: false,
           href: null,
+          tabBarStyle: {
+            display: "none",
+          },
         }}
       />
       <Tabs.Screen
