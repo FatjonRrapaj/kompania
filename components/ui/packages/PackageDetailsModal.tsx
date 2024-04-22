@@ -8,6 +8,7 @@ import IconConfig from "@/assets/svg/IconConfig";
 import { H7Bold } from "@/components/StyledText";
 import en from "@/translations/en";
 import Pressable from "@/components/Pressable";
+import { gray } from "@/constants/Colors";
 
 interface PackageDetailsModalProps {
   packageObject: PackageModel;
@@ -22,17 +23,19 @@ const PackageDetailsModal = ({
   const translate = (key: keyof typeof en.package) => t(`package:${key}`);
 
   return (
-    <Modal>
-      <View style={globalStyles.horizontalContainerSpaced}>
-        <View>
-          <IconConfig.Package />
+    <Modal presentationStyle="overFullScreen" animationType="slide">
+      <View style={globalStyles.screenContainer}>
+        <View style={globalStyles.horizontalContainerSpaced}>
+          <View style={styles.titleIconContainer}>
+            <IconConfig.Package />
+          </View>
+          <H7Bold>
+            {translate("packageFor") + " " + packageObject.receiverName}
+          </H7Bold>
+          <Pressable onPress={onClose}>
+            <IconConfig.CloseCircle />
+          </Pressable>
         </View>
-        <H7Bold>
-          {translate("packageFor") + " " + packageObject.receiverName}
-        </H7Bold>
-        <Pressable onPress={onClose}>
-          <IconConfig.CloseCircle />
-        </Pressable>
       </View>
     </Modal>
   );
@@ -41,5 +44,12 @@ const PackageDetailsModal = ({
 export default PackageDetailsModal;
 
 const styles = StyleSheet.create({
-  container: {},
+  titleIconContainer: {
+    backgroundColor: gray[10],
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
