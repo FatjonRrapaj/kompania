@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 
@@ -92,15 +92,15 @@ const PackageTimelineVertical = ({
       </Body2>
       <View style={{ alignSelf: "flex-start" }}>
         <View style={{ alignItems: "center" }}>
-          {timelineArray.map(({ timestamp, action }, index) => (
-            <>
+          {timelineArray.map(({ timestamp, action, actionKey }, index) => (
+            <Fragment key={actionKey}>
               <PackageTimelineCircles
                 isActive={!!timestamp}
                 timestamp={timestamp}
                 actionDescription={action}
               />
               {index !== timelineArray.length - 1 && <IconConfig.DashedLine />}
-            </>
+            </Fragment>
           ))}
         </View>
       </View>
