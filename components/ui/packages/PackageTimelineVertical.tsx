@@ -5,11 +5,23 @@ import { View } from "@/components/Themed";
 import { PackageTimeline } from "@/api/package";
 import { gray, primary } from "@/constants/Colors";
 
-interface PackageTimelineDotProps {
+const PackageTimelineDash = () => (
+  <View
+    style={{
+      height: 40,
+      width: 0,
+      borderLeftWidth: 1,
+      borderStyle: "dashed",
+      borderColor: primary[500],
+    }}
+  />
+);
+
+interface PackageTimelineCirclesProps {
   isActive: boolean;
 }
 
-const PackageTimelineDot = ({ isActive }: PackageTimelineDotProps) => {
+const PackageTimelineCircles = ({ isActive }: PackageTimelineCirclesProps) => {
   const backgroundColor = isActive ? primary : gray;
   return (
     <View style={[styles.outerCircle, { backgroundColor: backgroundColor[5] }]}>
