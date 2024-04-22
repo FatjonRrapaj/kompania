@@ -53,7 +53,7 @@ export interface CreatePackageData {
   phoneNumber: string;
   profileLink: string;
   address: string;
-  notesForReceiver: string;
+  notesForReceiver?: string;
   packageId: string;
   packageName?: string;
   packageWeight?: string;
@@ -63,7 +63,7 @@ export interface CreatePackageData {
   paymentAmount: string;
   shippingCost: string;
   cashOnDelivery: string;
-  notesForPackage: string;
+  notesForPackage?: string;
   canBeOpened: boolean;
   currency: CurrencyShortValue;
   isFragile: boolean;
@@ -95,7 +95,7 @@ export interface Package {
   paymentAmount: number;
   shippingCost: number;
   cashOnDelivery: number;
-  notesForPackage: string;
+  notesForPackage?: string;
   status: PackageStatus;
   timelineStatus: PackageTimelineStatus;
   timeline?: PackageTimeline;
@@ -155,7 +155,9 @@ export async function callCreatePackage(
       paymentAmount: parseInt(packageData.paymentAmount),
       shippingCost: parseInt(packageData.shippingCost),
       cashOnDelivery: parseInt(packageData.cashOnDelivery),
-      notesForPackage: packageData.notesForPackage,
+      ...(packageData.notesForPackage && {
+        notesForPackage: packageData.notesForPackage,
+      }),
       status: "pending",
       timelineStatus: "available",
       timeline: {
