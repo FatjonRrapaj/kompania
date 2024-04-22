@@ -18,6 +18,7 @@ import en from "@/translations/en";
 import { primary, white } from "@/constants/Colors";
 import { GiantButton } from "@/components/StyledButton";
 import PackageDetailsModal from "./PackageDetailsModal";
+import PackageTimelineVertical from "./PackageTimelineVertical";
 
 interface PackageInfoComponentProps {
   id: string;
@@ -39,8 +40,7 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
     };
   }, []);
 
-  //TODO: the package timeline w timestamps conversion & date translation.
-  //TODO: try to deepling the whatsapp message w number & text & not use twilio for these msgs inside.
+  //TODO: try to deeplink the whatsapp message w number & text & not use twilio for these msgs inside.
 
   return (
     <>
@@ -74,6 +74,16 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
             </Body2>
           </Pressable>
         </View>
+        <PackageTimelineVertical
+          timeline={{
+            createdAtDate: packageObject?.createdAtDate,
+            postedAtDate: packageObject?.postedAtDate,
+            acceptedAtDate: packageObject?.acceptedAtDate,
+            pickedAtDate: packageObject?.pickedAtDate,
+            deliveredAtDate: packageObject?.deliveredAtDate,
+            returnedAtDate: packageObject?.returnedAtDate,
+          }}
+        />
         <View
           style={[
             globalStyles.horizontalContainerSpaced,
@@ -96,8 +106,7 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
           title={translate("showQrCode")}
           onPress={() => {}}
         />
-        {/* TODO: remove the exclamation mark here on !packageObject */}
-        {!packageObject?.courierId && (
+        {packageObject?.courierId && (
           <>
             <View
               style={[
