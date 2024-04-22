@@ -53,7 +53,7 @@ const CreatePackage = () => {
     },
   });
 
-  const [isStandardPackage, setIsStandardPackage] = useState<boolean>(false);
+  const [isStandardPackage, setIsStandardPackage] = useState<boolean>(true);
   const [selectedCurrency, setSelectedCurrency] =
     useState<CurrencyShortValue>("ALL");
   const [isFragile, setIsFragile] = useState<boolean>(false);

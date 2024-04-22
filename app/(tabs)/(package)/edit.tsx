@@ -16,35 +16,41 @@ import PackageSizeSelector from "@/components/ui/createPackage/PackageSizeSelect
 import { GiantButton } from "@/components/StyledButton";
 import { useTranslation } from "react-i18next";
 import en from "@/translations/en";
+import { router } from "expo-router";
 
 const EditPackage = () => {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.package) => t(`createPackage:${key}`);
 
-  const editingPackage: PackageFormData = usePackageStore((store) => {
-    const editingPackageInDb = store.editingPackage;
-    const composedPackage: PackageFormData = {
-      receiverName: editingPackageInDb?.receiverName!,
-      phoneNumber: editingPackageInDb?.receiverPhoneNumber!,
-      profileLink: editingPackageInDb?.receiverProfileUrl!,
-      address: editingPackageInDb?.receiverAddressDescription!,
-      notesForReceiver: editingPackageInDb?.notesForReceiver!,
-      packageId: editingPackageInDb?.id!,
-      packageName: editingPackageInDb?.packageName,
-      packageWeight: editingPackageInDb?.packageWeight?.toString(),
-      packageWidth: editingPackageInDb?.packageWidth?.toString(),
-      packageLength: editingPackageInDb?.packageLength?.toString(),
-      packageHeight: editingPackageInDb?.packageHeight?.toString(),
-      paymentAmount: editingPackageInDb?.paymentAmount?.toString()!,
-      shippingCost: editingPackageInDb?.shippingCost?.toString()!,
-      cashOnDelivery: editingPackageInDb?.cashOnDelivery?.toString()!,
-      notesForPackage: editingPackageInDb?.notesForPackage,
-      canBeOpened: !!editingPackageInDb?.canBeOpened,
-      isFragile: !!editingPackageInDb?.isFragile,
-      currency: editingPackageInDb?.currencyShortValue as CurrencyShortValue,
-    };
-    return composedPackage;
-  });
+  const editingPackage: PackageFormData | undefined = usePackageStore(
+    (store) => {
+      const editingPackageInDb = store.editingPackage;
+      if (!store.editingPackage) {
+        return undefined;
+      }
+      const composedPackage: PackageFormData = {
+        receiverName: editingPackageInDb?.receiverName!,
+        phoneNumber: editingPackageInDb?.receiverPhoneNumber!,
+        profileLink: editingPackageInDb?.receiverProfileUrl!,
+        address: editingPackageInDb?.receiverAddressDescription!,
+        notesForReceiver: editingPackageInDb?.notesForReceiver!,
+        packageId: editingPackageInDb?.id!,
+        packageName: editingPackageInDb?.packageName,
+        packageWeight: editingPackageInDb?.packageWeight?.toString(),
+        packageWidth: editingPackageInDb?.packageWidth?.toString(),
+        packageLength: editingPackageInDb?.packageLength?.toString(),
+        packageHeight: editingPackageInDb?.packageHeight?.toString(),
+        paymentAmount: editingPackageInDb?.paymentAmount?.toString()!,
+        shippingCost: editingPackageInDb?.shippingCost?.toString()!,
+        cashOnDelivery: editingPackageInDb?.cashOnDelivery?.toString()!,
+        notesForPackage: editingPackageInDb?.notesForPackage,
+        canBeOpened: !!editingPackageInDb?.canBeOpened,
+        isFragile: !!editingPackageInDb?.isFragile,
+        currency: editingPackageInDb?.currencyShortValue as CurrencyShortValue,
+      };
+      return composedPackage;
+    }
+  );
 
   const loadingEditingPackage = usePackageStore(
     (store) => store.loadingEditingPackage
@@ -60,7 +66,9 @@ const EditPackage = () => {
     defaultValues: editingPackage,
   });
 
-  const [isStandardPackage, setIsStandardPackage] = useState<boolean>(false);
+  const [isStandardPackage, setIsStandardPackage] = useState<boolean>(
+    !!editingPackage?.packageWidth
+  );
   const [selectedCurrency, setSelectedCurrency] =
     useState<CurrencyShortValue>("ALL");
   const [isFragile, setIsFragile] = useState<boolean>(false);
@@ -83,11 +91,21 @@ const EditPackage = () => {
     }
   };
 
+  if (!editingPackage) {
+    return (
+      <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]} />
+    );
+  }
+
   return (
     <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>
       <PageHeader
         title="editingPackageFor"
         extraTitle={` ${editingPackage.receiverName}`}
+        onBackPressed={() => {
+          usePackageStore.getState().setEditingPackage(undefined);
+          router.back();
+        }}
       />
       <KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -158,7 +176,3 @@ const EditPackage = () => {
 };
 
 export default EditPackage;
-
-const styles = StyleSheet.create({
-  container: {},
-});

@@ -198,7 +198,8 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
           type="outline"
           title={translate("edit")}
           onPress={() => {
-            //TODO: edit
+            usePackageStore.getState().setEditingPackage(packageObject);
+            router.push("/(tabs)/(package)/edit");
           }}
         />
         <GiantButton
