@@ -3,6 +3,7 @@ import { router } from "expo-router";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
+import Clipboard from "@react-native-clipboard/clipboard";
 
 import usePackageStore from "@/store/package";
 import PackageModel from "@/watermelon/models/Package";
@@ -19,6 +20,7 @@ import { primary, white } from "@/constants/Colors";
 import { GiantButton } from "@/components/StyledButton";
 import PackageDetailsModal from "./PackageDetailsModal";
 import PackageTimelineVertical from "./PackageTimelineVertical";
+import showToast from "@/utils/toast";
 
 interface PackageInfoComponentProps {
   id: string;
@@ -39,6 +41,15 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
       clearTimeout(goingBackTimeout.current);
     };
   }, []);
+
+  const copyToClipboard = (textToCopy: string) => {
+    Clipboard.setString(textToCopy);
+    showToast({
+      type: "success",
+      visibilityTime: 1000,
+      text1Key: "copiedPackageId",
+    });
+  };
 
   //TODO: try to deeplink the whatsapp message w number & text & not use twilio for these msgs inside.
 
@@ -97,7 +108,9 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
           icon="Copy"
           type="outline"
           title={translate("copyTrackingId")}
-          onPress={() => {}}
+          onPress={() => {
+            copyToClipboard(packageObject?.packageScanId!);
+          }}
         />
         <GiantButton
           style={{ marginTop: 16 }}

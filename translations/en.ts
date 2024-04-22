@@ -565,5 +565,6 @@ export default {
     changePasswordSuccess: "Successfully changed password",
     passwordIncorrect: "The provided password is incorrect",
     pleaseTryAgainText2: "Please try again",
+    copiedPackageId: "Package Scan Id is copied",
   },
 };

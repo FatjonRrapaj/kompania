@@ -586,5 +586,6 @@ export default {
     changePasswordSuccess: "Fjalëkalimi u ndryshua me sukses",
     passwordIncorrect: "Fjalëkalimi i dhënë është i pasaktë",
     pleaseTryAgainText2: "Ju lutemi provoni përsëri",
+    copiedPackageId: "Id e skanimit të pakos u kopjua",
   },
 };
