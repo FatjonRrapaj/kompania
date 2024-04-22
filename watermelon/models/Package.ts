@@ -13,6 +13,7 @@ class PackageModel extends Model {
   @field("packageHeight") packageHeight?: number;
   @field("isFragile") isFragile?: boolean;
   @field("canBeOpened") canBeOpened?: boolean;
+  @field("notesForPackage") notesForPackage?: boolean;
 
   @field("paymentAmount") paymentAmount!: number;
   @field("shippingCost") shippingCost!: number;

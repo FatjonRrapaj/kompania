@@ -14,7 +14,8 @@ const schema = appSchema({
         { name: "packageWidth", type: "number", isOptional: true },
         { name: "packageHeight", type: "number", isOptional: true },
         { name: "isFragile", type: "boolean", isOptional: true },
-        { name: "canBeOpened", type: "boolean" },
+        { name: "canBeOpened", type: "boolean", isOptional: true },
+        { name: "notesForPackage", type: "string", isOptional: true },
 
         { name: "paymentAmount", type: "number" },
         { name: "shippingCost", type: "number" },
