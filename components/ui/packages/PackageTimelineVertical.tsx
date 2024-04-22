@@ -32,18 +32,22 @@ const PackageTimelineCircles = ({
           <View
             style={[
               styles.innerCircle,
-              { backgroundColor: backgroundColor[500] },
+              { backgroundColor: backgroundColor[80] },
             ]}
           />
         </View>
       </View>
       <View style={styles.circlesTimeContainer}>
-        <Caption style={{ color: gray[500], position: "absolute", left: 8 }}>
-          Time {timestamp}
-        </Caption>
-        <Body2 style={{ position: "absolute", top: 8, left: 8 }}>
-          {actionDescription}
-        </Body2>
+        {timestamp ? (
+          <Caption style={{ color: gray[500], position: "absolute", left: 8 }}>
+            {timestamp}
+          </Caption>
+        ) : null}
+        {actionDescription ? (
+          <Body2 style={{ position: "absolute", top: 8, left: 8 }}>
+            {actionDescription}
+          </Body2>
+        ) : null}
       </View>
     </View>
   );
@@ -64,6 +68,7 @@ const PackageTimelineVertical = ({
   const [shortVersion, setShortVersion] = useState(false);
   const timelineArray: TimelinePoint[] = useMemo(() => {
     let timelineArr = Object.keys(timeline)
+      .filter((k) => k !== "createdAtDate")
       .filter((k) => !!timeline[k])
       .sort((t1, t2) => ((timeline[t2] as number) - timeline[t1]) as number)
       .map((k) => ({
@@ -71,6 +76,12 @@ const PackageTimelineVertical = ({
         action: translate(k as keyof typeof en.package),
         actionKey: k,
       }));
+    if (
+      timelineArr[timelineArr.length - 1].action !== "deliveredAtDate" ||
+      timelineArr[timelineArr.length - 1].action !== "returnedAtDate"
+    ) {
+      timelineArr.push({ timestamp: 0, action: "", actionKey: "" });
+    }
     if (shortVersion) {
       return timelineArr.slice(0, 2);
     } else return timelineArr;
@@ -78,21 +89,17 @@ const PackageTimelineVertical = ({
 
   return (
     <View style={styles.container}>
-      <Body2>{timeline.createdAtDate}</Body2>
+      <Body2 style={styles.startDate}>{timeline.createdAtDate}</Body2>
       <View style={{ alignSelf: "flex-start" }}>
         <View style={{ alignItems: "center" }}>
-          {timelineArray.map(({ timestamp, action, actionKey }, index) => (
+          {timelineArray.map(({ timestamp, action }, index) => (
             <>
               <PackageTimelineCircles
-                isActive={
-                  (index === timelineArray.length - 1 &&
-                    actionKey !== "deliveredAtDate") ||
-                  actionKey !== "returnedAtDate"
-                }
+                isActive={!!timestamp}
                 timestamp={timestamp}
                 actionDescription={action}
               />
-              <IconConfig.DashedLine />
+              {index !== timelineArray.length - 1 && <IconConfig.DashedLine />}
             </>
           ))}
         </View>
@@ -132,5 +139,9 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     borderRadius: 6,
+  },
+  startDate: {
+    marginBottom: 16,
+    marginLeft: 4,
   },
 });
