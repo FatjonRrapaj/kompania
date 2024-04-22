@@ -56,7 +56,7 @@ const syncNewPackagesWDb = async (newPackages: Package[]) => {
 };
 
 const usePackageStore = create<ImmutablePackageStore>()(
-  immer((set, get) => ({
+  immer((set) => ({
     ...initialState,
     createPackage: async (createPackageData: CreatePackageData) => {
       try {

@@ -121,13 +121,15 @@ export async function callCreatePackage(
   const month = now.getMonth() + 1;
   const nowTimestamp = now.getTime();
 
+  //TODO: maybe pass uid to receiver
+
   try {
     const packageToUpload: Package = {
       scanId: packageData.packageId,
       packageName: packageData.packageName,
       receiver: {
         name: packageData.receiverName,
-        uid: packageData.profileLink,
+        profileUrl: packageData.profileLink,
         phoneNumber: packageData.phoneNumber,
         notes: packageData.notesForReceiver,
         receiverLocation: {
