@@ -50,6 +50,7 @@ const PackageTimelineCircles = ({
       </View>
       <View style={styles.circlesTimeContainer}>
         <Caption style={{ color: gray[500] }}>Time {timestamp}</Caption>
+        <Body2 style={{ position: "absolute" }}>{actionDescription}</Body2>
       </View>
     </View>
   );
