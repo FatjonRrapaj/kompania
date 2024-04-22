@@ -67,11 +67,17 @@ const CreatePackage = () => {
 
   const onSubmit = (data: PackageFormData) => {
     if (isValid) {
-      const cretePackageData = { ...data };
-      cretePackageData.isFragile = isFragile;
-      cretePackageData.canBeOpened = canBeOpened;
-      cretePackageData.currency = selectedCurrency;
-      usePackageStore.getState().createPackage(cretePackageData);
+      const createPackageData = { ...data };
+      createPackageData.isFragile = isFragile;
+      createPackageData.canBeOpened = canBeOpened;
+      createPackageData.currency = selectedCurrency;
+      usePackageStore.getState().createPackage(createPackageData);
+      if (isStandardPackage) {
+        createPackageData.packageWeight = undefined;
+        createPackageData.packageHeight = undefined;
+        createPackageData.packageLength = undefined;
+        createPackageData.packageWidth = undefined;
+      }
     }
   };
 
