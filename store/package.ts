@@ -3,8 +3,8 @@ import { immer } from "zustand/middleware/immer";
 import { Immutable } from "immer";
 
 import {
-  CreatePackageData,
   Package,
+  PackageFormData,
   callCreatePackage,
   callSyncPackages,
 } from "@/api/package";
@@ -23,10 +23,11 @@ type PackageState = {
   newCreatedPackageId?: string;
   packageRouteOrigin?: string;
   editingPackage?: PackageModel;
+  loadingEditingPackage: boolean;
 };
 
 type PackageActions = {
-  createPackage: (createPackageData: CreatePackageData) => Promise<void>;
+  createPackage: (createPackageData: PackageFormData) => Promise<void>;
   syncPackages: (localLastUpdatedAt: number) => Promise<void>;
   setLoadingSyncPackages: (loading: boolean) => void;
   setNewCreatedPackageId: (newCreatedPackageId?: string) => void;
@@ -40,6 +41,7 @@ type ImmutablePackageStore = Immutable<PackageStore>;
 const initialState: PackageState = {
   loadingCreatePackage: false,
   loadingSyncPackages: true,
+  loadingEditingPackage: false,
 };
 
 const syncNewPackagesWDb = async (newPackages: Package[]) => {
@@ -61,7 +63,7 @@ const syncNewPackagesWDb = async (newPackages: Package[]) => {
 const usePackageStore = create<ImmutablePackageStore>()(
   immer((set) => ({
     ...initialState,
-    createPackage: async (createPackageData: CreatePackageData) => {
+    createPackage: async (createPackageData: PackageFormData) => {
       try {
         set((state) => {
           state.loadingCreatePackage = true;
@@ -123,6 +125,19 @@ const usePackageStore = create<ImmutablePackageStore>()(
       set((state) => {
         state.editingPackage = editingPackage;
       });
+    },
+    editPackage: async (editingPackageData: PackageFormData) => {
+      try {
+        set((state) => {
+          state.loadingEditingPackage = true;
+        });
+      } catch (error) {
+        showToastFromError(error);
+      } finally {
+        set((state) => {
+          state.loadingEditingPackage = false;
+        });
+      }
     },
   }))
 );

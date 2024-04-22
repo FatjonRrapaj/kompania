@@ -20,6 +20,7 @@ export default {
     forgotPassword: "Forgot password",
     newPackage: "New Package",
     packageFor: "Package for",
+    editingPackageFor: "Editing package for",
   },
   form: {
     isRequired: "is required",
@@ -109,6 +110,7 @@ export default {
     createdAt: "Created at",
     edit: "Edit",
     delete: "Delete",
+    save: "Save Changes",
   },
   createPackage: {
     receiverDetails: "Receiver Details",

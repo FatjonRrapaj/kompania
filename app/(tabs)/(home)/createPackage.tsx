@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -10,11 +11,10 @@ import useCreatePackageFields from "@/components/ui/createPackage/useCreatePacka
 import en from "@/translations/en";
 import { Body1Bold } from "@/components/StyledText";
 import TextInput from "@/components/Form/TextInput";
-import { useState } from "react";
 import PackageSizeSelector from "@/components/ui/createPackage/PackageSizeSelector";
 import Checkboxes from "@/components/ui/createPackage/Checkboxes";
 import CurrencySelector from "@/components/ui/createPackage/CurrencySelector";
-import { CreatePackageData, CurrencyShortValue } from "@/api/package";
+import { PackageFormData, CurrencyShortValue } from "@/api/package";
 import usePackageStore from "@/store/package";
 import SuccessfullyCreatedPackageModal from "@/components/ui/createPackage/SuccessfullyCreatedPackageModal";
 
@@ -33,7 +33,7 @@ const CreatePackage = () => {
     resetField,
     setValue,
     formState: { isValid },
-  } = useForm<CreatePackageData>({
+  } = useForm<PackageFormData>({
     defaultValues: {
       receiverName: "Fatjon Rrapaj",
       phoneNumber: "0685919978",
@@ -65,7 +65,7 @@ const CreatePackage = () => {
     setValue,
   });
 
-  const onSubmit = (data: CreatePackageData) => {
+  const onSubmit = (data: PackageFormData) => {
     if (isValid) {
       const cretePackageData = { ...data };
       cretePackageData.isFragile = isFragile;

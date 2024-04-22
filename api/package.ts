@@ -48,7 +48,7 @@ export interface PackageTimeline {
   returnedAtDate?: number;
 }
 
-export interface CreatePackageData {
+export interface PackageFormData {
   receiverName: string;
   phoneNumber: string;
   profileLink: string;
@@ -106,7 +106,7 @@ export interface Package {
 }
 
 export async function callCreatePackage(
-  packageData: CreatePackageData,
+  packageData: PackageFormData,
   company: Company,
   profile: CompanyUserProfile
 ): Promise<string> {
@@ -226,6 +226,10 @@ export async function callCreatePackage(
   } catch (error) {
     throw error;
   }
+}
+
+export async function callEditPackage(editingPackageData: PackageFormData) {
+  //TODO: do this very simmilar to edit package
 }
 
 export async function callSyncPackages(

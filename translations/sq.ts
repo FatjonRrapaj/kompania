@@ -20,6 +20,7 @@ export default {
     forgotPassword: "Forgot password",
     newPackage: "Pako e re",
     packageFor: "Pako për",
+    editingPackageFor: "Duke ndryshuar pakon për",
   },
   form: {
     isRequired: "kërkohet",

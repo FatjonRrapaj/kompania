@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import en from "@/translations/en";
 import { UseFormResetField, UseFormSetValue } from "react-hook-form";
 import { Customer } from "@/api/company";
-import { CreatePackageData } from "@/api/package";
+import { PackageFormData } from "@/api/package";
 
 type FormElementTypes =
   | "sectionLabel"
@@ -50,8 +50,8 @@ type CreatePackageFieldsType = Array<
 
 interface PackageFieldsProps {
   isStandardPackage: boolean;
-  resetField: UseFormResetField<CreatePackageData>;
-  setValue: UseFormSetValue<CreatePackageData>;
+  resetField: UseFormResetField<PackageFormData>;
+  setValue: UseFormSetValue<PackageFormData>;
 }
 
 function useCreatePackageFields({
