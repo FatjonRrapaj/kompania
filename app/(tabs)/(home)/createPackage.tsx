@@ -71,13 +71,13 @@ const CreatePackage = () => {
       createPackageData.isFragile = isFragile;
       createPackageData.canBeOpened = canBeOpened;
       createPackageData.currency = selectedCurrency;
-      usePackageStore.getState().createPackage(createPackageData);
       if (isStandardPackage) {
         createPackageData.packageWeight = undefined;
         createPackageData.packageHeight = undefined;
         createPackageData.packageLength = undefined;
         createPackageData.packageWidth = undefined;
       }
+      usePackageStore.getState().createPackage(createPackageData);
     }
   };
 
