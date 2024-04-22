@@ -15,12 +15,14 @@ import { Company } from "@/api/company";
 import { findPackage } from "@/watermelon/operations/package/getPackage";
 import { updateExistingPackage } from "@/watermelon/operations/package/updatePackage";
 import { createPackageFromFirebasePackage } from "@/watermelon/operations/package/createPackage";
+import PackageModel from "@/watermelon/models/Package";
 
 type PackageState = {
   loadingCreatePackage: boolean;
   loadingSyncPackages: boolean;
   newCreatedPackageId?: string;
   packageRouteOrigin?: string;
+  editingPackage?: PackageModel;
 };
 
 type PackageActions = {
@@ -29,6 +31,7 @@ type PackageActions = {
   setLoadingSyncPackages: (loading: boolean) => void;
   setNewCreatedPackageId: (newCreatedPackageId?: string) => void;
   setPackageRouteOrigin: (packageRouteOrigin?: string) => void;
+  setEditingPackage: (editingPackage?: PackageModel) => void;
 };
 
 type PackageStore = PackageState & PackageActions;
@@ -114,6 +117,11 @@ const usePackageStore = create<ImmutablePackageStore>()(
     setPackageRouteOrigin: (packageRouteOrigin?: string) => {
       set((state) => {
         state.packageRouteOrigin = packageRouteOrigin;
+      });
+    },
+    setEditingPackage: (editingPackage?: PackageModel) => {
+      set((state) => {
+        state.editingPackage = editingPackage;
       });
     },
   }))
