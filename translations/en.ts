@@ -86,6 +86,12 @@ export default {
     notes: "Notes",
     notesForClient: "Notes for the client:",
     notesForPackage: "Notes for the package:",
+    createdAtDate: "Package is created",
+    postedAtDate: "Package is published",
+    acceptedAtDate: "Package is accepted by courier",
+    pickedAtDate: "Package is picked by courier",
+    deliveredAtDate: "Package is delivered to client",
+    returnedAtDate: "Package is returned",
   },
   createPackage: {
     receiverDetails: "Receiver Details",

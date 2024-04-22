@@ -86,6 +86,12 @@ export default {
     notes: "Shënime",
     notesForClient: "Shënime për klientin:",
     notesForPackage: "Shënime për pakon:",
+    createdAtDate: "Pakoja është krijuar",
+    postedAtDate: "Pakoja është publikuar",
+    acceptedAtDate: "Pakoja është pranuar nga korrieri",
+    pickedAtDate: "Pakoja është marrë nga korrieri",
+    deliveredAtDate: "Pakoja është dorëzuar tek klienti",
+    returnedAtDate: "Pakoja është kthyer",
   },
   createPackage: {
     receiverDetails: "Detajet e Marrësit",

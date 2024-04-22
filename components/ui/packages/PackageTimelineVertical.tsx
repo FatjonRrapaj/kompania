@@ -1,10 +1,12 @@
 import { useState, useMemo } from "react";
 import { StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { View } from "@/components/Themed";
 import { PackageTimeline } from "@/api/package";
 import { gray, primary } from "@/constants/Colors";
 import { Body2, Caption } from "@/components/StyledText";
+import en from "@/translations/en";
 
 const PackageTimelineDash = () => (
   <View
@@ -57,15 +59,24 @@ interface PackageTimelineVerticalProps {
   timeline: PackageTimeline;
 }
 
+type TimelinePoint = { timestamp: number; action: string; actionKey: string };
+
 const PackageTimelineVertical = ({
   timeline,
 }: PackageTimelineVerticalProps) => {
+  const { t } = useTranslation();
+  const translate = (key: keyof typeof en.package) => t(`package:${key}`);
+
   const [shortVersion, setShortVersion] = useState(false);
-  const timelineArray: any = useMemo(() => {
+  const timelineArray: TimelinePoint[] = useMemo(() => {
     let timelineArr = Object.keys(timeline)
       .filter((k) => !!timeline[k])
       .sort((t1) => ((timeline[t2] as number) - timeline[t1]) as number)
-      .map((k) => timeline[k]);
+      .map((k) => ({
+        timestamp: timeline[k],
+        action: translate(k as keyof typeof en.package),
+        actionKey: k,
+      }));
     if (shortVersion) {
       return timelineArr.slice(0, 2);
     } else return timelineArr;
@@ -74,9 +85,17 @@ const PackageTimelineVertical = ({
   return (
     <View>
       <Body2>{timeline.createdAtDate}</Body2>
-      {timelineArray.map((timestamp) => (
+      {timelineArray.map(({ timestamp, action, actionKey }, index) => (
         <>
-          <PackageTimelineCircles isActive={true} />
+          <PackageTimelineCircles
+            isActive={
+              (index === timelineArray.length - 1 &&
+                actionKey !== "deliveredAtDate") ||
+              actionKey !== "returnedAtDate"
+            }
+            timestamp={timestamp}
+            actionDescription={action}
+          />
           <PackageTimelineDash />
         </>
       ))}
