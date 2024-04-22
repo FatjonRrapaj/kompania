@@ -50,6 +50,7 @@ export const createPackageFromFirebasePackage = async (
         newRecord.isFragile = firebasePackageObject.packageDetails.isFragile;
         newRecord.canBeOpened =
           firebasePackageObject.packageDetails.canBeOpened;
+        newRecord.notesForPackage = firebasePackageObject.notesForPackage;
 
         //package price
         newRecord.paymentAmount = firebasePackageObject.paymentAmount;

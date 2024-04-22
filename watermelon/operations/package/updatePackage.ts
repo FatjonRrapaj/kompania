@@ -59,6 +59,8 @@ export const updateExistingPackage = async (
           firebasePackageObject.packageDetails.isFragile;
         existingWatermelonPackage.canBeOpened =
           firebasePackageObject.packageDetails.canBeOpened;
+        existingWatermelonPackage.notesForPackage =
+          firebasePackageObject.notesForPackage;
 
         //package price
         existingWatermelonPackage.paymentAmount =
