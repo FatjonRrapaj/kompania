@@ -49,6 +49,7 @@ export interface PackageTimeline {
 }
 
 export interface PackageFormData {
+  uid?: string;
   receiverName: string;
   phoneNumber: string;
   profileLink: string;

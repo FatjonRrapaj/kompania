@@ -29,6 +29,7 @@ const EditPackage = () => {
         return undefined;
       }
       const composedPackage: PackageFormData = {
+        uid: editingPackageInDb?.id!,
         receiverName: editingPackageInDb?.receiverName!,
         phoneNumber: editingPackageInDb?.receiverPhoneNumber!,
         profileLink: editingPackageInDb?.receiverProfileUrl!,
@@ -67,7 +68,7 @@ const EditPackage = () => {
   });
 
   const [isStandardPackage, setIsStandardPackage] = useState<boolean>(
-    !!editingPackage?.packageWidth
+    !editingPackage?.packageWidth
   );
   const [selectedCurrency, setSelectedCurrency] =
     useState<CurrencyShortValue>("ALL");
@@ -82,10 +83,16 @@ const EditPackage = () => {
 
   const onSubmit = (data: PackageFormData) => {
     if (isValid) {
-      const cretePackageData = { ...data };
-      cretePackageData.isFragile = isFragile;
-      cretePackageData.canBeOpened = canBeOpened;
-      cretePackageData.currency = selectedCurrency;
+      const editPackageData = { ...data };
+      editPackageData.isFragile = isFragile;
+      editPackageData.canBeOpened = canBeOpened;
+      editPackageData.currency = selectedCurrency;
+      if (isStandardPackage) {
+        editPackageData.packageWeight = undefined;
+        editPackageData.packageHeight = undefined;
+        editPackageData.packageLength = undefined;
+        editPackageData.packageWidth = undefined;
+      }
       //TODO: create edit package in firebase and update the updatedAt
       //Go back on success.
     }
