@@ -114,6 +114,8 @@ export async function callCreatePackage(
   //TODO: compose a string that contains package title, client name, client phone number, description, etc so that the user can easily search for the package...
   //TODO: make the composed string easy to edit.
 
+  //TODO: create a notifications collection inside each company & update through the diff cloud functions, also have them as notifications.
+  //TODO: do the notifications subscription on a company ID Base.
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth() + 1;

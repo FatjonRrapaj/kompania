@@ -7,6 +7,7 @@ import { observePackages } from "@/watermelon/operations/package/getPackage";
 import PackageModel from "@/watermelon/models/Package";
 import PackageItemLarge from "./PackageItemLarge";
 import { ListEmptyComponent } from "../home/PackageItem";
+import { white } from "@/constants/Colors";
 
 interface PackagesListProps {
   packages: PackageModel[];
@@ -18,8 +19,13 @@ const PackagesListComponent = ({ packages }: PackagesListProps) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={{ backgroundColor: white[500], flex: 1 }}>
       <FlashList
+        contentContainerStyle={{
+          paddingHorizontal: 22,
+          backgroundColor: white[500],
+          paddingVertical: 24,
+        }}
         showsVerticalScrollIndicator={false}
         data={packages}
         estimatedItemSize={packages?.length}

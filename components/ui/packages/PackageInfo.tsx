@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { router } from "expo-router";
 import { withObservables } from "@nozbe/watermelondb/react";
-import { StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import Clipboard from "@react-native-clipboard/clipboard";
 
@@ -168,22 +168,30 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
           icon="Call"
           type="outline"
           title={translate("callClient")}
-          onPress={() => {}}
+          onPress={() => {
+            Linking.openURL(`tel:${packageObject?.receiverPhoneNumber}`);
+          }}
         />
         <GiantButton
           style={{ marginTop: 16 }}
           icon="GreenSMS"
           type="outline"
           title={translate("sendSmsToClient")}
-          onPress={() => {}}
+          onPress={() => {
+            Linking.openURL(`sms:number?body=TODO://?`);
+          }}
         />
-        <GiantButton
-          style={{ marginTop: 16 }}
-          icon="Insta"
-          type="outline"
-          title={translate("visitClientProfile")}
-          onPress={() => {}}
-        />
+        {packageObject?.receiverProfileUrl && (
+          <GiantButton
+            style={{ marginTop: 16 }}
+            icon="Insta"
+            type="outline"
+            title={translate("visitClientProfile")}
+            onPress={() => {
+              Linking.openURL(packageObject?.receiverProfileUrl!);
+            }}
+          />
+        )}
       </ScrollView>
       {packageDetailsModalVisible && (
         <PackageDetailsModal

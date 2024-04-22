@@ -4,7 +4,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import i18next from "i18next";
 
 import { Body1Bold, Body2, Caption } from "@/components/StyledText";
-import { gray, primary, white } from "@/constants/Colors";
+import { dark, primary, white } from "@/constants/Colors";
 import PackageModel from "@/watermelon/models/Package";
 import PackageStatusTimeline from "./PackageStatusTimeline";
 import { PackageTimelineStatus } from "@/api/package";
@@ -60,11 +60,16 @@ export default PackageItemLarge;
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderColor: gray[500],
     borderRadius: 16,
     padding: 16,
     alignSelf: "stretch",
+    backgroundColor: white[500],
+    shadowOpacity: 0.2,
+    shadowColor: dark[500],
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    elevation: 3,
+    marginHorizontal: 2,
   },
   horizontalContainer: {
     flexDirection: "row",
