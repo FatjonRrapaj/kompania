@@ -68,6 +68,7 @@ export default {
     callClient: "Call the client",
     sendSmsToClient: "Send SMS to client",
     visitClientProfile: "Visit client profile",
+    packageFor: "Package for",
   },
   createPackage: {
     receiverDetails: "Receiver Details",

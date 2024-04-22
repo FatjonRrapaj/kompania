@@ -12,7 +12,3 @@ const Package = () => {
 };
 
 export default Package;
-
-const styles = StyleSheet.create({
-  container: {},
-});

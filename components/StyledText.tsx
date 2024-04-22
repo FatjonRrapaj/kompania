@@ -42,6 +42,10 @@ export function H6Bold(props: TextProps) {
   return <BoldText {...props} style={[props.style, { fontSize: 24 }]} />;
 }
 
+export function H7Bold(props: TextProps) {
+  return <BoldText {...props} style={[props.style, { fontSize: 18 }]} />;
+}
+
 export function Body1Bold(props: TextProps) {
   return <BoldText {...props} style={[props.style, { fontSize: 16 }]} />;
 }
@@ -79,7 +83,10 @@ export function H5(props: TextProps) {
 }
 
 export function H6(props: TextProps) {
-  return <RegularText {...props} style={[props.style, { fontSize: 24 }]} />;
+  return <RegularText {...props} style={[props.style, { fontSize: 20 }]} />;
+}
+export function H7(props: TextProps) {
+  return <RegularText {...props} style={[props.style, { fontSize: 18 }]} />;
 }
 
 export function Body1(props: TextProps) {

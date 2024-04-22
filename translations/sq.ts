@@ -68,6 +68,7 @@ export default {
     callClient: "Telefono klientin",
     sendSmsToClient: "Dërgoji SMS klientit",
     visitClientProfile: "Vizito profilin e klientit",
+    packageFor: "Pako për",
   },
   createPackage: {
     receiverDetails: "Detajet e Marrësit",

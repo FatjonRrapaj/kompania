@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Modal } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import Pressable from "./Pressable";
