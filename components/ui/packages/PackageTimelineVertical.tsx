@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 
@@ -66,7 +66,6 @@ const PackageTimelineVertical = ({
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.package) => t(`package:${key}`);
 
-  const [shortVersion, setShortVersion] = useState(false);
   const timelineArray: TimelinePoint[] = useMemo(() => {
     let timelineArr = Object.keys(timeline)
       .filter((k) => k !== "createdAtDate")
@@ -78,20 +77,18 @@ const PackageTimelineVertical = ({
         actionKey: k,
       }));
     if (
-      timelineArr[timelineArr.length - 1].action !== "deliveredAtDate" ||
-      timelineArr[timelineArr.length - 1].action !== "returnedAtDate"
+      timelineArr[timelineArr.length - 1].actionKey !== "deliveredAtDate" &&
+      timelineArr[timelineArr.length - 1].actionKey !== "returnedAtDate"
     ) {
       timelineArr.push({ timestamp: 0, action: "", actionKey: "" });
     }
-    if (shortVersion) {
-      return timelineArr.slice(0, 2);
-    } else return timelineArr;
-  }, [shortVersion]);
+    return timelineArr;
+  }, [timeline]);
 
   return (
     <View style={styles.container}>
       <Body2 style={styles.startDate}>
-        {getDateFromTimestamp(timeline.createdAtDate)}
+        {getDateFromTimestamp(timeline.createdAtDate!)}
       </Body2>
       <View style={{ alignSelf: "flex-start" }}>
         <View style={{ alignItems: "center" }}>
