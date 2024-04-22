@@ -22,6 +22,10 @@ import WhiteBox from "./whiteBox.svg";
 import WhiteTruck from "./whiteTruck.svg";
 import WhiteBoxDelivered from "./whiteBoxDelivered.svg";
 import WhiteBoxReturned from "./whiteBoxReturned.svg";
+import Tag from "./tag.svg";
+import BoxDimensions from "./boxDimensions.svg";
+import BoxSpecifics from "./boxSpecifics.svg";
+import Notes from "./notes.svg";
 
 //actions
 import Scan from "./scan.svg";
@@ -53,6 +57,10 @@ const IconConfig = {
   WhiteTruck,
   WhiteBoxDelivered,
   WhiteBoxReturned,
+  Tag,
+  BoxDimensions,
+  BoxSpecifics,
+  Notes,
   Scan,
   Copy,
   Call,
