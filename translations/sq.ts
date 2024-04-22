@@ -107,6 +107,8 @@ export default {
     deliveredAtDate: "Pakoja është dorëzuar tek klienti",
     returnedAtDate: "Pakoja është kthyer",
     createdAt: "Krijuar në",
+    edit: "Ndrysho",
+    delete: "Fshije",
   },
   createPackage: {
     receiverDetails: "Detajet e Marrësit",

@@ -35,6 +35,8 @@ import Copy from "./copy.svg";
 import QRCode from "./qrCode.svg";
 import Call from "./call.svg";
 import Insta from "./insta.svg";
+import Edit from "./edit.svg";
+import Delete from "./delete.svg";
 
 //Navigation
 import ArrowLeft from "./arrow-left.svg";
@@ -67,6 +69,8 @@ const IconConfig = {
   Copy,
   Call,
   Insta,
+  Edit,
+  Delete,
   QRCode,
   CloseCircle,
   Package,

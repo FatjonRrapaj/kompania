@@ -16,7 +16,7 @@ import PageHeader from "@/components/PageHeader";
 import PackageStatusTimeline from "./PackageStatusTimeline";
 import { PackageTimelineStatus } from "@/api/package";
 import en from "@/translations/en";
-import { primary, white } from "@/constants/Colors";
+import { dark, primary, secondary, tertiary, white } from "@/constants/Colors";
 import { GiantButton } from "@/components/StyledButton";
 import PackageDetailsModal from "./PackageDetailsModal";
 import PackageTimelineVertical from "./PackageTimelineVertical";
@@ -192,6 +192,25 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
             }}
           />
         )}
+        <GiantButton
+          style={{ marginTop: 40, borderColor: dark[500] }}
+          icon="Edit"
+          type="outline"
+          title={translate("edit")}
+          onPress={() => {
+            //TODO: edit
+          }}
+        />
+        <GiantButton
+          style={{ marginTop: 16, borderColor: tertiary[500] }}
+          textStyle={{ color: tertiary[500] }}
+          icon="Delete"
+          type="outline"
+          title={translate("delete")}
+          onPress={() => {
+            //TODO: delete
+          }}
+        />
       </ScrollView>
       {packageDetailsModalVisible && (
         <PackageDetailsModal

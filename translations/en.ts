@@ -107,6 +107,8 @@ export default {
     deliveredAtDate: "Package is delivered to client",
     returnedAtDate: "Package is returned",
     createdAt: "Created at",
+    edit: "Edit",
+    delete: "Delete",
   },
   createPackage: {
     receiverDetails: "Receiver Details",
