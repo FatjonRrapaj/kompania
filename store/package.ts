@@ -6,9 +6,10 @@ import {
   Package,
   PackageFormData,
   callCreatePackage,
+  callEditPackage,
   callSyncPackages,
 } from "@/api/package";
-import { showToastFromError } from "@/utils/toast";
+import showToast, { showToastFromError } from "@/utils/toast";
 import useAuthStore from "./auth";
 import useCompanyStore from "./company";
 import { Company } from "@/api/company";
@@ -131,7 +132,16 @@ const usePackageStore = create<ImmutablePackageStore>()(
         set((state) => {
           state.loadingEditingPackage = true;
         });
+        const company = useCompanyStore.getState().company as Company;
+        const companyUserProfile = useAuthStore.getState().profile;
+        await callEditPackage(editingPackageData, company, companyUserProfile!);
+        showToast({
+          text1Key: "successfullyEditedPackageText1",
+          text2Key: "successfullyEditedPackageText2",
+          type: "success",
+        });
       } catch (error) {
+        console.log("error @editPackage: ", error);
         showToastFromError(error);
       } finally {
         set((state) => {

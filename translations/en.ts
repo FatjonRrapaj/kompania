@@ -571,5 +571,7 @@ export default {
     pleaseTryAgainText2: "Please try again",
     copiedPackageId: "Package Scan Id is copied",
     packageDoesNotExist: "Package does not exist",
+    successfullyEditedPackageText1: "Successfully edited the package",
+    successfullyEditedPackageText2: "The packaga info is now updated",
   },
 };

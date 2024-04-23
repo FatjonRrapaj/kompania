@@ -591,5 +591,7 @@ export default {
     pleaseTryAgainText2: "Ju lutemi provoni përsëri",
     copiedPackageId: "Id e skanimit të pakos u kopjua",
     packageDoesNotExist: "Pakoja nuk egziston",
+    successfullyEditedPackageText1: "Pakoja u ndryshua me sukses",
+    successfullyEditedPackageText2: "Informacioni i pakos u përditësua",
   },
 };
