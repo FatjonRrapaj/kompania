@@ -58,8 +58,11 @@ const initialState: PackageState = {
 const syncNewPackagesWDb = async (newPackages: Package[]) => {
   newPackages.forEach(async (firebasePackage) => {
     const existingPackageInDb = await findPackage(firebasePackage.uid!);
-    if (existingPackageInDb) {
-      console.log("existingPackageInDb: ", existingPackageInDb);
+    if (existingPackageInDb?.receiverName) {
+      console.log(
+        "existingPackageInDb already exists.. ",
+        existingPackageInDb.receiverName
+      );
       //package already exists, update it.
       await updateExistingPackage(existingPackageInDb, firebasePackage);
     } else {
@@ -110,6 +113,10 @@ const usePackageStore = create<ImmutablePackageStore>()(
           localLastUpdatedAt,
           company.uid!
         );
+
+        //TODO: new packages is emptyyy????
+        console.log("newPackages: ", newPackages);
+
         await syncNewPackagesWDb(newPackages);
       } catch (error) {
       } finally {

@@ -362,10 +362,13 @@ export async function callSyncPackages(
       packagesRef,
       where("timeline.updatedAtDate", ">", localLastUpdatedAt)
     );
+    //TODO: this is not working very ok...
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(
-      (doc) => ({ uid: doc.id, ...doc.data() } as Package)
-    );
+    const docs: Package[] = [];
+    querySnapshot.forEach((doc) => {
+      docs.push({ uid: doc.id, ...doc.data() } as Package);
+    });
+    return docs;
   } catch (error) {
     throw error;
   }

@@ -14,9 +14,9 @@ export const updateExistingPackage = async (
         existingWatermelonPackage.packageScanId = firebasePackageObject.scanId;
 
         //package status
-        existingWatermelonPackage.packageStatus = firebasePackageObject.status;
+        existingWatermelonPackage.packageStatus = firebasePackageObject.status!;
         existingWatermelonPackage.packageTimeLineStatus =
-          firebasePackageObject.timelineStatus;
+          firebasePackageObject.timelineStatus!;
 
         //receiver
         existingWatermelonPackage.receiverId =
