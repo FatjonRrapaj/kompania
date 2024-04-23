@@ -114,9 +114,6 @@ const usePackageStore = create<ImmutablePackageStore>()(
           company.uid!
         );
 
-        //TODO: new packages is emptyyy????
-        console.log("newPackages: ", newPackages);
-
         await syncNewPackagesWDb(newPackages);
       } catch (error) {
       } finally {

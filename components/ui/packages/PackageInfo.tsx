@@ -209,6 +209,7 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
             router.push("/(tabs)/(package)/edit");
           }}
         />
+        {/*TODO:// ADD CONFIRMATION BTN/STEP FOR PACKAGE DELETION*/}
         <GiantButton
           loading={loadingDeletePackage}
           style={{ marginTop: 16, borderColor: tertiary[500] }}

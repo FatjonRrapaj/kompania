@@ -33,18 +33,15 @@ const PackagesChangesListener = () => {
         const company = { uid: doc.id, ...doc.data() } as Company;
         useCompanyStore.getState().setCompany(company);
         let lastServerUpdatedAt = company.lastUpdatedAt;
-        console.log("lastServerUpdatedAt: ", lastServerUpdatedAt);
         if (!lastServerUpdatedAt) {
           lastServerUpdatedAt = 0;
         }
         let localLastUpdatedAt = await getLocalLastUpdatedAt();
-        console.log("localLastUpdatedAt: ", localLastUpdatedAt);
         if (!localLastUpdatedAt) {
           localLastUpdatedAt = 0;
         }
 
         if (lastServerUpdatedAt > localLastUpdatedAt) {
-          console.log("*** EDIT CONTITION MET***");
           //we have new packages on the server, need to sync
           usePackageStore.getState().syncPackages(localLastUpdatedAt);
         } else {
