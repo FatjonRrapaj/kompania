@@ -93,9 +93,7 @@ const EditPackage = () => {
         editPackageData.packageLength = undefined;
         editPackageData.packageWidth = undefined;
       }
-      usePackageStore.getState().editPackage(data);
-      //TODO: create edit package in firebase and update the updatedAt
-      //Go back on success.
+      usePackageStore.getState().editPackage(data, router);
     }
   };
 

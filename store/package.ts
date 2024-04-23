@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { Immutable } from "immer";
+import { Router, router } from "expo-router";
 
 import {
   Package,
@@ -34,7 +35,10 @@ type PackageActions = {
   setNewCreatedPackageId: (newCreatedPackageId?: string) => void;
   setPackageRouteOrigin: (packageRouteOrigin?: string) => void;
   setEditingPackage: (editingPackage?: PackageModel) => void;
-  editPackage: (editingPackageData: PackageFormData) => Promise<void>;
+  editPackage: (
+    editingPackageData: PackageFormData,
+    router: Router
+  ) => Promise<void>;
 };
 
 type PackageStore = PackageState & PackageActions;
@@ -129,7 +133,10 @@ const usePackageStore = create<ImmutablePackageStore>()(
         state.editingPackage = editingPackage;
       });
     },
-    editPackage: async (editingPackageData: PackageFormData) => {
+    editPackage: async (
+      editingPackageData: PackageFormData,
+      router: Router
+    ) => {
       try {
         set((state) => {
           state.loadingEditingPackage = true;
@@ -137,6 +144,7 @@ const usePackageStore = create<ImmutablePackageStore>()(
         const company = useCompanyStore.getState().company as Company;
         const companyUserProfile = useAuthStore.getState().profile;
         await callEditPackage(editingPackageData, company, companyUserProfile!);
+        router.back();
         showToast({
           text1Key: "successfullyEditedPackageText1",
           text2Key: "successfullyEditedPackageText2",
