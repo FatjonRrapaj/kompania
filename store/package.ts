@@ -171,9 +171,10 @@ const usePackageStore = create<ImmutablePackageStore>()(
         });
         const company = useCompanyStore.getState().company as Company;
         const companyUserProfile = useAuthStore.getState().profile;
+        const routeOrigin = usePackageStore.getState().packageRouteOrigin;
         await callDeletePackage(packageObject, company, companyUserProfile!);
         await deleteExistingPackage(packageObject);
-        router.back();
+        router.replace(routeOrigin as any);
         showToast({
           text1Key: "successfullyEditedPackageText1",
           text2Key: "successfullyEditedPackageText2",

@@ -13,6 +13,7 @@ type CompanyState = {
 
 type CompanyActions = {
   getCompany: () => Promise<void>;
+  setCompany: (company: Company) => void;
 };
 
 type CompanyStore = CompanyState & CompanyActions;
@@ -26,6 +27,11 @@ const initialState: CompanyState = {
 const useCompanyStore = create<ImmutableCompanyStore>()(
   immer((set) => ({
     ...initialState,
+    setCompany: (company: Company) => {
+      set((state) => {
+        state.company = company;
+      });
+    },
     getCompany: async () => {
       try {
         set((state) => {

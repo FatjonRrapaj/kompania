@@ -31,6 +31,9 @@ interface PackageInfoComponentProps {
 const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
   const goingBackTimeout = useRef<NodeJS.Timeout>();
   const routeOrigin = usePackageStore((state) => state.packageRouteOrigin);
+  const loadingDeletePackage = usePackageStore(
+    (state) => state.loadingDeletePackage
+  );
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.package) => t(`package:${key}`);
 
@@ -203,13 +206,14 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
           }}
         />
         <GiantButton
+          loading={loadingDeletePackage}
           style={{ marginTop: 16, borderColor: tertiary[500] }}
           textStyle={{ color: tertiary[500] }}
           icon="Delete"
           type="outline"
           title={translate("delete")}
           onPress={() => {
-            //TODO: delete
+            usePackageStore.getState().deletePackage(packageObject!, router);
           }}
         />
       </ScrollView>

@@ -86,7 +86,10 @@ export function GiantButton({
         <View
           style={[StyleSheet.absoluteFill, styles.activityIndicatorContainer]}
         >
-          <ActivityIndicator size={"small"} style={{}} color={white[500]} />
+          <ActivityIndicator
+            size={"small"}
+            color={type === "outline" ? dark[500] : white[500]}
+          />
         </View>
       )}
     </Pressable>
@@ -159,7 +162,10 @@ export function MediumButton({
         <View
           style={[StyleSheet.absoluteFill, styles.activityIndicatorContainer]}
         >
-          <ActivityIndicator size={"small"} style={{}} color={white[500]} />
+          <ActivityIndicator
+            size={"small"}
+            color={type === "outline" ? dark[500] : white[500]}
+          />
         </View>
       )}
     </Pressable>

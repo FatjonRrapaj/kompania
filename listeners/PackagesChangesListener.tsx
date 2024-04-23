@@ -13,6 +13,8 @@ const PackagesChangesListener = () => {
   //TODO: this thing does not listen for deleted packages. How to solve: Build the admin on React,
   //      and create a listener on each package that lets them know for deleted packages as an array.
   //      and then never delete packages directly from firebase console.
+
+  //TODO: this is not realtime, the packages status is not working
   const user = useAuthStore((state) => state.user);
   const company = useCompanyStore((state) => state.company);
 
@@ -30,6 +32,7 @@ const PackagesChangesListener = () => {
       doc(db, Collections.companies, company.uid!),
       async (doc) => {
         const company = doc.data() as Company;
+        useCompanyStore.getState().setCompany(company);
         let lastServerUpdatedAt = company.lastUpdatedAt;
         if (!lastServerUpdatedAt) {
           lastServerUpdatedAt = 0;
