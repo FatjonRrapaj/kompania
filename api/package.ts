@@ -3,10 +3,12 @@ import {
   collection,
   doc,
   getDocs,
+  updateDoc,
   increment,
   query,
   where,
   writeBatch,
+  getDoc,
 } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 import { db } from "@/utils/firebase";
@@ -14,6 +16,7 @@ import { db } from "@/utils/firebase";
 import { CompanyAddress, getCompanyRef, Customer, Company } from "./company";
 import { mockPackageObject } from "@/mocks/packagesMock";
 import { CompanyUserProfile } from "./auth";
+import generateCustomError from "@/utils/customError";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -70,7 +73,7 @@ export interface PackageFormData {
   isFragile: boolean;
 }
 
-type PackageLogAction = "created" | "updated" | "deleted";
+type PackageLogAction = "created" | "edited" | "updated" | "deleted";
 
 export interface PackageLog {
   action: PackageLogAction;
@@ -78,6 +81,7 @@ export interface PackageLog {
   company: Company;
   user: CompanyUserProfile;
   createdAt: number;
+  oldPackageData?: Package;
 }
 
 export interface Package {
@@ -97,8 +101,8 @@ export interface Package {
   shippingCost: number;
   cashOnDelivery: number;
   notesForPackage?: string;
-  status: PackageStatus;
-  timelineStatus: PackageTimelineStatus;
+  status?: PackageStatus;
+  timelineStatus?: PackageTimelineStatus;
   timeline?: PackageTimeline;
   courier?: Courier;
   currency: CurrencyShortValue;
@@ -117,12 +121,12 @@ export async function callCreatePackage(
 
   //TODO: create a notifications collection inside each company & update through the diff cloud functions, also have them as notifications.
   //TODO: do the notifications subscription on a company ID Base.
+  //TODO: maybe pass uid to receiver
+
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
   const nowTimestamp = now.getTime();
-
-  //TODO: maybe pass uid to receiver
 
   try {
     const packageToUpload: Package = {
@@ -190,7 +194,7 @@ export async function callCreatePackage(
     const newPackageForInsideCompany = doc(
       collection(db, Collections.companies, company.uid!, Collections.packages)
     );
-    const totalsRef = doc(collection(db, Collections.logs));
+    const totalsLogsRef = doc(collection(db, Collections.logs));
     const packageRefForAvailablePackages = doc(
       db,
       Collections.availablePackages,
@@ -220,7 +224,7 @@ export async function callCreatePackage(
     );
     batch.set(newPackageForInsideCompany, packageToUpload);
     batch.set(packageRefForAvailablePackages, packageToUpload);
-    batch.set(totalsRef, packageLog);
+    batch.set(totalsLogsRef, packageLog);
 
     await batch.commit();
     return newPackageForInsideCompany.id;
@@ -229,8 +233,100 @@ export async function callCreatePackage(
   }
 }
 
-export async function callEditPackage(editingPackageData: PackageFormData) {
+export async function callEditPackage(
+  editingPackageData: PackageFormData,
+  company: Company,
+  profile: CompanyUserProfile
+): Promise<string> {
   //TODO: do this very simmilar to edit package
+  const now = new Date();
+  const nowTimestamp = now.getTime();
+
+  try {
+    const packageToEdit: Package = {
+      scanId: editingPackageData.packageId,
+      packageName: editingPackageData.packageName,
+      receiver: {
+        name: editingPackageData.receiverName,
+        profileUrl: editingPackageData.profileLink,
+        phoneNumber: editingPackageData.phoneNumber,
+        notes: editingPackageData.notesForReceiver,
+        receiverLocation: {
+          description: editingPackageData.address,
+        },
+      },
+      packageDetails: {
+        canBeOpened: editingPackageData.canBeOpened,
+        isFragile: editingPackageData.isFragile,
+        ...(editingPackageData.packageWeight && {
+          weight: parseInt(editingPackageData.packageWeight),
+        }),
+        ...(editingPackageData.packageWidth && {
+          width: parseInt(editingPackageData.packageWidth),
+        }),
+        ...(editingPackageData.packageHeight && {
+          height: parseInt(editingPackageData.packageHeight),
+        }),
+        ...(editingPackageData.packageLength && {
+          length: parseInt(editingPackageData.packageLength),
+        }),
+      },
+      paymentAmount: parseInt(editingPackageData.paymentAmount),
+      shippingCost: parseInt(editingPackageData.shippingCost),
+      cashOnDelivery: parseInt(editingPackageData.cashOnDelivery),
+      ...(editingPackageData.notesForPackage && {
+        notesForPackage: editingPackageData.notesForPackage,
+      }),
+      timeline: {
+        updatedAtDate: nowTimestamp,
+      },
+      currency: editingPackageData.currency,
+      companyAddress: company!.locations![0] as CompanyAddress,
+    };
+
+    const packageRef = doc(
+      collection(
+        db,
+        Collections.companies,
+        company.uid!,
+        Collections.packages,
+        editingPackageData.uid!
+      )
+    );
+    const packageDocument = await getDoc(packageRef);
+
+    if (!packageDocument.exists()) {
+      throw generateCustomError({ errorKey: "packageDoesNotExist" });
+    }
+    const companyRef = getCompanyRef(company.uid!);
+    const totalsLogsRef = doc(collection(db, Collections.logs));
+
+    const oldPackageData = packageDocument.data() as Package;
+
+    const packageLog: PackageLog = {
+      action: "edited",
+      package: packageToEdit,
+      company: company,
+      user: profile,
+      createdAt: nowTimestamp,
+      oldPackageData: oldPackageData,
+    };
+
+    const batch = writeBatch(db);
+    batch.set(packageRef, packageToEdit, { merge: true });
+    batch.set(totalsLogsRef, packageLog);
+    batch.set(
+      companyRef,
+      {
+        lastUpdatedAt: nowTimestamp,
+      },
+      { merge: true }
+    );
+    await batch.commit();
+    return packageDocument.id;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function callSyncPackages(
