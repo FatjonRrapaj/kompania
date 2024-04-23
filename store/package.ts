@@ -7,6 +7,7 @@ import {
   Package,
   PackageFormData,
   callCreatePackage,
+  callDeletePackage,
   callEditPackage,
   callSyncPackages,
 } from "@/api/package";
@@ -18,6 +19,7 @@ import { findPackage } from "@/watermelon/operations/package/getPackage";
 import { updateExistingPackage } from "@/watermelon/operations/package/updatePackage";
 import { createPackageFromFirebasePackage } from "@/watermelon/operations/package/createPackage";
 import PackageModel from "@/watermelon/models/Package";
+import { deleteExistingPackage } from "@/watermelon/operations/package/deletePackage";
 
 type PackageState = {
   loadingCreatePackage: boolean;
@@ -26,6 +28,7 @@ type PackageState = {
   packageRouteOrigin?: string;
   editingPackage?: PackageModel;
   loadingEditingPackage: boolean;
+  loadingDeletePackage: boolean;
 };
 
 type PackageActions = {
@@ -39,6 +42,7 @@ type PackageActions = {
     editingPackageData: PackageFormData,
     router: Router
   ) => Promise<void>;
+  deletePackage: (packageObject: PackageModel, router: Router) => Promise<void>;
 };
 
 type PackageStore = PackageState & PackageActions;
@@ -48,6 +52,7 @@ const initialState: PackageState = {
   loadingCreatePackage: false,
   loadingSyncPackages: true,
   loadingEditingPackage: false,
+  loadingDeletePackage: false,
 };
 
 const syncNewPackagesWDb = async (newPackages: Package[]) => {
@@ -156,6 +161,29 @@ const usePackageStore = create<ImmutablePackageStore>()(
       } finally {
         set((state) => {
           state.loadingEditingPackage = false;
+        });
+      }
+    },
+    deletePackage: async (packageObject: PackageModel, router: Router) => {
+      try {
+        set((state) => {
+          state.loadingDeletePackage = true;
+        });
+        const company = useCompanyStore.getState().company as Company;
+        const companyUserProfile = useAuthStore.getState().profile;
+        await callDeletePackage(packageObject, company, companyUserProfile!);
+        await deleteExistingPackage(packageObject);
+        router.back();
+        showToast({
+          text1Key: "successfullyEditedPackageText1",
+          text2Key: "successfullyEditedPackageText2",
+          type: "success",
+        });
+      } catch (error) {
+        showToastFromError(error);
+      } finally {
+        set((state) => {
+          state.loadingDeletePackage = false;
         });
       }
     },
