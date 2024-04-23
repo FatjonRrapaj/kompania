@@ -55,7 +55,7 @@ const PackagesChangesListener = () => {
     return () => {
       unsubscribe?.();
     };
-  }, [user, company]);
+  }, [user, company?.lastUpdatedAt]);
 
   return <></>;
 };
