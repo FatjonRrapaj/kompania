@@ -58,6 +58,10 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
 
   //TODO: try to deeplink the whatsapp message w number & text & not use twilio for these msgs inside.
 
+  if (!packageObject) {
+    return null;
+  }
+
   return (
     <>
       <ScrollView

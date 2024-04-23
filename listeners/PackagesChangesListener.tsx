@@ -31,7 +31,7 @@ const PackagesChangesListener = () => {
     unsubscribe = onSnapshot(
       doc(db, Collections.companies, company.uid!),
       async (doc) => {
-        const company = doc.data() as Company;
+        const company = { uid: doc.id, ...doc.data() } as Company;
         useCompanyStore.getState().setCompany(company);
         let lastServerUpdatedAt = company.lastUpdatedAt;
         if (!lastServerUpdatedAt) {

@@ -16,8 +16,8 @@ export const createPackageFromFirebasePackage = async (
         newRecord.packageScanId = firebasePackageObject.scanId;
 
         //package status
-        newRecord.packageStatus = firebasePackageObject.status;
-        newRecord.packageTimeLineStatus = firebasePackageObject.timelineStatus;
+        newRecord.packageStatus = firebasePackageObject.status!;
+        newRecord.packageTimeLineStatus = firebasePackageObject.timelineStatus!;
 
         //receiver
         newRecord.receiverId = firebasePackageObject?.receiver?.uid;

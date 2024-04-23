@@ -231,6 +231,7 @@ export async function callCreatePackage(
     await batch.commit();
     return newPackageForInsideCompany.id;
   } catch (error) {
+    console.log("error: ", error);
     throw error;
   }
 }
