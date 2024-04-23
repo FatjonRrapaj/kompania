@@ -17,6 +17,7 @@ import { CompanyAddress, getCompanyRef, Customer, Company } from "./company";
 import { mockPackageObject } from "@/mocks/packagesMock";
 import { CompanyUserProfile } from "./auth";
 import generateCustomError from "@/utils/customError";
+import PackageModel from "@/watermelon/models/Package";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -77,7 +78,8 @@ type PackageLogAction = "created" | "edited" | "updated" | "deleted";
 
 export interface PackageLog {
   action: PackageLogAction;
-  package: Package;
+  package?: Package;
+  packageId?: string;
   company: Company;
   user: CompanyUserProfile;
   createdAt: number;
@@ -366,6 +368,93 @@ export async function callSyncPackages(
   } catch (error) {
     throw error;
   }
+}
+
+export async function callDeletePackage(
+  packageObject: PackageModel,
+  company: Company,
+  profile: CompanyUserProfile
+): Promise<void> {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const nowTimestamp = now.getTime();
+  try {
+    const packageRef = doc(
+      db,
+      Collections.companies,
+      company.uid!,
+      Collections.packages,
+      packageObject.id
+    );
+    const packageDocument = await getDoc(packageRef);
+    if (!packageDocument.exists()) {
+      throw generateCustomError({ errorKey: "packageDoesNotExist" });
+    }
+    const oldPackageData = packageDocument.data() as Package;
+
+    const logsRef = doc(collection(db, Collections.logs));
+
+    const packageLog: PackageLog = {
+      action: "deleted",
+      company: company,
+      package: oldPackageData,
+      user: profile,
+      createdAt: nowTimestamp,
+    };
+
+    //TODO: it can also be inside picked etc, see what you can do w delete operation for these types of packages.
+    const packageRefInsideAvailablePackages = doc(
+      db,
+      Collections.availablePackages,
+      packageDocument.id
+    );
+
+    const packageDocInsideAvailablePackages = await getDoc(
+      packageRefInsideAvailablePackages
+    );
+
+    const batch = writeBatch(db);
+
+    if (packageDocInsideAvailablePackages.exists()) {
+      batch.delete(packageRefInsideAvailablePackages);
+    }
+    batch.delete(packageRef);
+    batch.set(logsRef, packageLog);
+
+    //updating the stats for deleted package
+    const currentPackageStatus = packageObject.packageStatus;
+    const aggregatorRef = doc(
+      db,
+      Collections.companies,
+      Collections.aggregator
+    );
+    const periodKey = `packages-${year}-${month}`;
+    const companyRef = getCompanyRef(company.uid!);
+    batch.set(
+      aggregatorRef,
+      {
+        [currentPackageStatus]: increment(-1),
+      },
+      { merge: true }
+    );
+    batch.set(
+      companyRef,
+      {
+        lastUpdatedAt: nowTimestamp,
+        totals: {
+          all: {
+            [currentPackageStatus]: increment(-1),
+          },
+          [periodKey]: {
+            [currentPackageStatus]: increment(-1),
+          },
+        },
+      },
+      { merge: true }
+    );
+    await batch.commit();
+  } catch (error) {}
 }
 
 export type PreviousMonths = 2 | 1 | 0;
