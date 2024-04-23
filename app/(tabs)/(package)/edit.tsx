@@ -35,7 +35,7 @@ const EditPackage = () => {
         profileLink: editingPackageInDb?.receiverProfileUrl!,
         address: editingPackageInDb?.receiverAddressDescription!,
         notesForReceiver: editingPackageInDb?.notesForReceiver!,
-        packageId: editingPackageInDb?.id!,
+        packageId: editingPackageInDb?.packageScanId!,
         packageName: editingPackageInDb?.packageName,
         packageWeight: editingPackageInDb?.packageWeight?.toString(),
         packageWidth: editingPackageInDb?.packageWidth?.toString(),

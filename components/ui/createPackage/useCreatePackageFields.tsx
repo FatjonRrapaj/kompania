@@ -157,7 +157,7 @@ function useCreatePackageFields({
       containerStyle: { marginVertical: 16 },
       validate: validateField({
         fieldName: translate("profileLink"),
-        required: true,
+        required: false,
         min: 6,
       }),
     },
