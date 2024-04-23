@@ -34,6 +34,7 @@ type PackageActions = {
   setNewCreatedPackageId: (newCreatedPackageId?: string) => void;
   setPackageRouteOrigin: (packageRouteOrigin?: string) => void;
   setEditingPackage: (editingPackage?: PackageModel) => void;
+  editPackage: (editingPackageData: PackageFormData) => Promise<void>;
 };
 
 type PackageStore = PackageState & PackageActions;
@@ -49,6 +50,7 @@ const syncNewPackagesWDb = async (newPackages: Package[]) => {
   newPackages.forEach(async (firebasePackage) => {
     const existingPackageInDb = await findPackage(firebasePackage.uid!);
     if (existingPackageInDb) {
+      console.log("existingPackageInDb: ", existingPackageInDb);
       //package already exists, update it.
       await updateExistingPackage(existingPackageInDb, firebasePackage);
     } else {

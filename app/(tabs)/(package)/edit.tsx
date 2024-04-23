@@ -20,7 +20,7 @@ import { router } from "expo-router";
 
 const EditPackage = () => {
   const { t } = useTranslation();
-  const translate = (key: keyof typeof en.package) => t(`createPackage:${key}`);
+  const translate = (key: keyof typeof en.package) => t(`package:${key}`);
 
   const editingPackage: PackageFormData | undefined = usePackageStore(
     (store) => {
@@ -93,6 +93,7 @@ const EditPackage = () => {
         editPackageData.packageLength = undefined;
         editPackageData.packageWidth = undefined;
       }
+      usePackageStore.getState().editPackage(data);
       //TODO: create edit package in firebase and update the updatedAt
       //Go back on success.
     }

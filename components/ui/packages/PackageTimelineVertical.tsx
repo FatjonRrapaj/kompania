@@ -77,8 +77,8 @@ const PackageTimelineVertical = ({
         actionKey: k,
       }));
     if (
-      timelineArr[timelineArr.length - 1].actionKey !== "deliveredAtDate" &&
-      timelineArr[timelineArr.length - 1].actionKey !== "returnedAtDate"
+      timelineArr?.[timelineArr.length - 1]?.actionKey !== "deliveredAtDate" &&
+      timelineArr?.[timelineArr.length - 1]?.actionKey !== "returnedAtDate"
     ) {
       timelineArr.push({ timestamp: 0, action: "", actionKey: "" });
     }

@@ -110,6 +110,7 @@ export default {
     createdAt: "Krijuar në",
     edit: "Ndrysho",
     delete: "Fshije",
+    save: "Ruaj Ndryshimet",
   },
   createPackage: {
     receiverDetails: "Detajet e Marrësit",

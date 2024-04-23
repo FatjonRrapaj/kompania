@@ -194,7 +194,7 @@ export async function callCreatePackage(
     const newPackageForInsideCompany = doc(
       collection(db, Collections.companies, company.uid!, Collections.packages)
     );
-    const totalsLogsRef = doc(collection(db, Collections.logs));
+    const logsRef = doc(collection(db, Collections.logs));
     const packageRefForAvailablePackages = doc(
       db,
       Collections.availablePackages,
@@ -224,7 +224,7 @@ export async function callCreatePackage(
     );
     batch.set(newPackageForInsideCompany, packageToUpload);
     batch.set(packageRefForAvailablePackages, packageToUpload);
-    batch.set(totalsLogsRef, packageLog);
+    batch.set(logsRef, packageLog);
 
     await batch.commit();
     return newPackageForInsideCompany.id;
@@ -242,6 +242,25 @@ export async function callEditPackage(
   const nowTimestamp = now.getTime();
 
   try {
+    const packageRef = doc(
+      db,
+      Collections.companies,
+      company.uid!,
+      Collections.packages,
+      editingPackageData.uid!
+    );
+    const packageDocument = await getDoc(packageRef);
+
+    if (!packageDocument.exists()) {
+      throw generateCustomError({ errorKey: "packageDoesNotExist" });
+    }
+
+    //the package is inside the available packages packages...
+    //TODO: it can also be inside the picked packages... but can we edit it at that point???
+    //TODO: it can also be inside the delivered packages, etc.
+
+    const oldPackageData = packageDocument.data() as Package;
+
     const packageToEdit: Package = {
       scanId: editingPackageData.packageId,
       packageName: editingPackageData.packageName,
@@ -277,35 +296,15 @@ export async function callEditPackage(
         notesForPackage: editingPackageData.notesForPackage,
       }),
       timeline: {
+        ...oldPackageData.timeline,
         updatedAtDate: nowTimestamp,
       },
       currency: editingPackageData.currency,
       companyAddress: company!.locations![0] as CompanyAddress,
     };
 
-    const packageRef = doc(
-      collection(
-        db,
-        Collections.companies,
-        company.uid!,
-        Collections.packages,
-        editingPackageData.uid!
-      )
-    );
-    const packageDocument = await getDoc(packageRef);
-
-    if (!packageDocument.exists()) {
-      throw generateCustomError({ errorKey: "packageDoesNotExist" });
-    }
-
-    //the package is inside the available packages packages...
-    //TODO: it can also be inside the picked packages... but can we edit it at that point???
-    //TODO: it can also be inside the delivered packages, etc.
-
     const companyRef = getCompanyRef(company.uid!);
-    const totalsLogsRef = doc(collection(db, Collections.logs));
-
-    const oldPackageData = packageDocument.data() as Package;
+    const logsRef = doc(collection(db, Collections.logs));
 
     const packageLog: PackageLog = {
       action: "edited",
@@ -334,8 +333,8 @@ export async function callEditPackage(
       });
     }
 
-    batch.set(packageRef, packageToEdit, { merge: true });
-    batch.set(totalsLogsRef, packageLog);
+    batch.update(packageRef, packageToEdit as any);
+    batch.set(logsRef, packageLog);
     batch.set(
       companyRef,
       {
