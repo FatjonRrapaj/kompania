@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { router } from "expo-router";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Linking, StyleSheet } from "react-native";
@@ -22,6 +22,7 @@ import PackageDetailsModal from "./PackageDetailsModal";
 import PackageTimelineVertical from "./PackageTimelineVertical";
 import showToast from "@/utils/toast";
 import QRCodeModal from "./QrCodeModal";
+import DeletePackageConfirmationModal from "./DeletePackageConfirmation";
 
 interface PackageInfoComponentProps {
   id: string;
@@ -37,6 +38,8 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.package) => t(`package:${key}`);
 
+  const [deletePackageModalVisible, setDeletePackageModalVisible] =
+    useState(false);
   const [packageDetailsModalVisible, setPackageDetailsModalVisible] =
     useState(false);
   const [qrCodeModalVisible, setQrCodeModalVisible] = useState(false);
@@ -209,7 +212,6 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
             router.push("/(tabs)/(package)/edit");
           }}
         />
-        {/*TODO:// ADD CONFIRMATION BTN/STEP FOR PACKAGE DELETION*/}
         <GiantButton
           loading={loadingDeletePackage}
           style={{ marginTop: 16, borderColor: tertiary[500] }}
@@ -218,10 +220,20 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
           type="outline"
           title={translate("delete")}
           onPress={() => {
-            usePackageStore.getState().deletePackage(packageObject!, router);
+            setDeletePackageModalVisible(true);
           }}
         />
       </ScrollView>
+      {deletePackageModalVisible && (
+        <DeletePackageConfirmationModal
+          clientName={packageObject?.receiverName!}
+          onCancel={() => setDeletePackageModalVisible(false)}
+          onConfirm={() => {
+            setDeletePackageModalVisible(false);
+            usePackageStore.getState().deletePackage(packageObject!, router);
+          }}
+        />
+      )}
       {packageDetailsModalVisible && (
         <PackageDetailsModal
           packageObject={packageObject!}

@@ -27,6 +27,7 @@ import BoxDimensions from "./boxDimensions.svg";
 import BoxSpecifics from "./boxSpecifics.svg";
 import Notes from "./notes.svg";
 import DashedLine from "./dashedLine.svg";
+import NoPackageWhite from "./noPackageWhite.svg";
 
 //actions
 import Scan from "./scan.svg";
@@ -65,6 +66,7 @@ const IconConfig = {
   BoxSpecifics,
   Notes,
   DashedLine,
+  NoPackageWhite,
   Scan,
   Copy,
   Call,

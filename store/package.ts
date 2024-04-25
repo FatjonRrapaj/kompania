@@ -180,8 +180,7 @@ const usePackageStore = create<ImmutablePackageStore>()(
         await deleteExistingPackage(packageObject);
         router.replace(routeOrigin as any);
         showToast({
-          text1Key: "successfullyEditedPackageText1",
-          text2Key: "successfullyEditedPackageText2",
+          text1Key: "successfullyDeletedPackageText1",
           type: "success",
         });
       } catch (error) {

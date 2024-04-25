@@ -111,6 +111,9 @@ export default {
     edit: "Ndrysho",
     delete: "Fshije",
     save: "Ruaj Ndryshimet",
+    sureDelete: "A jeni të sigurtë që doni t'a fshini pakon për ",
+    noCancel: "Jo, Anuloje",
+    yesDelete: "Po, Fshije",
   },
   createPackage: {
     receiverDetails: "Detajet e Marrësit",
@@ -594,5 +597,6 @@ export default {
     packageDoesNotExist: "Pakoja nuk egziston",
     successfullyEditedPackageText1: "Pakoja u ndryshua me sukses",
     successfullyEditedPackageText2: "Informacioni i pakos u përditësua",
+    successfullyDeletedPackageText1: "Pakoja u fshi me sukses",
   },
 };

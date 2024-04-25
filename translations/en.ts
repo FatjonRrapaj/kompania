@@ -110,6 +110,9 @@ export default {
     createdAt: "Created at",
     edit: "Edit",
     delete: "Delete",
+    sureDelete: "Are you sure you want to delete the package for ",
+    noCancel: "No, Cancel",
+    yesDelete: "Yes, Delete",
     save: "Save Changes",
   },
   createPackage: {
@@ -572,6 +575,7 @@ export default {
     copiedPackageId: "Package Scan Id is copied",
     packageDoesNotExist: "Package does not exist",
     successfullyEditedPackageText1: "Successfully edited the package",
-    successfullyEditedPackageText2: "The packaga info is now updated",
+    successfullyEditedPackageText2: "The package info is now updated",
+    successfullyDeletedPackageText1: "The package was successfully deleted",
   },
 };
