@@ -143,6 +143,7 @@ export default {
     packageCreated: "Package is successfully created",
     couriersNotified: "Our couriers are notified",
     view: "View package",
+    goBack: "Go Back",
     currency: "Currency",
     receiverName: "Receiver name",
     receiverPhone: "Receiver phone number",

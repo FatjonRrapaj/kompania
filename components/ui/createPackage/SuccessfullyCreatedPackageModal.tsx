@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { View } from "@/components/Themed";
 import { Body2, PoppinsText } from "@/components/StyledText";
-import { dark, primary } from "@/constants/Colors";
+import { dark, gray, primary } from "@/constants/Colors";
 import en from "@/translations/en";
 import { GiantButton } from "@/components/StyledButton";
 import { router } from "expo-router";
@@ -33,6 +33,7 @@ const SuccessfullyCreatedPackageModal = () => {
             style={styles.close}
             onPress={() => {
               usePackageStore.getState().setNewCreatedPackageId(undefined);
+              router.back();
             }}
           >
             <IconConfig.CloseCircle />
@@ -54,6 +55,15 @@ const SuccessfullyCreatedPackageModal = () => {
               usePackageStore
                 .getState()
                 .setPackageRouteOrigin("/(tabs)/(home)");
+            }}
+          />
+          <GiantButton
+            type="outline"
+            style={{ borderColor: gray[500] }}
+            title={translate("goBack")}
+            onPress={() => {
+              usePackageStore.getState().setNewCreatedPackageId(undefined);
+              router.back();
             }}
           />
         </View>

@@ -143,6 +143,7 @@ export default {
     packageCreated: "Pakoja është krijuar me sukses",
     couriersNotified: "Korrierët tanë janë njoftuar",
     view: "Shiko pakon",
+    goBack: "Kthehu",
     currency: "Monedha",
     receiverName: "Emri i marrësit",
     receiverPhone: "Numri i telefonit",

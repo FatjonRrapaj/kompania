@@ -156,5 +156,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 16,
+    flex: 1,
   },
 });

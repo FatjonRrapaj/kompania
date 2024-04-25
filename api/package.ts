@@ -261,6 +261,7 @@ export async function callEditPackage(
     //the package is inside the available packages packages...
     //TODO: it can also be inside the picked packages... but can we edit it at that point???
     //TODO: it can also be inside the delivered packages, etc.
+    //TODO: customers api...
 
     const oldPackageData = packageDocument.data() as Package;
 
