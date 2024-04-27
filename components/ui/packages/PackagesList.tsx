@@ -45,13 +45,9 @@ const PackagesListComponent = ({
 
 const enhance = withObservables(["searchTerm"], ({ searchTerm }) => ({
   packages: observePackages(),
-  filteredPackages: observeAndFilterPackages(searchTerm ?? ""),
+  filteredPackages: observeAndFilterPackages(searchTerm),
 }));
 
 const PackagesList = enhance(PackagesListComponent);
 
 export default PackagesList;
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-});
