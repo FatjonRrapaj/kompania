@@ -114,6 +114,7 @@ export default {
     sureDelete: "A jeni të sigurtë që doni t'a fshini pakon për ",
     noCancel: "Jo, Anuloje",
     yesDelete: "Po, Fshije",
+    search: "Kërko pako...",
   },
   createPackage: {
     receiverDetails: "Detajet e Marrësit",

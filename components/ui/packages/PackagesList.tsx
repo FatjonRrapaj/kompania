@@ -16,11 +16,13 @@ import { View } from "@/components/Themed";
 interface PackagesListProps {
   packages: PackageModel[];
   filteredPackages: PackageModel[];
+  searchTerm: string;
 }
 
 const PackagesListComponent = ({
   packages,
   filteredPackages,
+  searchTerm,
 }: PackagesListProps) => {
   if (!packages?.length) {
     return <ListEmptyComponent />;
@@ -30,7 +32,7 @@ const PackagesListComponent = ({
     <FlashList
       contentContainerStyle={{ paddingTop: 24 }}
       showsVerticalScrollIndicator={false}
-      data={filteredPackages?.length ? filteredPackages : packages}
+      data={searchTerm ? filteredPackages : packages}
       estimatedItemSize={packages?.length}
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={() => <View style={{ height: 16 }} />}

@@ -114,6 +114,7 @@ export default {
     noCancel: "No, Cancel",
     yesDelete: "Yes, Delete",
     save: "Save Changes",
+    search: "Search packages...",
   },
   createPackage: {
     receiverDetails: "Receiver Details",

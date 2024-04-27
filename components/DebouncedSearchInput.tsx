@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { TextInput, View, StyleSheet } from "react-native";
 import IconConfig from "@/assets/svg/IconConfig";
+import { gray } from "@/constants/Colors";
+import i18next from "i18next";
 
 interface DebouncedTextInputProps {
   onDebouncedTextChange: (text: string) => void;
@@ -35,7 +37,7 @@ const DebouncedTextInput: React.FC<DebouncedTextInputProps> = ({
         style={styles.input}
         value={text}
         onChangeText={setText}
-        placeholder="Search..."
+        placeholder={i18next.t("package:search")}
       />
     </View>
   );
@@ -43,30 +45,24 @@ const DebouncedTextInput: React.FC<DebouncedTextInputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginVertical: 8,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 4,
+    borderColor: gray[500],
+    borderWidth: 1,
+    width: "100%",
+    justifyContent: "flex-start",
     position: "relative",
+    alignSelf: "stretch",
+    borderRadius: 10,
   },
   input: {
     height: 56,
-    fontSize: 16,
-    color: "gray",
+    paddingLeft: 60,
+    alignSelf: "stretch",
   },
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
-    right: 20,
+    left: 20,
     top: 0,
     bottom: 0,
   },

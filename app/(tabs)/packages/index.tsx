@@ -6,7 +6,7 @@ import { useState } from "react";
 import { TextInput } from "react-native";
 
 export default function Packages() {
-  const [searchTerm, setSearchTerm] = useState(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   return (
     <View style={globalStyles.screenContainer}>
@@ -15,7 +15,7 @@ export default function Packages() {
           setSearchTerm(text);
         }}
       />
-      <PackagesList />
+      <PackagesList searchTerm={searchTerm} />
     </View>
   );
 }
