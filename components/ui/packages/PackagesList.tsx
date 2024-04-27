@@ -1,46 +1,49 @@
 import * as React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { FlashList } from "@shopify/flash-list";
 
-import { observePackages } from "@/watermelon/operations/package/getPackage";
+import {
+  observeAndFilterPackages,
+  observePackages,
+} from "@/watermelon/operations/package/getPackage";
 import PackageModel from "@/watermelon/models/Package";
 import PackageItemLarge from "./PackageItemLarge";
 import { ListEmptyComponent } from "../home/PackageItem";
 import { white } from "@/constants/Colors";
+import { View } from "@/components/Themed";
 
 interface PackagesListProps {
   packages: PackageModel[];
+  filteredPackages: PackageModel[];
 }
 
-const PackagesListComponent = ({ packages }: PackagesListProps) => {
+const PackagesListComponent = ({
+  packages,
+  filteredPackages,
+}: PackagesListProps) => {
   if (!packages?.length) {
     return <ListEmptyComponent />;
   }
 
   return (
-    <View style={{ backgroundColor: white[500], flex: 1 }}>
-      <FlashList
-        contentContainerStyle={{
-          paddingHorizontal: 22,
-          backgroundColor: white[500],
-          paddingVertical: 24,
-        }}
-        showsVerticalScrollIndicator={false}
-        data={packages}
-        estimatedItemSize={packages?.length}
-        keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-        renderItem={({ item: packageObject }) => (
-          <PackageItemLarge packageObject={packageObject} />
-        )}
-      />
-    </View>
+    <FlashList
+      contentContainerStyle={{ paddingTop: 24 }}
+      showsVerticalScrollIndicator={false}
+      data={filteredPackages?.length ? filteredPackages : packages}
+      estimatedItemSize={packages?.length}
+      keyExtractor={(item) => item.id}
+      ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+      renderItem={({ item: packageObject }) => (
+        <PackageItemLarge packageObject={packageObject} />
+      )}
+    />
   );
 };
 
-const enhance = withObservables([], () => ({
+const enhance = withObservables(["searchTerm"], ({ searchTerm }) => ({
   packages: observePackages(),
+  filteredPackages: observeAndFilterPackages(searchTerm ?? ""),
 }));
 
 const PackagesList = enhance(PackagesListComponent);

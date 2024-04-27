@@ -38,6 +38,7 @@ import Call from "./call.svg";
 import Insta from "./insta.svg";
 import Edit from "./edit.svg";
 import Delete from "./delete.svg";
+import Search from "./search.svg";
 
 //Navigation
 import ArrowLeft from "./arrow-left.svg";
@@ -73,6 +74,7 @@ const IconConfig = {
   Insta,
   Edit,
   Delete,
+  Search,
   QRCode,
   CloseCircle,
   Package,

@@ -31,6 +31,17 @@ export const getLocalLastUpdatedAt = async () => {
 export const observePackages = () =>
   packagesCollection.query(Q.sortBy("updatedAtDate", Q.desc)).observe();
 
+export const observeAndFilterPackages = (searchTerm: string) =>
+  packagesCollection
+    .query(
+      Q.or(Q.where("receiverName", Q.includes(searchTerm))),
+      Q.or(Q.where("courierName", Q.includes(searchTerm))),
+      Q.or(Q.where("packageScanId", Q.includes(searchTerm))),
+      Q.or(Q.where("id", Q.includes(searchTerm))),
+      Q.sortBy("updatedAtDate", Q.desc)
+    )
+    .observe();
+
 export const findAndObservePackage = (packageId: string) =>
   packagesCollection.findAndObserve(packageId);
 
