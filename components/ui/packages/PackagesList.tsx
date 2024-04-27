@@ -1,5 +1,4 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { FlashList } from "@shopify/flash-list";
 
@@ -10,7 +9,6 @@ import {
 import PackageModel from "@/watermelon/models/Package";
 import PackageItemLarge from "./PackageItemLarge";
 import { ListEmptyComponent } from "../home/PackageItem";
-import { white } from "@/constants/Colors";
 import { View } from "@/components/Themed";
 
 interface PackagesListProps {

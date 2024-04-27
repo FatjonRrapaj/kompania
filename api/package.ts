@@ -118,8 +118,6 @@ export async function callCreatePackage(
   profile: CompanyUserProfile
 ): Promise<string> {
   //TODO: check internet connectivity before posting to make sure you are online, if not put as draft....
-  //TODO: compose a string that contains package title, client name, client phone number, description, etc so that the user can easily search for the package...
-  //TODO: make the composed string easy to edit.
 
   //TODO: create a notifications collection inside each company & update through the diff cloud functions, also have them as notifications.
   //TODO: do the notifications subscription on a company ID Base.
@@ -363,7 +361,6 @@ export async function callSyncPackages(
       packagesRef,
       where("timeline.updatedAtDate", ">", localLastUpdatedAt)
     );
-    //TODO: this is not working very ok...
     const querySnapshot = await getDocs(q);
     const docs: Package[] = [];
     querySnapshot.forEach((doc) => {
