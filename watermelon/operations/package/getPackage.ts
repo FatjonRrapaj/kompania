@@ -31,14 +31,18 @@ export const getLocalLastUpdatedAt = async () => {
 export const observePackages = () =>
   packagesCollection.query(Q.sortBy("updatedAtDate", Q.desc)).observe();
 
+// `${Q.sanitizeLikeString("jas")}%`
 export const observeAndFilterPackages = (searchTerm: string) =>
   packagesCollection
     .query(
       Q.or(
-        Q.where("receiverName", Q.includes(searchTerm)),
-        Q.where("courierName", Q.includes(searchTerm)),
-        Q.where("packageScanId", Q.includes(searchTerm)),
-        Q.where("id", Q.includes(searchTerm))
+        Q.where("receiverName", Q.like(`${Q.sanitizeLikeString(searchTerm)}%`)),
+        Q.where("courierName", Q.like(`${Q.sanitizeLikeString(searchTerm)}%`)),
+        Q.where(
+          "packageScanId",
+          Q.like(`${Q.sanitizeLikeString(searchTerm)}%`)
+        ),
+        Q.where("id", Q.like(`${Q.sanitizeLikeString(searchTerm)}%`))
       ),
       Q.sortBy("updatedAtDate", Q.desc)
     )
