@@ -6,13 +6,13 @@ import useAuthStore from "@/store/auth";
 
 const AuthStateChangeListener = () => {
   const { getState } = useNavigation();
-  const updateAuth = useAuthStore((state) => state.updateAuth);
-  useEffect(() => {
-    const unsubscribe = auth?.onAuthStateChanged((currentUser: User | null) => {
-      const state = getState?.();
+  const user = useAuthStore((state) => state.user);
+  const profile = useAuthStore((state) => state.profile);
 
-      updateAuth(currentUser);
-      if (currentUser) {
+  useEffect(() => {
+    if (profile) {
+      if (profile.passwordChanged) {
+        const state = getState?.();
         const screenName = state?.routes?.[state?.index]?.name;
         if (screenName !== "(tabs)") {
           router.replace("/(tabs)/(home)");
@@ -20,6 +20,28 @@ const AuthStateChangeListener = () => {
       } else {
         router.replace("/(auth)/login");
       }
+    }
+  }, [profile]);
+
+  useEffect(() => {
+    // if (currentUser) {
+    //   const screenName = state?.routes?.[state?.index]?.name;
+    //   if (screenName !== "(tabs)") {
+    //     router.replace("/(tabs)/(home)");
+    //   }
+    // } else {
+    //   router.replace("/(auth)/login");
+    // }
+    if (user) {
+      useAuthStore.getState().getProfile();
+    } else {
+      router.replace("/(auth)/login");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const unsubscribe = auth?.onAuthStateChanged((currentUser: User | null) => {
+      useAuthStore.getState().updateAuth(currentUser);
     });
     return unsubscribe;
   }, []);

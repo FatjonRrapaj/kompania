@@ -30,6 +30,13 @@ export default {
     doesNotMatch: "nuk përputhet",
     isInvalid: "nuk është i saktë",
   },
+  changePassword: {
+    title: "Ndrysho fjalëkalimin",
+    titleCreate: "Krijo fjalëkalim të ri",
+    oldPasswordPlaceholder: "Fjalëkalimi egzistues",
+    newPassword: "Fjalëkalimi i ri",
+    save: "Ruaj",
+  },
   login: {
     loginTitle: "Hyr në (Kompania)",
     enterInfo: "Plotëso informacionin më poshtë",
@@ -600,5 +607,6 @@ export default {
     successfullyEditedPackageText1: "Pakoja u ndryshua me sukses",
     successfullyEditedPackageText2: "Informacioni i pakos u përditësua",
     successfullyDeletedPackageText1: "Pakoja u fshi me sukses",
+    successfullyChangedPasswordText1: "Fjalëkalimi u ndërrua me sukses",
   },
 };

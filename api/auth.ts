@@ -15,6 +15,8 @@ export interface CompanyUserProfile {
   companyID: string;
   firstName: string;
   lastName: string;
+  phoneNumber: string;
+  passwordChanged: boolean;
 }
 
 export const getUserId = () => {

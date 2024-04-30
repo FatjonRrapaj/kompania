@@ -1,3 +1,5 @@
+import ChangePassword from "@/app/(auth)/change_password";
+
 export default {
   months: {
     1: "January",
@@ -29,6 +31,13 @@ export default {
     mustBeAMaximum: "must be a maximum of",
     doesNotMatch: "does not match",
     isInvalid: "is invalid",
+  },
+  changePassword: {
+    title: "Change password",
+    titleCreate: "Create a new password",
+    oldPasswordPlaceholder: "Enter your old password",
+    newPassword: "Enter new password",
+    save: "Save",
   },
   login: {
     loginTitle: "Login",
@@ -579,5 +588,6 @@ export default {
     successfullyEditedPackageText1: "Successfully edited the package",
     successfullyEditedPackageText2: "The package info is now updated",
     successfullyDeletedPackageText1: "The package was successfully deleted",
+    successfullyChangedPasswordText1: "The password was successfully changed",
   },
 };
