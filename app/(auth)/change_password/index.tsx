@@ -12,7 +12,6 @@ import { gray, primary } from "@/constants/Colors";
 import en from "@/translations/en";
 import TextInput from "@/components/Form/TextInput";
 
-import Pressable from "@/components/Pressable";
 import { GiantButton } from "@/components/StyledButton";
 import useAuthStore from "@/store/auth";
 import { ChangePasswordInfo, UserLoginInfo } from "@/api/auth";
@@ -20,6 +19,9 @@ import useChangePasswordFields from "@/components/ui/login/useChangePasswordFiel
 
 const ChangePassword = () => {
   const { t } = useTranslation();
+  const passwordChanged = useAuthStore(
+    (state) => state.profile?.passwordChanged
+  );
   const translate = (key: keyof typeof en.changePassword) =>
     t(`changePassword:${key}`);
 
@@ -43,7 +45,9 @@ const ChangePassword = () => {
     <View style={globalStyles.screenContainer}>
       <FontAwesome name="truck" size={60} color={primary[500]} />
       <Body1Bold>Kompania</Body1Bold>
-      <H5Bold style={styles.title}>{translate("titleCreate")}</H5Bold>
+      <H5Bold style={styles.title}>
+        {!passwordChanged ? translate("titleCreate") : translate("title")}
+      </H5Bold>
       {changePasswordFields.map((field, index) => (
         <TextInput
           {...field}
