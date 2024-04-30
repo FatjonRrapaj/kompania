@@ -9,18 +9,19 @@ import { View } from "@/components/Themed";
 import { Body1Bold, Body2, H5Bold } from "@/components/StyledText";
 import globalStyles from "@/components/globalStyles";
 import { gray, primary } from "@/constants/Colors";
-import useLoginFields from "../../../components/ui/login/useLoginFields";
 import en from "@/translations/en";
 import TextInput from "@/components/Form/TextInput";
 
 import Pressable from "@/components/Pressable";
 import { GiantButton } from "@/components/StyledButton";
 import useAuthStore from "@/store/auth";
-import { UserLoginInfo } from "@/api/auth";
+import { ChangePasswordInfo, UserLoginInfo } from "@/api/auth";
+import useChangePasswordFields from "@/components/ui/login/useChangePasswordFields";
 
 const ChangePassword = () => {
   const { t } = useTranslation();
-  const translate = (key: keyof typeof en.login) => t(`login:${key}`);
+  const translate = (key: keyof typeof en.changePassword) =>
+    t(`changePassword:${key}`);
 
   const loadingLogin = useAuthStore((state) => state.loadingLogin);
 
@@ -28,18 +29,13 @@ const ChangePassword = () => {
     control,
     handleSubmit,
     formState: { isValid },
-  } = useForm<UserLoginInfo>({
-    defaultValues: {
-      email: "fatjonrrapaj@live.com",
-      password: "123456",
-    } as UserLoginInfo,
-  });
+  } = useForm<ChangePasswordInfo>({});
 
-  const loginFields = useLoginFields();
+  const changePasswordFields = useChangePasswordFields();
 
-  const onSubmit: SubmitHandler<UserLoginInfo> = (info) => {
+  const onSubmit: SubmitHandler<ChangePasswordInfo> = (info) => {
     if (isValid) {
-      useAuthStore.getState().login(info);
+      useAuthStore.getState().changePassword(info);
     }
   };
 
@@ -47,30 +43,20 @@ const ChangePassword = () => {
     <View style={globalStyles.screenContainer}>
       <FontAwesome name="truck" size={60} color={primary[500]} />
       <Body1Bold>Kompania</Body1Bold>
-      <H5Bold style={styles.title}>{translate("loginTitle")}</H5Bold>
-      <Body2 style={styles.description}>{translate("enterInfo")}</Body2>
-      {loginFields.map((field, index) => (
+      <H5Bold style={styles.title}>{translate("titleCreate")}</H5Bold>
+      {changePasswordFields.map((field, index) => (
         <TextInput
           {...field}
-          control={control as Control<UserLoginInfo, any>}
+          control={control as Control<ChangePasswordInfo, any>}
           key={index}
         />
       ))}
-      <Pressable
-        style={styles.forgotPassword}
-        onPress={() => {
-          router.navigate("/forgot_password");
-        }}
-      >
-        <Body2 style={styles.forgotPasswordText}>
-          {translate("forgotPassword")}
-        </Body2>
-      </Pressable>
+
       <GiantButton
         loading={loadingLogin}
         inactive={!isValid}
         disabled={loadingLogin}
-        title={translate("login")}
+        title={translate("save")}
         onPress={handleSubmit(onSubmit)}
       />
     </View>

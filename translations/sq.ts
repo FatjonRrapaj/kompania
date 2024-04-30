@@ -33,8 +33,10 @@ export default {
   changePassword: {
     title: "Ndrysho fjalëkalimin",
     titleCreate: "Krijo fjalëkalim të ri",
-    oldPasswordPlaceholder: "Fjalëkalimi egzistues",
-    newPassword: "Fjalëkalimi i ri",
+    oldPasswordPlaceholder: "Vendos fjalëkalimin egzistues",
+    oldPassword: "fjalëkalimi egzistues",
+    newPasswordPlaceholder: "Vendos fjalëkalimin e ri",
+    newPassword: "fjalëkalimi i ri",
     save: "Ruaj",
   },
   login: {

@@ -4,8 +4,10 @@ import { Immutable } from "immer";
 import { User } from "firebase/auth";
 
 import {
+  ChangePasswordInfo,
   CompanyUserProfile,
   UserLoginInfo,
+  callChangePassword,
   callGetProfile,
   callLogin,
   callLogout,
@@ -17,7 +19,7 @@ type AuthState = {
   initializing: boolean;
   loadingLogin: boolean;
   loadingLogout: boolean;
-  loadingRegister: boolean;
+  loadingChangePassword: boolean;
   user: User | null;
   loadingGetProfile: boolean;
   profile?: CompanyUserProfile;
@@ -28,6 +30,7 @@ type AuthActions = {
   login: (info: UserLoginInfo) => Promise<void>;
   logout: () => Promise<void>;
   getProfile: (uid?: string) => Promise<void>;
+  changePassword: (info: ChangePasswordInfo) => Promise<void>;
 };
 
 type AuthStore = AuthState & AuthActions;
@@ -37,10 +40,10 @@ const initialState: AuthState = {
   initializing: true,
   loadingLogin: false,
   loadingGetProfile: false,
-  loadingRegister: false,
   loadingLogout: false,
   profile: undefined,
   user: null,
+  loadingChangePassword: false,
 };
 
 const useAuthStore = create<ImmutableAuthStore>()(
@@ -98,6 +101,20 @@ const useAuthStore = create<ImmutableAuthStore>()(
       } finally {
         set((state) => {
           state.loadingGetProfile = false;
+        });
+      }
+    },
+    changePassword: async (changePasswordInfo: ChangePasswordInfo) => {
+      set((state) => {
+        state.loadingChangePassword = true;
+      });
+      try {
+        await callChangePassword(changePasswordInfo);
+      } catch (error) {
+        showToastFromError(error);
+      } finally {
+        set((state) => {
+          state.loadingChangePassword = false;
         });
       }
     },

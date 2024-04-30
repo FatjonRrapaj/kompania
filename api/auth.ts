@@ -10,6 +10,11 @@ export interface UserLoginInfo {
   password: string;
 }
 
+export interface ChangePasswordInfo {
+  oldPassword: string;
+  newPassword: string;
+}
+
 export interface CompanyUserProfile {
   email: string;
   companyID: string;
@@ -60,4 +65,13 @@ export const callLogin = async (info: UserLoginInfo): Promise<void> => {
 
 export const callLogout = async () => {
   await signOut(auth);
+};
+
+export const callChangePassword = async (
+  info: ChangePasswordInfo
+): Promise<void> => {
+  try {
+  } catch (error) {
+    throw error;
+  }
 };

@@ -36,7 +36,9 @@ export default {
     title: "Change password",
     titleCreate: "Create a new password",
     oldPasswordPlaceholder: "Enter your old password",
-    newPassword: "Enter new password",
+    oldPassword: "old password",
+    newPasswordPlaceholder: "Enter new password",
+    newPassword: "new password",
     save: "Save",
   },
   login: {
