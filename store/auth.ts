@@ -11,8 +11,9 @@ import {
   callGetProfile,
   callLogin,
   callLogout,
+  reauthenticateUser,
 } from "@/api/auth";
-import { showToastFromError } from "@/utils/toast";
+import showToast, { showToastFromError } from "@/utils/toast";
 import { router } from "expo-router";
 
 type AuthState = {
@@ -109,7 +110,12 @@ const useAuthStore = create<ImmutableAuthStore>()(
         state.loadingChangePassword = true;
       });
       try {
+        await reauthenticateUser(changePasswordInfo);
         await callChangePassword(changePasswordInfo);
+        showToast({
+          type: "success",
+          text1Key: "successfullyChangedPasswordText1",
+        });
       } catch (error) {
         showToastFromError(error);
       } finally {
