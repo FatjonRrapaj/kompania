@@ -1,5 +1,3 @@
-import ChangePassword from "@/app/(auth)/change_password";
-
 export default {
   months: {
     1: "January",
@@ -23,6 +21,8 @@ export default {
     newPackage: "New Package",
     packageFor: "Package for",
     editingPackageFor: "Editing package for",
+    changePassword: "Change password",
+    changePasswordCreate: "Create a new password",
   },
   form: {
     isRequired: "is required",
@@ -33,8 +33,6 @@ export default {
     isInvalid: "is invalid",
   },
   changePassword: {
-    title: "Change password",
-    titleCreate: "Create a new password",
     oldPasswordPlaceholder: "Enter your old password",
     oldPassword: "old password",
     newPasswordPlaceholder: "Enter new password",

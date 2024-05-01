@@ -23,25 +23,17 @@ const AuthStateChangeListener = () => {
     }
   }, [profile]);
 
-  useEffect(() => {
-    // if (currentUser) {
-    //   const screenName = state?.routes?.[state?.index]?.name;
-    //   if (screenName !== "(tabs)") {
-    //     router.replace("/(tabs)/(home)");
-    //   }
-    // } else {
-    //   router.replace("/(auth)/login");
-    // }
-    if (user) {
-      useAuthStore.getState().getProfile();
-    } else {
-      router.replace("/(auth)/login");
-    }
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   useEffect(() => {
     const unsubscribe = auth?.onAuthStateChanged((currentUser: User | null) => {
+      console.log("CALLED!");
       useAuthStore.getState().updateAuth(currentUser);
+      if (user) {
+        useAuthStore.getState().getProfile();
+      } else {
+        router.replace("/(auth)/login");
+      }
     });
     return unsubscribe;
   }, []);

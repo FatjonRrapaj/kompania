@@ -39,7 +39,7 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<UserLoginInfo> = (info) => {
     if (isValid) {
-      useAuthStore.getState().login(info);
+      useAuthStore.getState().login(info, router);
     }
   };
 

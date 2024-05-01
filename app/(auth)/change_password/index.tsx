@@ -16,6 +16,7 @@ import { GiantButton } from "@/components/StyledButton";
 import useAuthStore from "@/store/auth";
 import { ChangePasswordInfo, UserLoginInfo } from "@/api/auth";
 import useChangePasswordFields from "@/components/ui/login/useChangePasswordFields";
+import PageHeader from "@/components/PageHeader";
 
 const ChangePassword = () => {
   const { t } = useTranslation();
@@ -45,11 +46,10 @@ const ChangePassword = () => {
 
   return (
     <View style={globalStyles.screenContainer}>
-      <FontAwesome name="truck" size={60} color={primary[500]} />
-      <Body1Bold>Kompania</Body1Bold>
-      <H5Bold style={styles.title}>
-        {!passwordChanged ? translate("titleCreate") : translate("title")}
-      </H5Bold>
+      <PageHeader
+        title={!passwordChanged ? "changePasswordCreate" : "changePassword"}
+      />
+
       {changePasswordFields.map((field, index) => (
         <TextInput
           {...field}

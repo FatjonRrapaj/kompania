@@ -21,6 +21,8 @@ export default {
     newPackage: "Pako e re",
     packageFor: "Pako për",
     editingPackageFor: "Duke ndryshuar pakon për",
+    changePassword: "Ndrysho fjalëkalimin",
+    changePasswordCreate: "Krijo fjalëkalim të ri",
   },
   form: {
     isRequired: "kërkohet",
@@ -31,8 +33,6 @@ export default {
     isInvalid: "nuk është i saktë",
   },
   changePassword: {
-    title: "Ndrysho fjalëkalimin",
-    titleCreate: "Krijo fjalëkalim të ri",
     oldPasswordPlaceholder: "Vendos fjalëkalimin egzistues",
     oldPassword: "fjalëkalimi egzistues",
     newPasswordPlaceholder: "Vendos fjalëkalimin e ri",

@@ -9,7 +9,7 @@ import {
 
 import { auth, db } from "@/utils/firebase";
 import generateCustomError from "@/utils/customError";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 
 export interface UserLoginInfo {
@@ -86,6 +86,18 @@ export const reauthenticateUser = async ({
       oldPassword
     );
     await reauthenticateWithCredential(auth.currentUser!, credential);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateUserPasswordChanged = async () => {
+  try {
+    if (!auth.currentUser) {
+      throw generateCustomError({ errorKey: "userNotAuthenticated" });
+    }
+    const userDocRef = doc(db, "users", auth.currentUser?.uid!);
+    await updateDoc(userDocRef, { passwordChanged: true });
   } catch (error) {
     throw error;
   }

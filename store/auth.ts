@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { Immutable } from "immer";
-import { User } from "firebase/auth";
+import { User, updateCurrentUser } from "firebase/auth";
 
 import {
   ChangePasswordInfo,
@@ -12,9 +12,10 @@ import {
   callLogin,
   callLogout,
   reauthenticateUser,
+  updateUserPasswordChanged,
 } from "@/api/auth";
 import showToast, { showToastFromError } from "@/utils/toast";
-import { router } from "expo-router";
+import { Route, Router, router } from "expo-router";
 
 type AuthState = {
   initializing: boolean;
@@ -28,7 +29,7 @@ type AuthState = {
 
 type AuthActions = {
   updateAuth: (auth: User | null) => void;
-  login: (info: UserLoginInfo) => Promise<void>;
+  login: (info: UserLoginInfo, router: Router) => Promise<void>;
   logout: () => Promise<void>;
   getProfile: (uid?: string) => Promise<void>;
   changePassword: (info: ChangePasswordInfo) => Promise<void>;
@@ -47,8 +48,27 @@ const initialState: AuthState = {
   loadingChangePassword: false,
 };
 
+const _getProfile = async (set: any, uid?: string) => {
+  try {
+    set((state: AuthState) => {
+      state.loadingGetProfile = true;
+    });
+    const profile = await callGetProfile(uid);
+    set((state: AuthState) => {
+      state.profile = profile;
+    });
+  } catch (error) {
+    console.log("error@ getProfile: ", error);
+    showToastFromError(error);
+  } finally {
+    set((state: AuthState) => {
+      state.loadingGetProfile = false;
+    });
+  }
+};
+
 const useAuthStore = create<ImmutableAuthStore>()(
-  immer((set) => ({
+  immer((set, get) => ({
     ...initialState,
     updateAuth: (newUser) => {
       set((state) => {
@@ -56,12 +76,17 @@ const useAuthStore = create<ImmutableAuthStore>()(
         state.initializing = false;
       });
     },
-    login: async (info: UserLoginInfo) => {
+    login: async (info: UserLoginInfo, router: Router) => {
       try {
         set((state) => {
           state.loadingLogin = true;
         });
         await callLogin(info);
+        const profile = get().profile;
+        if (!!profile && !profile.passwordChanged) {
+          //it means the user has logged in, went to set new password, and went back to login and tried to relogin again.
+          router.push("/(auth)/change_password");
+        }
       } catch (error: any) {
         console.log("error @login: ", error);
         //TODO: crashlytics or sentry to record error.
@@ -88,22 +113,7 @@ const useAuthStore = create<ImmutableAuthStore>()(
       }
     },
     getProfile: async (uid?: string) => {
-      set((state) => {
-        state.loadingGetProfile = true;
-      });
-      try {
-        const profile = await callGetProfile(uid);
-        set((state) => {
-          state.profile = profile;
-        });
-      } catch (error) {
-        console.log("error@ getProfile: ", error);
-        showToastFromError(error);
-      } finally {
-        set((state) => {
-          state.loadingGetProfile = false;
-        });
-      }
+      return await _getProfile(set, uid);
     },
     changePassword: async (changePasswordInfo: ChangePasswordInfo) => {
       set((state) => {
@@ -112,11 +122,14 @@ const useAuthStore = create<ImmutableAuthStore>()(
       try {
         await reauthenticateUser(changePasswordInfo);
         await callChangePassword(changePasswordInfo);
+        await updateUserPasswordChanged();
+        await _getProfile(set);
         showToast({
           type: "success",
           text1Key: "successfullyChangedPasswordText1",
         });
       } catch (error) {
+        console.log("error: ", error);
         showToastFromError(error);
       } finally {
         set((state) => {
