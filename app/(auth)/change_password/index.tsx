@@ -25,7 +25,9 @@ const ChangePassword = () => {
   const translate = (key: keyof typeof en.changePassword) =>
     t(`changePassword:${key}`);
 
-  const loadingLogin = useAuthStore((state) => state.loadingLogin);
+  const loadingChangePassword = useAuthStore(
+    (state) => state.loadingChangePassword
+  );
 
   const {
     control,
@@ -57,9 +59,9 @@ const ChangePassword = () => {
       ))}
 
       <GiantButton
-        loading={loadingLogin}
+        loading={loadingChangePassword}
         inactive={!isValid}
-        disabled={loadingLogin}
+        disabled={loadingChangePassword}
         title={translate("save")}
         onPress={handleSubmit(onSubmit)}
       />

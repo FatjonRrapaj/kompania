@@ -591,5 +591,6 @@ export default {
     successfullyEditedPackageText2: "The package info is now updated",
     successfullyDeletedPackageText1: "The package was successfully deleted",
     successfullyChangedPasswordText1: "The password was successfully changed",
+    userNotAuthenticated: "Please re login with the old password",
   },
 };

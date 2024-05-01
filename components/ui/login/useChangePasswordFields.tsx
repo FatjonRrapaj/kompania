@@ -23,7 +23,7 @@ function useChangePasswordFields(): Array<TextInputType> {
       secureTextEntry: true,
       keyboardType: "default",
       placeholder: translate("oldPasswordPlaceholder"),
-      containerStyle: { marginVertical: 16 },
+      containerStyle: { marginTop: 32, marginBottom: 24 },
       leftIcon: "Lock",
       validate: validateField({
         fieldName: translate("oldPassword"),
@@ -43,7 +43,7 @@ function useChangePasswordFields(): Array<TextInputType> {
       keyboardType: "default",
       placeholder: translate("newPasswordPlaceholder"),
       secureTextEntry: true,
-      containerStyle: { marginVertical: 16 },
+      containerStyle: { marginBottom: 32 },
       leftIcon: "Lock",
       validate: validateField({
         fieldName: translate("newPassword"),

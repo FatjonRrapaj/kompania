@@ -610,5 +610,6 @@ export default {
     successfullyEditedPackageText2: "Informacioni i pakos u përditësua",
     successfullyDeletedPackageText1: "Pakoja u fshi me sukses",
     successfullyChangedPasswordText1: "Fjalëkalimi u ndërrua me sukses",
+    userNotAuthenticated: "Ju lutem ri-kyçuni me fjalëkalimin e vjetër",
   },
 };

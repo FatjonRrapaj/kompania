@@ -18,7 +18,7 @@ const AuthStateChangeListener = () => {
           router.replace("/(tabs)/(home)");
         }
       } else {
-        router.replace("/(auth)/login");
+        router.push("/(auth)/change_password");
       }
     }
   }, [profile]);

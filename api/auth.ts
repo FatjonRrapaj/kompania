@@ -1,4 +1,11 @@
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  AuthCredential,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  signInWithEmailAndPassword,
+  signOut,
+  updatePassword,
+} from "firebase/auth";
 
 import { auth, db } from "@/utils/firebase";
 import generateCustomError from "@/utils/customError";
@@ -67,10 +74,31 @@ export const callLogout = async () => {
   await signOut(auth);
 };
 
-export const callChangePassword = async (
-  info: ChangePasswordInfo
-): Promise<void> => {
+export const reauthenticateUser = async ({
+  oldPassword,
+}: ChangePasswordInfo): Promise<void> => {
   try {
+    if (!auth.currentUser) {
+      throw generateCustomError({ errorKey: "userNotAuthenticated" });
+    }
+    const credential = EmailAuthProvider.credential(
+      auth.currentUser!.email!,
+      oldPassword
+    );
+    await reauthenticateWithCredential(auth.currentUser!, credential);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const callChangePassword = async ({
+  newPassword,
+}: ChangePasswordInfo): Promise<void> => {
+  try {
+    if (!auth.currentUser) {
+      throw generateCustomError({ errorKey: "userNotAuthenticated" });
+    }
+    await updatePassword(auth.currentUser!, newPassword);
   } catch (error) {
     throw error;
   }
