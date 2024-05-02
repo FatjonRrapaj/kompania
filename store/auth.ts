@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { Immutable } from "immer";
-import { User, updateCurrentUser } from "firebase/auth";
+import { User } from "firebase/auth";
 
 import {
   ChangePasswordInfo,
@@ -15,7 +15,8 @@ import {
   updateUserPasswordChanged,
 } from "@/api/auth";
 import showToast, { showToastFromError } from "@/utils/toast";
-import { Route, Router, router } from "expo-router";
+import { Router, router } from "expo-router";
+import { auth } from "@/utils/firebase";
 
 type AuthState = {
   initializing: boolean;
@@ -41,7 +42,7 @@ type ImmutableAuthStore = Immutable<AuthStore>;
 const initialState: AuthState = {
   initializing: true,
   loadingLogin: false,
-  loadingGetProfile: false,
+  loadingGetProfile: true,
   loadingLogout: false,
   profile: undefined,
   user: null,
@@ -83,9 +84,13 @@ const useAuthStore = create<ImmutableAuthStore>()(
         });
         await callLogin(info);
         const profile = get().profile;
-        if (!!profile && !profile.passwordChanged) {
+        if (!!auth.currentUser && !!profile) {
           //it means the user has logged in, went to set new password, and went back to login and tried to relogin again.
-          router.push("/(auth)/change_password");
+          if (!profile.passwordChanged) {
+            router.push("/(auth)/change_password");
+          } else {
+            router.replace("/(tabs)/(home)");
+          }
         }
       } catch (error: any) {
         console.log("error @login: ", error);
@@ -116,6 +121,7 @@ const useAuthStore = create<ImmutableAuthStore>()(
       return await _getProfile(set, uid);
     },
     changePassword: async (changePasswordInfo: ChangePasswordInfo) => {
+      console.log("changePasswordInfo: ", changePasswordInfo);
       set((state) => {
         state.loadingChangePassword = true;
       });

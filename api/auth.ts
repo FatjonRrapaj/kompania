@@ -19,7 +19,7 @@ export interface UserLoginInfo {
 
 export interface ChangePasswordInfo {
   oldPassword: string;
-  newPassword: string;
+  password: string;
 }
 
 export interface CompanyUserProfile {
@@ -104,13 +104,13 @@ export const updateUserPasswordChanged = async () => {
 };
 
 export const callChangePassword = async ({
-  newPassword,
+  password,
 }: ChangePasswordInfo): Promise<void> => {
   try {
     if (!auth.currentUser) {
       throw generateCustomError({ errorKey: "userNotAuthenticated" });
     }
-    await updatePassword(auth.currentUser!, newPassword);
+    await updatePassword(auth.currentUser!, password);
   } catch (error) {
     throw error;
   }

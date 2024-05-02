@@ -6,31 +6,37 @@ import useAuthStore from "@/store/auth";
 
 const AuthStateChangeListener = () => {
   const { getState } = useNavigation();
-  const user = useAuthStore((state) => state.user);
   const profile = useAuthStore((state) => state.profile);
+  const loadingGetProfile = useAuthStore((state) => state.loadingGetProfile);
+
+  const goToTabs = () => {
+    const state = getState?.();
+    const screenName = state?.routes?.[state?.index]?.name as string;
+    if (!screenName.includes("tabs")) {
+      router.replace("/(tabs)/(home)");
+    }
+  };
 
   useEffect(() => {
-    if (profile) {
-      if (profile.passwordChanged) {
-        const state = getState?.();
-        const screenName = state?.routes?.[state?.index]?.name;
-        if (screenName !== "(tabs)") {
-          router.replace("/(tabs)/(home)");
-        }
-      } else {
-        router.push("/(auth)/change_password");
-      }
+    if (loadingGetProfile) {
+      return;
     }
-  }, [profile]);
-
-  useEffect(() => {}, [user]);
+    if (profile?.passwordChanged) {
+      goToTabs();
+    } else {
+      router.push("/(auth)/change_password");
+    }
+  }, [profile, loadingGetProfile]);
 
   useEffect(() => {
     const unsubscribe = auth?.onAuthStateChanged((currentUser: User | null) => {
-      console.log("CALLED!");
       useAuthStore.getState().updateAuth(currentUser);
-      if (user) {
-        useAuthStore.getState().getProfile();
+      if (currentUser) {
+        if (!useAuthStore.getState().profile) {
+          useAuthStore.getState().getProfile();
+        } else {
+          goToTabs();
+        }
       } else {
         router.replace("/(auth)/login");
       }
