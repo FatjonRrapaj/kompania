@@ -195,6 +195,11 @@ export async function callCreatePackage(
       collection(db, Collections.companies, company.uid!, Collections.packages)
     );
     const logsRef = doc(collection(db, Collections.logs));
+    const availablePackagesCollectionInfoRef = doc(
+      db,
+      Collections.availablePackages,
+      "info"
+    );
     const packageRefForAvailablePackages = doc(
       db,
       Collections.availablePackages,
@@ -224,6 +229,13 @@ export async function callCreatePackage(
     );
     batch.set(newPackageForInsideCompany, packageToUpload);
     batch.set(packageRefForAvailablePackages, packageToUpload);
+    batch.set(
+      availablePackagesCollectionInfoRef,
+      {
+        lastUpdatedAt: nowTimestamp,
+      },
+      { merge: true }
+    );
     batch.set(logsRef, packageLog);
 
     await batch.commit();
