@@ -78,7 +78,7 @@ const PlacesAutoComplete = forwardRef(
               )}
               <GooglePlacesAutocomplete
                 disableScroll={true}
-                debounce={500}
+                debounce={600}
                 keyboardShouldPersistTaps="always"
                 fetchDetails={true}
                 styles={isFocused ? styles.focused : styles.base}
