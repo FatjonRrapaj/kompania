@@ -86,8 +86,7 @@ const PlacesAutoComplete = forwardRef(
                 query={{
                   key: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
                   language: i18n.language,
-                  types: "address",
-                  radius: 500,
+                  radius: 100,
                 }}
                 onPress={(
                   data: GooglePlaceData,
@@ -134,8 +133,9 @@ const PlacesAutoComplete = forwardRef(
 
 const styles = {
   container: {
-    height: 56,
-    position: "relative",
+    flex: 0,
+    width: "100%",
+    zIndex: 1,
   },
   base: {
     alignSelf: "stretch",
@@ -159,7 +159,7 @@ const styles = {
       borderRadius: 10,
       backgroundColor: "transparent",
     },
-    listView: {},
+    listView: { backgroundColor: "white" },
     poweredContainer: { backgroundColor: "red", display: "none", height: 0 },
     powered: {
       display: "none",
@@ -182,9 +182,7 @@ const styles = {
       height: 56,
       backgroundColor: "white",
     },
-    row: {
-      zIndex: 999,
-    },
+
     predefinedPlacesDescription: { backgroundColor: "red" },
     poweredContainer: { backgroundColor: "red", display: "none", height: 0 },
     powered: {
@@ -198,11 +196,7 @@ const styles = {
       backgroundColor: "transparent",
     },
     listView: {
-      top: 60,
-      maxHeight: 150,
-      position: "absolute",
-      backgroundColor: "red",
-      zIndex: 999,
+      backgroundColor: "white",
     },
   },
   icon: {
