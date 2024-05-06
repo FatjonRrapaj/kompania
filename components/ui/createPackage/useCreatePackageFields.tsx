@@ -98,7 +98,9 @@ function useCreatePackageFields({
 
     setValue("receiverName", name);
     setValue("phoneNumber", phoneNumber.toString());
-    setValue("address", receiverLocation!.description!);
+    if (receiverLocation) {
+      setValue("address", receiverLocation);
+    }
     if (profileUrl) {
       setValue("profileLink", profileUrl);
     }
@@ -107,7 +109,7 @@ function useCreatePackageFields({
   const handleAutoSuggestCleared = () => {
     setValue("receiverName", "");
     setValue("phoneNumber", "");
-    setValue("address", "");
+    setValue("address", {});
     setValue("profileLink", "");
   };
 
