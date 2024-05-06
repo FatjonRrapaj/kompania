@@ -17,6 +17,7 @@ type FormElementTypes =
   | "textArea"
   | "currencySelector"
   | "checkboxes"
+  | "placesAutoComplete"
   | "undefined";
 
 interface FormElementType {
@@ -40,12 +41,17 @@ interface CurrencySelectorComponent extends FormElementType {
   type: "currencySelector";
 }
 
+interface PlacesAutoComplete extends FormElementType {
+  type: "placesAutoComplete";
+}
+
 type CreatePackageFieldsType = Array<
   | TextInputType
   | LabelType
   | SizeCheckerComponent
   | CurrencySelectorComponent
   | CheckboxesComponent
+  | PlacesAutoComplete
 >;
 
 interface PackageFieldsProps {
@@ -167,7 +173,7 @@ function useCreatePackageFields({
       autoComplete: "off",
       autoCorrect: false,
       spellCheck: false,
-      type: "input",
+      type: "placesAutoComplete",
       elementKey: "address",
       keyboardType: "default",
       placeholder: translate("addressPlaceholder"),

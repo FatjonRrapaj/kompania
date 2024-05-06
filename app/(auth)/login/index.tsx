@@ -31,7 +31,7 @@ const Login = () => {
   } = useForm<UserLoginInfo>({
     defaultValues: {
       email: "fatjonrrapaj@live.com",
-      password: "123456",
+      password: "654321",
     } as UserLoginInfo,
   });
 

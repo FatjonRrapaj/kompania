@@ -13,6 +13,9 @@ export default {
     11: "November",
     12: "December",
   },
+  placesAutoComplete: {
+    placeholder: "Write the client's address",
+  },
   navigation: {
     back: "Back",
     login: "Login",

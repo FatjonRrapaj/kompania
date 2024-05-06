@@ -13,6 +13,9 @@ export default {
     11: "Nëntor",
     12: "Dhjetor",
   },
+  placesAutoComplete: {
+    placeholder: "Shkruaj adresën e klientit",
+  },
   navigation: {
     back: "Back",
     login: "Login",

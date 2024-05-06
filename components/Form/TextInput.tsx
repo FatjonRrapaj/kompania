@@ -1,4 +1,4 @@
-import React, { useState, Ref, LegacyRef, forwardRef } from "react";
+import React, { useState, Ref, forwardRef } from "react";
 import {
   TextInput as DefaultTextInput,
   StyleSheet,

@@ -19,6 +19,7 @@ import PackagesOverView from "./PackagesOverview";
 import PackageActions from "./PackageActions";
 import PackagesListHeader from "./PackagesListHeader";
 import usePackageStore from "@/store/package";
+import PlacesAutoComplete from "@/components/PlacesAutocomplete";
 
 interface PackageListProps {
   packages: PackageModel[];
@@ -46,6 +47,8 @@ const PackagesListComponent = ({ packages }: PackageListProps) => {
       useCompanyStore.getState().getCompany();
     }
   }, [profile]);
+
+  //TODO: add listEmptyComponent and list loader component better this has a reset ugly af kk?
 
   if (!packages?.length) {
     return (

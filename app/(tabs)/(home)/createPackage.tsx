@@ -17,6 +17,7 @@ import CurrencySelector from "@/components/ui/createPackage/CurrencySelector";
 import { PackageFormData, CurrencyShortValue } from "@/api/package";
 import usePackageStore from "@/store/package";
 import SuccessfullyCreatedPackageModal from "@/components/ui/createPackage/SuccessfullyCreatedPackageModal";
+import PlacesAutoComplete from "@/components/PlacesAutocomplete";
 
 const CreatePackage = () => {
   const { t } = useTranslation();
@@ -38,7 +39,7 @@ const CreatePackage = () => {
       receiverName: "Fatjon Rrapaj",
       phoneNumber: "0685919978",
       profileLink: "http://www.google.com",
-      address: "Rruga Don Bosko, kullat hawaiii",
+      // address: "Rruga Don Bosko, kullat hawaiii",
       notesForReceiver: "E do shpejte",
       packageId: "8123129312",
       packageName: "Pako e kuqe",
@@ -108,6 +109,15 @@ const CreatePackage = () => {
                 );
               case "input":
                 return <TextInput {...field} control={control} key={index} />;
+
+              case "placesAutoComplete":
+                return (
+                  <PlacesAutoComplete
+                    control={control}
+                    key={index}
+                    {...field}
+                  />
+                );
               case "checkboxes":
                 return (
                   <Checkboxes

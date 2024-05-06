@@ -195,11 +195,7 @@ export async function callCreatePackage(
       collection(db, Collections.companies, company.uid!, Collections.packages)
     );
     const logsRef = doc(collection(db, Collections.logs));
-    const availablePackagesCollectionInfoRef = doc(
-      db,
-      Collections.availablePackages,
-      "info"
-    );
+
     const packageRefForAvailablePackages = doc(
       db,
       Collections.availablePackages,
@@ -229,13 +225,7 @@ export async function callCreatePackage(
     );
     batch.set(newPackageForInsideCompany, packageToUpload);
     batch.set(packageRefForAvailablePackages, packageToUpload);
-    batch.set(
-      availablePackagesCollectionInfoRef,
-      {
-        lastUpdatedAt: nowTimestamp,
-      },
-      { merge: true }
-    );
+
     batch.set(logsRef, packageLog);
 
     await batch.commit();
@@ -376,7 +366,10 @@ export async function callSyncPackages(
     const querySnapshot = await getDocs(q);
     const docs: Package[] = [];
     querySnapshot.forEach((doc) => {
-      docs.push({ uid: doc.id, ...doc.data() } as Package);
+      if (doc.id !== "aggregator") {
+        //if id==='aggregagtor', the doc is is the aggregator doc, not a package, do not process this
+        docs.push({ uid: doc.id, ...doc.data() } as Package);
+      }
     });
     return docs;
   } catch (error) {
