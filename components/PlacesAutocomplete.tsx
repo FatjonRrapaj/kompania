@@ -105,6 +105,9 @@ const PlacesAutoComplete = forwardRef(
                   data: GooglePlaceData,
                   detail: GooglePlaceDetail | null
                 ) => {
+                  //TODO: add form vaildation to prevent the decscription being too short
+                  //Description being too short means that it can be just a city name or smth
+                  //or maybe just let it be
                   const description = data.description;
                   const coordinates = new GeoPoint(
                     detail?.geometry.location.lat ?? -1,
