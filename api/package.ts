@@ -13,7 +13,13 @@ import {
 import { Collections } from "@/constants/Firestore";
 import { db } from "@/utils/firebase";
 
-import { CompanyAddress, getCompanyRef, Customer, Company } from "./company";
+import {
+  CompanyAddress,
+  getCompanyRef,
+  Customer,
+  Company,
+  CustomerAddress,
+} from "./company";
 import { mockPackageObject } from "@/mocks/packagesMock";
 import { CompanyUserProfile } from "./auth";
 import generateCustomError from "@/utils/customError";
@@ -57,8 +63,8 @@ export interface PackageFormData {
   receiverName: string;
   phoneNumber: string;
   profileLink: string;
-  address: string;
   notesForReceiver?: string;
+  address: CustomerAddress;
   packageId: string;
   packageName?: string;
   packageWeight?: string;
@@ -138,7 +144,8 @@ export async function callCreatePackage(
         phoneNumber: packageData.phoneNumber,
         notes: packageData.notesForReceiver,
         receiverLocation: {
-          description: packageData.address,
+          description: packageData.address.description,
+          coordinates: packageData.address.coordinates,
         },
       },
       packageDetails: {

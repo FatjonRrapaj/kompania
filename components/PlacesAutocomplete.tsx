@@ -81,7 +81,7 @@ const PlacesAutoComplete = forwardRef(
                 debounce={300}
                 keyboardShouldPersistTaps="always"
                 fetchDetails={true}
-                styles={isFocused ? styles.focused : styles.base} // doesn't accept array styles
+                styles={isFocused ? styles.focused : styles.base}
                 placeholder={value?.description || translate("placeholder")}
                 query={{
                   key: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,

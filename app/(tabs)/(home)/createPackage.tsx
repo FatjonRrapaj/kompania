@@ -39,7 +39,13 @@ const CreatePackage = () => {
       receiverName: "Fatjon Rrapaj",
       phoneNumber: "0685919978",
       profileLink: "http://www.google.com",
-      // address: "Rruga Don Bosko, kullat hawaiii",
+      address: {
+        description: "Rruga Don Bosko, kullat hawaiii",
+        coordinates: {
+          latitude: 0,
+          longitude: 0,
+        },
+      },
       notesForReceiver: "E do shpejte",
       packageId: "8123129312",
       packageName: "Pako e kuqe",
@@ -115,7 +121,7 @@ const CreatePackage = () => {
                   <PlacesAutoComplete
                     control={control}
                     key={index}
-                    {...field}
+                    {...(field as any)}
                   />
                 );
               case "checkboxes":
