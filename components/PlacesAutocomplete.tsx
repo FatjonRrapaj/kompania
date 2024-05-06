@@ -70,7 +70,7 @@ const PlacesAutoComplete = forwardRef(
           console.log("value: ", value);
 
           return (
-            <View style={[styles.container as ViewStyle, containerStyle]}>
+            <View style={containerStyle}>
               {value && (
                 <Label style={{ position: "absolute", top: -16 }}>
                   {placeholder}
@@ -79,9 +79,16 @@ const PlacesAutoComplete = forwardRef(
               <GooglePlacesAutocomplete
                 disableScroll={true}
                 debounce={600}
-                keyboardShouldPersistTaps="always"
                 fetchDetails={true}
-                styles={isFocused ? styles.focused : styles.base}
+                styles={{
+                  textInputContainer: isFocused
+                    ? textInputContainerFocused
+                    : textInputContainer,
+                  textInput,
+                  poweredContainer,
+                  powered,
+                  listView,
+                }}
                 placeholder={value?.description || translate("placeholder")}
                 query={{
                   key: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -114,15 +121,13 @@ const PlacesAutoComplete = forwardRef(
                   autoCorrect: false,
                 }}
                 renderLeftButton={() => (
-                  <View style={styles.icon as ViewStyle}>
+                  <View style={styles.icon}>
                     <IconConfig.Search />
                   </View>
                 )}
               />
               {error?.message ? (
-                <Label style={styles.label as ViewStyle}>
-                  {error?.message}
-                </Label>
+                <Label style={styles.label}>{error?.message}</Label>
               ) : null}
             </View>
           );
@@ -133,67 +138,40 @@ const PlacesAutoComplete = forwardRef(
   }
 );
 
-const styles = {
-  base: {
-    textInputContainer: {
-      borderColor: gray[500],
-      borderWidth: 1,
-      width: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-      position: "relative",
-      alignSelf: "stretch",
-      borderRadius: 10,
-      paddingLeft: 20,
-      height: 56,
-      backgroundColor: "white",
-    },
-    textInput: {
-      height: 56,
-      marginTop: 4,
-      borderRadius: 10,
-      backgroundColor: "transparent",
-    },
-    listView: { backgroundColor: "white" },
-    poweredContainer: { backgroundColor: "red", display: "none", height: 0 },
-    powered: {
-      display: "none",
-      height: 0,
-    },
-  },
-  focused: {
-    alignSelf: "stretch",
-    position: "relative",
-    textInputContainer: {
-      borderColor: primary[500],
-      borderWidth: 1,
-      width: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-      position: "relative",
-      alignSelf: "stretch",
-      borderRadius: 10,
-      paddingLeft: 20,
-      height: 56,
-      backgroundColor: "white",
-    },
+//places autocomplete stylings
+const textInputContainer = {
+  borderColor: gray[500],
+  borderWidth: 1,
+  width: "100%",
+  justifyContent: "center",
+  alignItems: "center",
+  position: "relative",
+  alignSelf: "stretch",
+  borderRadius: 10,
+  paddingLeft: 20,
+  height: 56,
+  backgroundColor: "white",
+};
+const textInputContainerFocused = {
+  ...textInputContainer,
+  borderColor: primary[500],
+};
+const textInput = {
+  height: 56,
+  marginTop: 4,
+  borderRadius: 10,
+  backgroundColor: "transparent",
+};
+const poweredContainer = { display: "none", height: 0 };
+const powered = {
+  display: "none",
+  height: 0,
+};
+const listView = {
+  backgroundColor: "white",
+};
 
-    predefinedPlacesDescription: { backgroundColor: "red" },
-    poweredContainer: { backgroundColor: "red", display: "none", height: 0 },
-    powered: {
-      display: "none",
-      height: 0,
-    },
-    textInput: {
-      height: 56,
-      marginTop: 4,
-      borderRadius: 10,
-      backgroundColor: "transparent",
-    },
-    listView: {
-      backgroundColor: "white",
-    },
-  },
+const styles = StyleSheet.create({
   icon: {
     justifyContent: "center",
   },
@@ -202,6 +180,6 @@ const styles = {
     alignSelf: "flex-end",
     color: tertiary[500],
   },
-};
+});
 
 export default PlacesAutoComplete;
