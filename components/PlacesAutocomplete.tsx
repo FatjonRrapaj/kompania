@@ -82,12 +82,16 @@ const PlacesAutoComplete = forwardRef(
                 fetchDetails={true}
                 styles={{
                   textInputContainer: isFocused
-                    ? textInputContainerFocused
-                    : textInputContainer,
-                  textInput,
-                  poweredContainer,
-                  powered,
-                  listView,
+                    ? {
+                        ...styles.textInputContainer,
+                        ...styles.textInputContainerFocused,
+                      }
+                    : styles.textInputContainer,
+                  textInput: styles.textInput,
+                  poweredContainer: styles.poweredContainer,
+                  powered: styles.powered,
+                  listView: styles.listView,
+                  separator: styles.separator,
                 }}
                 placeholder={value?.description || translate("placeholder")}
                 query={{
@@ -138,40 +142,42 @@ const PlacesAutoComplete = forwardRef(
   }
 );
 
-//places autocomplete stylings
-const textInputContainer = {
-  borderColor: gray[500],
-  borderWidth: 1,
-  width: "100%",
-  justifyContent: "center",
-  alignItems: "center",
-  position: "relative",
-  alignSelf: "stretch",
-  borderRadius: 10,
-  paddingLeft: 20,
-  height: 56,
-  backgroundColor: "white",
-};
-const textInputContainerFocused = {
-  ...textInputContainer,
-  borderColor: primary[500],
-};
-const textInput = {
-  height: 56,
-  marginTop: 4,
-  borderRadius: 10,
-  backgroundColor: "transparent",
-};
-const poweredContainer = { display: "none", height: 0 };
-const powered = {
-  display: "none",
-  height: 0,
-};
-const listView = {
-  backgroundColor: "white",
-};
-
 const styles = StyleSheet.create({
+  textInputContainer: {
+    borderColor: gray[500],
+    borderWidth: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    alignSelf: "stretch",
+    borderRadius: 10,
+    paddingLeft: 20,
+    height: 56,
+    backgroundColor: "white",
+  },
+  textInputContainerFocused: {
+    borderColor: primary[500],
+  },
+  textInput: {
+    height: 56,
+    marginTop: 4,
+    borderRadius: 10,
+    backgroundColor: "transparent",
+  },
+  listView: {
+    backgroundColor: "white",
+  },
+  poweredContainer: { display: "none", height: 0 },
+  powered: {
+    display: "none",
+    height: 0,
+  },
+  separator: {
+    width: "100%",
+    height: 0.5,
+    backgroundColor: gray[500],
+  },
   icon: {
     justifyContent: "center",
   },
