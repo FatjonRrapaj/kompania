@@ -81,12 +81,13 @@ const PlacesAutoComplete = forwardRef(
                 debounce={600}
                 fetchDetails={true}
                 styles={{
-                  textInputContainer: isFocused
-                    ? {
-                        ...styles.textInputContainer,
-                        ...styles.textInputContainerFocused,
-                      }
-                    : styles.textInputContainer,
+                  textInputContainer:
+                    isFocused || value
+                      ? {
+                          ...styles.textInputContainer,
+                          ...styles.textInputContainerFocused,
+                        }
+                      : styles.textInputContainer,
                   textInput: styles.textInput,
                   poweredContainer: styles.poweredContainer,
                   powered: styles.powered,
