@@ -78,7 +78,7 @@ const PlacesAutoComplete = forwardRef(
               )}
               <GooglePlacesAutocomplete
                 disableScroll={true}
-                debounce={300}
+                debounce={500}
                 keyboardShouldPersistTaps="always"
                 fetchDetails={true}
                 styles={isFocused ? styles.focused : styles.base}
@@ -87,6 +87,8 @@ const PlacesAutoComplete = forwardRef(
                   key: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
                   language: i18n.language,
                   radius: 100,
+
+                  components: "country:al|country:xk",
                 }}
                 onPress={(
                   data: GooglePlaceData,
@@ -132,14 +134,7 @@ const PlacesAutoComplete = forwardRef(
 );
 
 const styles = {
-  container: {
-    flex: 0,
-    width: "100%",
-    zIndex: 1,
-  },
   base: {
-    alignSelf: "stretch",
-    position: "relative",
     textInputContainer: {
       borderColor: gray[500],
       borderWidth: 1,
