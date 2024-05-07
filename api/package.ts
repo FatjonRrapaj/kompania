@@ -96,6 +96,7 @@ export interface Package {
   packageName?: string;
   scanId: string;
   receiver: Customer;
+  estimatedDeliveryTime?: number;
   packageDetails: {
     weight?: number;
     length?: number;
@@ -117,6 +118,44 @@ export interface Package {
   companyId?: string;
 }
 
+async function getTravelTime(
+  warehouseCoords: string,
+  clientCoords: string
+): Promise<number> {
+  console.log("clientCoords: ", clientCoords);
+  console.log("warehouseCoords: ", warehouseCoords);
+  const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${warehouseCoords}&destination=${clientCoords}&mode=driving&departure_time=any&key=${process.env.EXPO_PUBLIC_FIREBASE_API_KEY}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const data = await response.json();
+    console.log("getTravelTime data: ", data);
+    const { routes } = data;
+    console.log("getTravelTime routes: ", routes);
+
+    if (routes && routes.length > 0) {
+      const { legs } = routes[0];
+
+      if (legs && legs.length > 0) {
+        const { duration } = legs[0];
+
+        if (duration && duration.value) {
+          return duration.value;
+        }
+      }
+    }
+
+    throw new Error("Unable to calculate travel time.");
+  } catch (error) {
+    console.log("getTravelTime error: ", error);
+    console.error("Error fetching travel time:", error);
+    throw error;
+  }
+}
+
 export async function callCreatePackage(
   packageData: PackageFormData,
   company: Company,
@@ -132,6 +171,22 @@ export async function callCreatePackage(
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
   const nowTimestamp = now.getTime();
+
+  let estimatedDeliveryTimeInSeconds: number | undefined = undefined;
+  if (
+    packageData.address.coordinates?.latitude &&
+    packageData.address.coordinates.longitude
+  ) {
+    const clientCoords = `${packageData.address.coordinates?.latitude}`;
+    const warehouseCoords = `${
+      (company.locations[0].coordinates.latitude,
+      company.locations[0].coordinates.longitude)
+    }`;
+    estimatedDeliveryTimeInSeconds = await getTravelTime(
+      warehouseCoords,
+      clientCoords
+    );
+  }
 
   try {
     const packageToUpload: Package = {
