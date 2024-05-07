@@ -124,15 +124,17 @@ async function getTravelTime(
 ): Promise<number> {
   console.log("clientCoords: ", clientCoords);
   console.log("warehouseCoords: ", warehouseCoords);
-  const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${warehouseCoords}&destination=${clientCoords}&mode=driving&departure_time=any&key=${process.env.EXPO_PUBLIC_FIREBASE_API_KEY}`;
+  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${clientCoords}&origins=${warehouseCoords}&units=metric&key=${process.env.EXPO_PUBLIC_FIREBASE_API_KEY}`;
+  console.log("url: ", url);
   try {
     const response = await fetch(url);
+    console.log("response: ", JSON.stringify(response));
     if (!response.ok) {
       throw new Error("Failed to fetch data");
     }
 
     const data = await response.json();
-    console.log("getTravelTime data: ", data);
+    console.log("getTravelTime data: ", JSON.stringify(data));
     const { routes } = data;
     console.log("getTravelTime routes: ", routes);
 
@@ -177,11 +179,8 @@ export async function callCreatePackage(
     packageData.address.coordinates?.latitude &&
     packageData.address.coordinates.longitude
   ) {
-    const clientCoords = `${packageData.address.coordinates?.latitude}`;
-    const warehouseCoords = `${
-      (company.locations[0].coordinates.latitude,
-      company.locations[0].coordinates.longitude)
-    }`;
+    const clientCoords = `${packageData.address.coordinates?.latitude},${packageData.address.coordinates?.longitude}`;
+    const warehouseCoords = `${company.locations[0].coordinates.latitude},${company.locations[0].coordinates.longitude}`;
     estimatedDeliveryTimeInSeconds = await getTravelTime(
       warehouseCoords,
       clientCoords
@@ -192,6 +191,7 @@ export async function callCreatePackage(
     const packageToUpload: Package = {
       scanId: packageData.packageId,
       packageName: packageData.packageName,
+      estimatedDeliveryTime: estimatedDeliveryTimeInSeconds,
       receiver: {
         name: packageData.receiverName,
         profileUrl: packageData.profileLink,
