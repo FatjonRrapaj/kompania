@@ -96,7 +96,8 @@ export interface Package {
   packageName?: string;
   scanId: string;
   receiver: Customer;
-  estimatedDeliveryTime?: number;
+  estimatedDeliveryTimeInSeconds: number | null;
+  estimatedDeliveryDistanceInMeters: number | null;
   packageDetails: {
     weight?: number;
     length?: number;
@@ -118,43 +119,64 @@ export interface Package {
   companyId?: string;
 }
 
-async function getTravelTime(
+interface GoogleDistanceApiResponse {
+  destinationAddresses: string[];
+  originAddresses: string[];
+  rows: DistanceMatrixRow[];
+  status: string;
+}
+
+interface DistanceMatrixRow {
+  elements: DistanceMatrixElement[];
+}
+
+interface DistanceMatrixElement {
+  distance: Distance;
+  duration: Duration;
+  status: string;
+}
+
+interface Distance {
+  text: string;
+  value: number;
+}
+
+interface Duration {
+  text: string;
+  value: number;
+}
+
+interface SimplifiedTravelTimeAndDistance {
+  time: number;
+  distance: number;
+}
+
+async function getTravelTimeAndDistance(
   warehouseCoords: string,
   clientCoords: string
-): Promise<number> {
+): Promise<SimplifiedTravelTimeAndDistance | undefined> {
   console.log("clientCoords: ", clientCoords);
   console.log("warehouseCoords: ", warehouseCoords);
   const url = `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${clientCoords}&origins=${warehouseCoords}&units=metric&key=${process.env.EXPO_PUBLIC_FIREBASE_API_KEY}`;
   console.log("url: ", url);
   try {
     const response = await fetch(url);
-    console.log("response: ", JSON.stringify(response));
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
+    const data: GoogleDistanceApiResponse = await response.json();
+    console.log("data: ", data);
+    if (
+      data?.rows?.[0]?.elements?.[0]?.distance?.value &&
+      data?.rows?.[0]?.elements?.[0]?.duration?.value
+    ) {
+      return {
+        time: data.rows[0].elements[0].duration.value,
+        distance: data.rows[0].elements[0].distance.value,
+      } as SimplifiedTravelTimeAndDistance;
+    } else {
+      return undefined;
     }
-
-    const data = await response.json();
-    console.log("getTravelTime data: ", JSON.stringify(data));
-    const { routes } = data;
-    console.log("getTravelTime routes: ", routes);
-
-    if (routes && routes.length > 0) {
-      const { legs } = routes[0];
-
-      if (legs && legs.length > 0) {
-        const { duration } = legs[0];
-
-        if (duration && duration.value) {
-          return duration.value;
-        }
-      }
-    }
-
-    throw new Error("Unable to calculate travel time.");
   } catch (error) {
-    console.log("getTravelTime error: ", error);
-    console.error("Error fetching travel time:", error);
-    throw error;
+    console.log("getTravelTimeAndDistance error: ", error);
+    return undefined;
   }
 }
 
@@ -174,24 +196,33 @@ export async function callCreatePackage(
   const month = now.getMonth() + 1;
   const nowTimestamp = now.getTime();
 
-  let estimatedDeliveryTimeInSeconds: number | undefined = undefined;
+  let estimatedDeliveryTimeInSeconds: number | null = null;
+  let estimatedDeliveryDistanceInMeters: number | null = null;
+
   if (
     packageData.address.coordinates?.latitude &&
     packageData.address.coordinates.longitude
   ) {
     const clientCoords = `${packageData.address.coordinates?.latitude},${packageData.address.coordinates?.longitude}`;
     const warehouseCoords = `${company.locations[0].coordinates.latitude},${company.locations[0].coordinates.longitude}`;
-    estimatedDeliveryTimeInSeconds = await getTravelTime(
+    const travelTimeResponse = await getTravelTimeAndDistance(
       warehouseCoords,
       clientCoords
     );
+    console.log("travelTimeResponse: ", travelTimeResponse);
+
+    if (travelTimeResponse) {
+      estimatedDeliveryTimeInSeconds = travelTimeResponse.time;
+      estimatedDeliveryDistanceInMeters = travelTimeResponse.distance;
+    }
   }
 
   try {
     const packageToUpload: Package = {
       scanId: packageData.packageId,
       packageName: packageData.packageName,
-      estimatedDeliveryTime: estimatedDeliveryTimeInSeconds,
+      estimatedDeliveryTimeInSeconds,
+      estimatedDeliveryDistanceInMeters,
       receiver: {
         name: packageData.receiverName,
         profileUrl: packageData.profileLink,
