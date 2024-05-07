@@ -96,8 +96,10 @@ export interface Package {
   packageName?: string;
   scanId: string;
   receiver: Customer;
-  estimatedDeliveryTimeInSeconds: number | null;
-  estimatedDeliveryDistanceInMeters: number | null;
+  estimatedDeliveryTimeInSeconds: number;
+  estimatedDeliveryDistanceInMeters: number;
+  googleNamingStandardOriginAddress: string;
+  googleNamingStandardDestinationAddress: string;
   packageDetails: {
     weight?: number;
     length?: number;
@@ -149,6 +151,8 @@ interface Duration {
 interface SimplifiedTravelTimeAndDistance {
   time: number;
   distance: number;
+  googleNamingStandardOriginAddress: string;
+  googleNamingStandardDestinationAddress: string;
 }
 
 async function getTravelTimeAndDistance(
@@ -158,7 +162,6 @@ async function getTravelTimeAndDistance(
   console.log("clientCoords: ", clientCoords);
   console.log("warehouseCoords: ", warehouseCoords);
   const url = `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${clientCoords}&origins=${warehouseCoords}&units=metric&key=${process.env.EXPO_PUBLIC_FIREBASE_API_KEY}`;
-  console.log("url: ", url);
   try {
     const response = await fetch(url);
     const data: GoogleDistanceApiResponse = await response.json();
@@ -170,6 +173,9 @@ async function getTravelTimeAndDistance(
       return {
         time: data.rows[0].elements[0].duration.value,
         distance: data.rows[0].elements[0].distance.value,
+        googleNamingStandardDestinationAddress:
+          data?.destinationAddresses?.[0] ?? null,
+        googleNamingStandardOriginAddress: data?.originAddresses?.[0] ?? null,
       } as SimplifiedTravelTimeAndDistance;
     } else {
       return undefined;
@@ -196,8 +202,10 @@ export async function callCreatePackage(
   const month = now.getMonth() + 1;
   const nowTimestamp = now.getTime();
 
-  let estimatedDeliveryTimeInSeconds: number | null = null;
-  let estimatedDeliveryDistanceInMeters: number | null = null;
+  let estimatedDeliveryTimeInSeconds: number = 0;
+  let estimatedDeliveryDistanceInMeters: number = 0;
+  let googleNamingStandardDestinationAddress: string = "";
+  let googleNamingStandardOriginAddress: string = "";
 
   if (
     packageData.address.coordinates?.latitude &&
@@ -214,6 +222,10 @@ export async function callCreatePackage(
     if (travelTimeResponse) {
       estimatedDeliveryTimeInSeconds = travelTimeResponse.time;
       estimatedDeliveryDistanceInMeters = travelTimeResponse.distance;
+      googleNamingStandardDestinationAddress =
+        travelTimeResponse.googleNamingStandardDestinationAddress;
+      googleNamingStandardOriginAddress =
+        travelTimeResponse.googleNamingStandardOriginAddress;
     }
   }
 
@@ -222,6 +234,8 @@ export async function callCreatePackage(
       scanId: packageData.packageId,
       packageName: packageData.packageName,
       estimatedDeliveryTimeInSeconds,
+      googleNamingStandardDestinationAddress,
+      googleNamingStandardOriginAddress,
       estimatedDeliveryDistanceInMeters,
       receiver: {
         name: packageData.receiverName,

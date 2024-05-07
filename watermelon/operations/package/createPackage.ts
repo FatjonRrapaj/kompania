@@ -66,6 +66,16 @@ export const createPackageFromFirebasePackage = async (
         newRecord.companyLocationDescription =
           firebasePackageObject.companyAddress?.description;
 
+        //maps api
+        newRecord.estimatedDeliveryTimeInSeconds =
+          firebasePackageObject.estimatedDeliveryTimeInSeconds;
+        newRecord.estimatedDeliveryDistanceInMeters =
+          firebasePackageObject.estimatedDeliveryDistanceInMeters;
+        newRecord.googleNamingStandardDestinationAddress =
+          firebasePackageObject.googleNamingStandardDestinationAddress;
+        newRecord.googleNamingStandardOriginAddress =
+          firebasePackageObject.googleNamingStandardOriginAddress;
+
         //package timeline
         newRecord.createdAtDate = firebasePackageObject.timeline?.createdAtDate;
         newRecord.postedAtDate = firebasePackageObject.timeline?.postedAtDate;

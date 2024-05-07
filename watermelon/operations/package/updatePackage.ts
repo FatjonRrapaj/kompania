@@ -78,6 +78,16 @@ export const updateExistingPackage = async (
         existingWatermelonPackage.companyLocationDescription =
           firebasePackageObject.companyAddress?.description;
 
+        //maps api
+        existingWatermelonPackage.estimatedDeliveryTimeInSeconds =
+          firebasePackageObject.estimatedDeliveryTimeInSeconds;
+        existingWatermelonPackage.estimatedDeliveryDistanceInMeters =
+          firebasePackageObject.estimatedDeliveryDistanceInMeters;
+        existingWatermelonPackage.googleNamingStandardDestinationAddress =
+          firebasePackageObject.googleNamingStandardDestinationAddress;
+        existingWatermelonPackage.googleNamingStandardOriginAddress =
+          firebasePackageObject.googleNamingStandardOriginAddress;
+
         //package timeline
         existingPackage.createdAtDate =
           firebasePackageObject.timeline?.createdAtDate;
