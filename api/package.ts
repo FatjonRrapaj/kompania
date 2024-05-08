@@ -122,8 +122,8 @@ export interface Package {
 }
 
 interface GoogleDistanceApiResponse {
-  destinationAddresses: string[];
-  originAddresses: string[];
+  destination_addresses: string[];
+  origin_addresses: string[];
   rows: DistanceMatrixRow[];
   status: string;
 }
@@ -172,8 +172,8 @@ async function getTravelTimeAndDistance(
         time: data.rows[0].elements[0].duration.value,
         distance: data.rows[0].elements[0].distance.value,
         googleNamingStandardDestinationAddress:
-          data?.destinationAddresses?.[0] ?? null,
-        googleNamingStandardOriginAddress: data?.originAddresses?.[0] ?? null,
+          data?.destination_addresses?.[0] ?? null,
+        googleNamingStandardOriginAddress: data?.origin_addresses?.[0] ?? null,
       } as SimplifiedTravelTimeAndDistance;
     } else {
       return undefined;
