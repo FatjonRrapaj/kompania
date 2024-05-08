@@ -79,14 +79,20 @@ export interface PackageFormData {
   isFragile: boolean;
 }
 
-type PackageLogAction = "created" | "edited" | "updated" | "deleted";
+type PackageLogAction =
+  | "created"
+  | "edited"
+  | "updated"
+  | "deleted"
+  | "accepted";
 
 export interface PackageLog {
   action: PackageLogAction;
   package?: Package;
   packageId?: string;
-  company: Company;
-  user: CompanyUserProfile;
+  company?: Company;
+  courier?: Courier;
+  user?: CompanyUserProfile;
   createdAt: number;
   oldPackageData?: Package;
 }
