@@ -96,6 +96,7 @@ const CreatePackage = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
+          keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 24 }}
         >

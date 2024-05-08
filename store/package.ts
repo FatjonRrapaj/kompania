@@ -58,11 +58,7 @@ const initialState: PackageState = {
 const syncNewPackagesWDb = async (newPackages: Package[]) => {
   newPackages.forEach(async (firebasePackage) => {
     const existingPackageInDb = await findPackage(firebasePackage.uid!);
-    if (existingPackageInDb?.receiverName) {
-      console.log(
-        "existingPackageInDb already exists.. ",
-        existingPackageInDb.receiverName
-      );
+    if (existingPackageInDb) {
       //package already exists, update it.
       await updateExistingPackage(existingPackageInDb, firebasePackage);
     } else {

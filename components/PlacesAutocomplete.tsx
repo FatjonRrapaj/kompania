@@ -80,7 +80,6 @@ const PlacesAutoComplete = forwardRef(
                 disableScroll={true}
                 debounce={600}
                 fetchDetails={true}
-                keyboardShouldPersistTaps="never"
                 styles={{
                   textInputContainer:
                     isFocused || value
