@@ -159,9 +159,7 @@ async function getTravelTimeAndDistance(
   warehouseCoords: string,
   clientCoords: string
 ): Promise<SimplifiedTravelTimeAndDistance | undefined> {
-  console.log("clientCoords: ", clientCoords);
-  console.log("warehouseCoords: ", warehouseCoords);
-  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${clientCoords}&origins=${warehouseCoords}&units=metric&key=${process.env.EXPO_PUBLIC_FIREBASE_API_KEY}`;
+  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${clientCoords}&language=sq&origins=${warehouseCoords}&units=metric&key=${process.env.EXPO_PUBLIC_FIREBASE_API_KEY}`;
   try {
     const response = await fetch(url);
     const data: GoogleDistanceApiResponse = await response.json();
