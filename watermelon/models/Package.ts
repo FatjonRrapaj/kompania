@@ -24,13 +24,13 @@ class PackageModel extends Model {
   @field("packageTimeLineStatus") packageTimeLineStatus!: string;
 
   @field("estimatedDeliveryTimeInSeconds")
-  estimatedDeliveryTimeInSeconds!: number;
+  estimatedDeliveryTimeInSeconds?: number;
   @field("estimatedDeliveryDistanceInMeters")
-  estimatedDeliveryDistanceInMeters!: number;
+  estimatedDeliveryDistanceInMeters?: number;
   @field("googleNamingStandardDestinationAddress")
-  googleNamingStandardDestinationAddress!: string;
+  googleNamingStandardDestinationAddress?: string;
   @field("googleNamingStandardOriginAddress")
-  googleNamingStandardOriginAddress!: string;
+  googleNamingStandardOriginAddress?: string;
 
   @field("createdAtDate") createdAtDate?: number;
   @field("postedAtDate") postedAtDate?: number;

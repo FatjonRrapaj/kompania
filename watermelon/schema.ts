@@ -25,6 +25,28 @@ const schema = appSchema({
         { name: "packageStatus", type: "string" },
         { name: "packageTimeLineStatus", type: "string" },
 
+        {
+          name: "estimatedDeliveryTimeInSeconds",
+          type: "number",
+          isOptional: true,
+        },
+
+        {
+          name: "estimatedDeliveryDistanceInMeters",
+          type: "number",
+          isOptional: true,
+        },
+        {
+          name: "googleNamingStandardDestinationAddress",
+          type: "string",
+          isOptional: true,
+        },
+        {
+          name: "googleNamingStandardOriginAddress",
+          type: "string",
+          isOptional: true,
+        },
+
         { name: "createdAtDate", type: "number" },
         { name: "postedAtDate", type: "number" },
         { name: "acceptedAtDate", type: "number", isOptional: true },

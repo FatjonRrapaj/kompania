@@ -80,6 +80,7 @@ const PlacesAutoComplete = forwardRef(
                 disableScroll={true}
                 debounce={600}
                 fetchDetails={true}
+                keyboardShouldPersistTaps="never"
                 styles={{
                   textInputContainer:
                     isFocused || value
@@ -109,6 +110,7 @@ const PlacesAutoComplete = forwardRef(
                   //TODO: add form vaildation to prevent the decscription being too short
                   //Description being too short means that it can be just a city name or smth
                   //or maybe just let it be
+                  console.log("????", data);
                   const description = data.description;
                   const coordinates = new GeoPoint(
                     detail?.geometry.location.lat ?? -1,
