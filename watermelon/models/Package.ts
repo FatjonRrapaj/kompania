@@ -54,6 +54,7 @@ class PackageModel extends Model {
   @field("receiverPhoneNumber") receiverPhoneNumber?: string;
   @field("notesForReceiver") notesForReceiver?: string;
 
+  @field("companyId") companyId?: string;
   @field("companyLocationLat") companyLocationLat?: number;
   @field("companyLocationLng") companyLocationLng?: number;
   @field("companyLocationDescription") companyLocationDescription?: string;

@@ -70,13 +70,15 @@ export const updateExistingPackage = async (
         existingWatermelonPackage.cashOnDelivery =
           firebasePackageObject.cashOnDelivery;
         existingPackage.currencyShortValue = firebasePackageObject.currency;
-        //package company location
+
+        //package company
         existingWatermelonPackage.companyLocationLat =
           firebasePackageObject.companyAddress?.coordinates.latitude;
         existingWatermelonPackage.companyLocationLng =
           firebasePackageObject.companyAddress?.coordinates.longitude;
         existingWatermelonPackage.companyLocationDescription =
           firebasePackageObject.companyAddress?.description;
+        existingWatermelonPackage.companyId = firebasePackageObject.companyId;
 
         //maps api
         existingWatermelonPackage.estimatedDeliveryTimeInSeconds =

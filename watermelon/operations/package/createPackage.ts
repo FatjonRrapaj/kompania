@@ -58,13 +58,14 @@ export const createPackageFromFirebasePackage = async (
         newRecord.cashOnDelivery = firebasePackageObject.cashOnDelivery;
         newRecord.currencyShortValue = firebasePackageObject.currency;
 
-        //package company location
+        //package company
         newRecord.companyLocationLat =
           firebasePackageObject.companyAddress?.coordinates.latitude;
         newRecord.companyLocationLng =
           firebasePackageObject.companyAddress?.coordinates.longitude;
         newRecord.companyLocationDescription =
           firebasePackageObject.companyAddress?.description;
+        newRecord.companyId = firebasePackageObject.companyId;
 
         //maps api
         newRecord.estimatedDeliveryTimeInSeconds =

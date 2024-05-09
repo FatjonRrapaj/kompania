@@ -73,6 +73,7 @@ const schema = appSchema({
         { name: "receiverPhoneNumber", type: "string", isOptional: true },
         { name: "notesForReceiver", type: "string", isOptional: true },
 
+        { name: "companyId", type: "string", isOptional: true },
         { name: "companyLocationLat", type: "number", isOptional: true },
         { name: "companyLocationLng", type: "number", isOptional: true },
         {
