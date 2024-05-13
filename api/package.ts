@@ -84,7 +84,8 @@ type PackageLogAction =
   | "edited"
   | "updated"
   | "deleted"
-  | "accepted";
+  | "accepted"
+  | "delivered";
 
 export interface PackageLog {
   action: PackageLogAction;
