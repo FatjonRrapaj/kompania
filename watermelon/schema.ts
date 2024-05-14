@@ -94,6 +94,7 @@ const schema = appSchema({
         { name: "addressDescription", type: "string", isOptional: true },
         { name: "notes", type: "string", isOptional: true },
         { name: "profileLink", type: "string", isOptional: true },
+        { name: "createdAtDate", type: "number", isOptional: true },
       ],
     }),
   ],

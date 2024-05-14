@@ -244,7 +244,7 @@ export async function callCreatePackage(
   };
 
   //TODO: customer creation...
-  //Check for exising customer with the same phone numberrrrr
+  //Check for exising customer with the same phone number
 
   try {
     const packageToUpload: Package = {

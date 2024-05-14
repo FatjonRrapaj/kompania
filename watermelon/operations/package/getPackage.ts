@@ -1,4 +1,3 @@
-import { Package } from "@/api/package";
 import watermelonDB from "@/watermelon";
 import PackageModel from "@/watermelon/models/Package";
 import { Q } from "@nozbe/watermelondb";
@@ -31,7 +30,6 @@ export const getLocalLastUpdatedAt = async () => {
 export const observePackages = () =>
   packagesCollection.query(Q.sortBy("updatedAtDate", Q.desc)).observe();
 
-// `${Q.sanitizeLikeString("jas")}%`
 export const observeAndFilterPackages = (searchTerm: string) =>
   packagesCollection
     .query(
