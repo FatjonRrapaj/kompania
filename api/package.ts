@@ -19,7 +19,6 @@ import {
   Company,
   CustomerAddress,
 } from "./company";
-import { mockPackageObject } from "@/mocks/packagesMock";
 import { CompanyUserProfile } from "./auth";
 import generateCustomError from "@/utils/customError";
 import PackageModel from "@/watermelon/models/Package";
@@ -578,25 +577,4 @@ export async function callDeletePackage(
     );
     await batch.commit();
   } catch (error) {}
-}
-
-export type PreviousMonths = 2 | 1 | 0;
-
-export async function pushMockPackages(
-  companyID: string,
-  previousMonths: PreviousMonths = 0
-) {
-  const companyRef = getCompanyRef(companyID);
-  const packagesRef = collection(companyRef, Collections.packages);
-
-  const currentDate = new Date();
-  currentDate.setMonth(currentDate.getMonth() - previousMonths);
-
-  const mockPackageObjectWithUpdatedAt = { ...mockPackageObject };
-  mockPackageObjectWithUpdatedAt.timeline!.updatedAtDate =
-    currentDate.getTime();
-
-  for (let i = 0; i < 1; i++) {
-    await addDoc(packagesRef, mockPackageObjectWithUpdatedAt);
-  }
 }
