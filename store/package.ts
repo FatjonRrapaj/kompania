@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { Immutable } from "immer";
-import { Router, router } from "expo-router";
+import { Router } from "expo-router";
 
 import {
   Package,
