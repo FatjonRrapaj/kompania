@@ -12,7 +12,7 @@ const AuthStateChangeListener = () => {
   const goToTabs = () => {
     const state = getState?.();
     const screenName = state?.routes?.[state?.index]?.name as string;
-    if (!screenName.includes("tabs")) {
+    if (!screenName?.includes("tabs")) {
       router.replace("/(tabs)/(home)");
     }
   };

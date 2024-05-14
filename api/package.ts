@@ -222,7 +222,6 @@ export async function callCreatePackage(
       warehouseCoords,
       clientCoords
     );
-    console.log("travelTimeResponse: ", travelTimeResponse);
 
     if (travelTimeResponse) {
       estimatedDeliveryTimeInSeconds = travelTimeResponse.time;
@@ -234,6 +233,19 @@ export async function callCreatePackage(
     }
   }
 
+  const receiver: Customer = {
+    name: packageData.receiverName,
+    profileUrl: packageData.profileLink,
+    phoneNumber: packageData.phoneNumber,
+    notes: packageData.notesForReceiver,
+    receiverLocation: {
+      description: packageData.address.description,
+      coordinates: packageData.address.coordinates,
+    },
+  };
+
+  //TODO: customer creation...
+
   try {
     const packageToUpload: Package = {
       scanId: packageData.packageId,
@@ -243,14 +255,7 @@ export async function callCreatePackage(
       googleNamingStandardOriginAddress,
       estimatedDeliveryDistanceInMeters,
       receiver: {
-        name: packageData.receiverName,
-        profileUrl: packageData.profileLink,
-        phoneNumber: packageData.phoneNumber,
-        notes: packageData.notesForReceiver,
-        receiverLocation: {
-          description: packageData.address.description,
-          coordinates: packageData.address.coordinates,
-        },
+        ...receiver,
       },
       packageDetails: {
         canBeOpened: packageData.canBeOpened,
