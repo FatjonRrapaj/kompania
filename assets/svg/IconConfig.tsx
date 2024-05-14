@@ -43,6 +43,10 @@ import Search from "./search.svg";
 //Navigation
 import ArrowLeft from "./arrow-left.svg";
 import ArrowDown from "./arrow-down.svg";
+import Home from "./home.svg";
+import PackageNav from "./packageNav.svg";
+import Notifications from "./notifications.svg";
+import Settings from "./settings.svg";
 
 const IconConfig = {
   SMS,
@@ -81,6 +85,10 @@ const IconConfig = {
   NoPackage,
   ArrowLeft,
   ArrowDown,
+  Home,
+  PackageNav,
+  Notifications,
+  Settings,
 };
 
 export default IconConfig;

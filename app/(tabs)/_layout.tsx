@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import { useSegments } from "expo-router";
@@ -6,6 +6,7 @@ import { useSegments } from "expo-router";
 import Colors, { primary } from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import IconConfig from "@/assets/svg/IconConfig";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -25,6 +26,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: primary[500],
         tabBarInactiveTintColor: Colors[colorScheme ?? "light"].tabIconStroke,
         headerShown: useClientOnlyValue(false, true),
+        tabBarStyle: { height: 90 },
       }}
     >
       <Tabs.Screen
@@ -32,8 +34,9 @@ export default function TabLayout() {
         options={{
           title: "",
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }) => <IconConfig.Home fill={color} />,
           tabBarStyle: {
+            height: 90,
             display: segment[2] === "createPackage" ? "none" : "flex",
           },
         }}
@@ -43,9 +46,7 @@ export default function TabLayout() {
         options={{
           title: "",
           headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="lightbulb-o" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <IconConfig.PackageNav stroke={color} />,
         }}
       />
       <Tabs.Screen
@@ -64,7 +65,9 @@ export default function TabLayout() {
         options={{
           title: "",
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="bell" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <IconConfig.Notifications stroke={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -72,7 +75,7 @@ export default function TabLayout() {
         options={{
           title: "",
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="wrench" color={color} />,
+          tabBarIcon: ({ color }) => <IconConfig.Settings stroke={color} />,
         }}
       />
     </Tabs>
