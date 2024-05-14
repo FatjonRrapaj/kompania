@@ -8,7 +8,11 @@ import { gray, primary } from "@/constants/Colors";
 import { Body2, Caption } from "@/components/StyledText";
 import en from "@/translations/en";
 import IconConfig from "@/assets/svg/IconConfig";
-import { getDateFromTimestamp, getHHMMfromTimestamp } from "@/utils/date";
+import {
+  getDDMMfromTimestamp,
+  getDateFromTimestamp,
+  getHHMMfromTimestamp,
+} from "@/utils/date";
 
 interface PackageTimelineCirclesProps {
   isActive: boolean;
@@ -41,7 +45,8 @@ const PackageTimelineCircles = ({
       <View style={styles.circlesTimeContainer}>
         {timestamp ? (
           <Caption style={{ color: gray[500], position: "absolute", left: 8 }}>
-            {getHHMMfromTimestamp(timestamp)}
+            {getDDMMfromTimestamp(timestamp)}
+            {","} {getHHMMfromTimestamp(timestamp)}
           </Caption>
         ) : null}
         {actionDescription ? (
@@ -70,7 +75,7 @@ const PackageTimelineVertical = ({
     let timelineArr = Object.keys(timeline)
       .filter((k) => k !== "createdAtDate")
       .filter((k) => !!timeline[k])
-      .sort((t1, t2) => ((timeline[t2] as number) - timeline[t1]) as number)
+      .sort((t1, t2) => ((timeline[t1] as number) - timeline[t2]) as number)
       .map((k) => ({
         timestamp: timeline[k],
         action: translate(k as keyof typeof en.package),

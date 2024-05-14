@@ -9,7 +9,7 @@ export default function Packages() {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   return (
-    <View style={globalStyles.screenContainer}>
+    <View style={[globalStyles.screenContainer, { paddingBottom: 0 }]}>
       <DebouncedTextInput
         onDebouncedTextChange={(text) => {
           setSearchTerm(text);

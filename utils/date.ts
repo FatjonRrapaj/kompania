@@ -28,3 +28,10 @@ export const getHHMMfromTimestamp = (timestamp: number) => {
   const timeString = `${hours}:${minutes.toString().padStart(2, "0")}`;
   return timeString;
 };
+export const getDDMMfromTimestamp = (timestamp: number) => {
+  const date = new Date(timestamp);
+  const dateOfMonth = date.getDate();
+  const month = date.getMonth() + 1;
+  const DDMM = `${dateOfMonth}/${month}`;
+  return DDMM;
+};

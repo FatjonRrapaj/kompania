@@ -26,7 +26,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: primary[500],
         tabBarInactiveTintColor: Colors[colorScheme ?? "light"].tabIconStroke,
         headerShown: useClientOnlyValue(false, true),
-        tabBarStyle: { height: 90 },
+        tabBarStyle: { height: 60 },
       }}
     >
       <Tabs.Screen
@@ -36,7 +36,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ color }) => <IconConfig.Home fill={color} />,
           tabBarStyle: {
-            height: 90,
+            height: 60,
             display: segment[2] === "createPackage" ? "none" : "flex",
           },
         }}

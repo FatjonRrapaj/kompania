@@ -33,7 +33,6 @@ const PackagesListComponent = ({
       data={searchTerm ? filteredPackages : packages}
       estimatedItemSize={packages?.length}
       keyExtractor={(item) => item.id}
-      ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
       renderItem={({ item: packageObject }) => (
         <PackageItemLarge packageObject={packageObject} />
       )}
