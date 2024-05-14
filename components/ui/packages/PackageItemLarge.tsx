@@ -27,7 +27,7 @@ const PackageItemLargeComponent = ({
         router.push(`/(tabs)/(package)/${packageObject.id}`);
       }}
     >
-      <View style={[styles.horizontalContainer, { marginBottom: 4 }]}>
+      <View style={[styles.horizontalContainer, { marginBottom: 16 }]}>
         <Body2>{i18next.t("package:client")}</Body2>
         <Body1Bold>{packageObject.receiverName}</Body1Bold>
       </View>
