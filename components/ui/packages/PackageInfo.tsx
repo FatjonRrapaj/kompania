@@ -202,27 +202,33 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
             }}
           />
         )}
-        <GiantButton
-          style={{ marginTop: 40, borderColor: dark[500] }}
-          icon="Edit"
-          type="outline"
-          title={translate("edit")}
-          onPress={() => {
-            usePackageStore.getState().setEditingPackage(packageObject);
-            router.push("/(tabs)/(package)/edit");
-          }}
-        />
-        <GiantButton
-          loading={loadingDeletePackage}
-          style={{ marginTop: 16, borderColor: tertiary[500] }}
-          textStyle={{ color: tertiary[500] }}
-          icon="Delete"
-          type="outline"
-          title={translate("delete")}
-          onPress={() => {
-            setDeletePackageModalVisible(true);
-          }}
-        />
+        {(packageObject.packageTimeLineStatus === "available" ||
+          packageObject.packageTimeLineStatus === "accepted") && (
+          <GiantButton
+            style={{ marginTop: 40, borderColor: dark[500] }}
+            icon="Edit"
+            type="outline"
+            title={translate("edit")}
+            onPress={() => {
+              usePackageStore.getState().setEditingPackage(packageObject);
+              router.push("/(tabs)/(package)/edit");
+            }}
+          />
+        )}
+        {(packageObject.packageTimeLineStatus === "available" ||
+          packageObject.packageTimeLineStatus === "accepted") && (
+          <GiantButton
+            loading={loadingDeletePackage}
+            style={{ marginTop: 16, borderColor: tertiary[500] }}
+            textStyle={{ color: tertiary[500] }}
+            icon="Delete"
+            type="outline"
+            title={translate("delete")}
+            onPress={() => {
+              setDeletePackageModalVisible(true);
+            }}
+          />
+        )}
       </ScrollView>
       {deletePackageModalVisible && (
         <DeletePackageConfirmationModal

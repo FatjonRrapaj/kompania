@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
+import { KeyboardAvoidingView, Platform } from "react-native";
 import { useForm } from "react-hook-form";
 
 import { View, ScrollView } from "@/components/Themed";
