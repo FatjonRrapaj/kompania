@@ -1,11 +1,10 @@
 import { useTranslation } from "react-i18next";
 
 import validateField from "@/utils/form";
-import TextInput, { TextInputType } from "@/components/Form/TextInput";
-import { useEffect, useRef, useState } from "react";
+import { TextInputType } from "@/components/Form/TextInput";
+import { useEffect, useRef } from "react";
 import en from "@/translations/en";
 import { UseFormResetField, UseFormSetValue } from "react-hook-form";
-import { Customer } from "@/api/company";
 import { PackageFormData } from "@/api/package";
 import CustomerModel from "@/watermelon/models/Customer";
 import { GeoPoint } from "firebase/firestore";
@@ -76,7 +75,6 @@ function useCreatePackageFields({
     t(`createPackage:${key}`);
   const phoneNumberRef = useRef(null);
   const profileLinkRef = useRef(null);
-  //TODO: add google maps autocomplete here later as an option.
   const addressRef = useRef(null);
   const clientNotesRef = useRef(null);
   const packageIdRef = useRef(null);
@@ -105,7 +103,7 @@ function useCreatePackageFields({
 
     setValue("receiverName", name);
     setValue("phoneNumber", phoneNumber.toString());
-    if (addressDescription && lat && lng) {
+    if (addressDescription) {
       setValue("address", {
         description: addressDescription,
         coordinates: new GeoPoint(lat!, lng!),

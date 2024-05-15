@@ -19,7 +19,7 @@ import { Body1, Body2, Caption, Label } from "../StyledText";
 import IconConfig from "@/assets/svg/IconConfig";
 
 import Pressable from "../Pressable";
-import { GiantButton, MediumButton, SmallButton } from "../StyledButton";
+import { GiantButton } from "../StyledButton";
 import i18next from "i18next";
 
 interface PasswordVisibilityProps {
@@ -195,11 +195,7 @@ const TextInput = forwardRef(
         }) => {
           return (
             <View style={containerStyle}>
-              {value && (
-                <Label style={{ position: "absolute", top: -16 }}>
-                  {placeholder}
-                </Label>
-              )}
+              {value && <Label style={styles.label}>{placeholder}</Label>}
               <View
                 style={[
                   styles.inputContainer,
@@ -243,28 +239,12 @@ const TextInput = forwardRef(
               hasAutoSuggest &&
               !hasSelectedSuggestion ? (
                 <>
-                  <View
-                    style={{
-                      marginHorizontal: 2,
-                      elevation: 3,
-                      shadowColor: dark[500],
-                      backgroundColor: white[500],
-                      shadowOffset: { width: 0, height: 1 },
-                      shadowOpacity: 0.2,
-                      shadowRadius: 2,
-                      borderRadius: 8,
-                      marginVertical: 8,
-                    }}
-                  >
+                  <View style={styles.menuContainer}>
                     {autoSuggestData?.length &&
                       autoSuggestData.map((item: any, index) => (
                         <Pressable
                           key={index}
-                          style={{
-                            padding: 16,
-                            position: "relative",
-                            gap: 4,
-                          }}
+                          style={styles.menuItem}
                           onPress={() => {
                             onAutoSuggestResultClicked(item.value);
                             setHasSelectedSuggestion(true);
@@ -283,16 +263,7 @@ const TextInput = forwardRef(
                           </View>
                           <Caption>{item.text3}</Caption>
                           {autoSuggestData?.length - 1 !== index && (
-                            <View
-                              style={{
-                                position: "absolute",
-                                bottom: 0,
-                                left: 16,
-                                right: 16,
-                                height: 1,
-                                backgroundColor: gray[80],
-                              }}
-                            />
+                            <View style={styles.menuItemDivider} />
                           )}
                         </Pressable>
                       ))}
@@ -300,10 +271,7 @@ const TextInput = forwardRef(
                   <GiantButton
                     type="outline"
                     title={i18next.t("form:closeSuggestions")}
-                    style={{
-                      borderColor: dark[500],
-                      marginTop: 8,
-                    }}
+                    style={styles.menuClearBtn}
                     onPress={() => {
                       setSearchTerm("");
                     }}
@@ -311,7 +279,7 @@ const TextInput = forwardRef(
                 </>
               ) : null}
               {error?.message ? (
-                <Label style={styles.label}>{error?.message}</Label>
+                <Label style={styles.error}>{error?.message}</Label>
               ) : null}
             </View>
           );
@@ -341,6 +309,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: 20,
   },
+  label: { position: "absolute", top: -16 },
   input: {
     height: 56,
     alignSelf: "stretch",
@@ -367,7 +336,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
   },
-  label: {
+  error: {
     marginTop: 2,
     alignSelf: "flex-end",
     color: tertiary[500],
@@ -375,5 +344,33 @@ const styles = StyleSheet.create({
   textArea: {
     height: 96,
     paddingTop: 8,
+  },
+  menuContainer: {
+    marginHorizontal: 2,
+    elevation: 3,
+    shadowColor: dark[500],
+    backgroundColor: white[500],
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    borderRadius: 8,
+    marginVertical: 8,
+  },
+  menuItem: {
+    padding: 16,
+    position: "relative",
+    gap: 4,
+  },
+  menuItemDivider: {
+    position: "absolute",
+    bottom: 0,
+    left: 16,
+    right: 16,
+    height: 1,
+    backgroundColor: gray[80],
+  },
+  menuClearBtn: {
+    borderColor: dark[500],
+    marginTop: 8,
   },
 });

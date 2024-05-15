@@ -1,5 +1,4 @@
 import {
-  addDoc,
   collection,
   doc,
   getDocs,
@@ -245,8 +244,6 @@ export async function callCreatePackage(
       coordinates: packageData.address.coordinates,
     },
   };
-
-  console.log("receiver: ", receiver);
 
   try {
     const packageToUpload: Package = {

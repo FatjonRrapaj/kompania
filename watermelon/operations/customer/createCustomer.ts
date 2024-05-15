@@ -1,5 +1,4 @@
 import { Customer } from "@/api/company";
-import { Package } from "@/api/package";
 import watermelonDB from "@/watermelon";
 import CustomerModel from "@/watermelon/models/Customer";
 
