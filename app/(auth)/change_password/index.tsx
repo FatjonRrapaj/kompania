@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { router } from "expo-router";
 
 import { View } from "@/components/Themed";
-import { Body1Bold, Body2, H5Bold } from "@/components/StyledText";
 import globalStyles from "@/components/globalStyles";
 import { gray, primary } from "@/constants/Colors";
 import en from "@/translations/en";
@@ -14,7 +13,7 @@ import TextInput from "@/components/Form/TextInput";
 
 import { GiantButton } from "@/components/StyledButton";
 import useAuthStore from "@/store/auth";
-import { ChangePasswordInfo, UserLoginInfo } from "@/api/auth";
+import { ChangePasswordInfo } from "@/api/auth";
 import useChangePasswordFields from "@/components/ui/login/useChangePasswordFields";
 import PageHeader from "@/components/PageHeader";
 

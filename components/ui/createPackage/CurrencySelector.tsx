@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import Pressable from "@/components/Pressable";
 import { H6Bold } from "@/components/StyledText";
 import { dark, gray, primary } from "@/constants/Colors";
+import { CurrencyShortValue } from "@/api/package";
 
 interface CurrencySelectorProps {
   currency: CurrencyShortValue;

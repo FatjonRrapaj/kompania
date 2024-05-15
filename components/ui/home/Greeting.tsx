@@ -6,10 +6,12 @@ import { useTranslation } from "react-i18next";
 import IconConfig from "@/assets/svg/IconConfig";
 import { Body1, Body1Bold } from "../../StyledText";
 import en from "@/translations/en";
+import useAuthStore from "@/store/auth";
 
 const GreetingComponent = () => {
   const { t } = useTranslation();
   const translate = (key: keyof typeof en.home) => t(`home:${key}`);
+  const name = useAuthStore((state) => state.profile?.firstName);
 
   const [greetingIconKey, setGreetingIconKey] =
     useState<keyof typeof IconConfig>("Sun");
@@ -36,13 +38,12 @@ const GreetingComponent = () => {
 
   const GreetingIcon = IconConfig[greetingIconKey];
   //TODO: link user name here
-  const userName = "Fatjon";
 
   return (
     <View style={styles.container}>
       <GreetingIcon />
       <Body1>{greetingMessage}</Body1>
-      <Body1Bold>{userName}</Body1Bold>
+      <Body1Bold>{name}</Body1Bold>
     </View>
   );
 };
