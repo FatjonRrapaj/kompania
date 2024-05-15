@@ -34,6 +34,7 @@ export default {
     mustBeAMaximum: "must be a maximum of",
     doesNotMatch: "does not match",
     isInvalid: "is invalid",
+    closeSuggestions: "Close Suggestions",
   },
   changePassword: {
     oldPasswordPlaceholder: "Enter your old password",

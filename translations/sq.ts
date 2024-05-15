@@ -34,6 +34,7 @@ export default {
     mustBeAMaximum: "duhet të jetë maksimumi",
     doesNotMatch: "nuk përputhet",
     isInvalid: "nuk është i saktë",
+    closeSuggestions: "Hiqi Sugjerimet",
   },
   changePassword: {
     oldPasswordPlaceholder: "Vendos fjalëkalimin egzistues",

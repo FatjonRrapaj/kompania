@@ -35,29 +35,29 @@ const CreatePackage = () => {
     setValue,
     formState: { isValid },
   } = useForm<PackageFormData>({
-    defaultValues: {
-      receiverName: "Fatjon Rrapaj",
-      phoneNumber: "0685919978",
-      profileLink: "http://www.google.com",
-      address: {
-        description: "Rruga Don Bosko, kullat hawaiii",
-        coordinates: {
-          latitude: 0,
-          longitude: 0,
-        },
-      },
-      notesForReceiver: "E do shpejte",
-      packageId: "8123129312",
-      packageName: "Pako e kuqe",
-      packageWeight: "2",
-      packageWidth: "3",
-      packageLength: "4",
-      packageHeight: "5",
-      paymentAmount: "2000",
-      shippingCost: "300",
-      cashOnDelivery: "2300",
-      notesForPackage: "Kujdes se thyhett",
-    },
+    // defaultValues: {
+    //   receiverName: "Fatjon Rrapaj",
+    //   phoneNumber: "0685919978",
+    //   profileLink: "http://www.google.com",
+    //   address: {
+    //     description: "Rruga Don Bosko, kullat hawaiii",
+    //     coordinates: {
+    //       latitude: 0,
+    //       longitude: 0,
+    //     },
+    //   },
+    //   notesForReceiver: "E do shpejte",
+    //   packageId: "8123129312",
+    //   packageName: "Pako e kuqe",
+    //   packageWeight: "2",
+    //   packageWidth: "3",
+    //   packageLength: "4",
+    //   packageHeight: "5",
+    //   paymentAmount: "2000",
+    //   shippingCost: "300",
+    //   cashOnDelivery: "2300",
+    //   notesForPackage: "Kujdes se thyhett",
+    // },
   });
 
   const [isStandardPackage, setIsStandardPackage] = useState<boolean>(true);

@@ -176,7 +176,7 @@ export function SmallButton(props: StyledButtonProps) {
   return (
     <MediumButton
       {...props}
-      style={styles.small}
+      style={[styles.small, props.style as any]}
       textStyle={{ fontSize: 12 }}
       iconContainerStyle={styles.iconContainerSmall}
     />

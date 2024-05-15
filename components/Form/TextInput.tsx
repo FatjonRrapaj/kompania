@@ -19,6 +19,8 @@ import { Body1, Body2, Caption, Label } from "../StyledText";
 import IconConfig from "@/assets/svg/IconConfig";
 
 import Pressable from "../Pressable";
+import { GiantButton, MediumButton, SmallButton } from "../StyledButton";
+import i18next from "i18next";
 
 interface PasswordVisibilityProps {
   isVisible?: boolean;
@@ -150,10 +152,8 @@ const TextInput = forwardRef(
     const getSearchResults = async (searchTerm: string) => {
       try {
         const results = await autoSuggestFn(searchTerm);
-        console.log("res: ", results);
-        const autoSuggestResutls = results
+        const autoSuggestResults = results
           .map((result) => {
-            console.log("result: ", result);
             if (
               !!result[autoSuggestMapper.text1] &&
               !!result[autoSuggestMapper.text2] &&
@@ -170,13 +170,15 @@ const TextInput = forwardRef(
             }
           })
           .filter((result) => result);
-        setAutoSuggestData(autoSuggestResutls as any);
+        setAutoSuggestData(autoSuggestResults as any);
       } catch {}
     };
 
     useEffect(() => {
       if (searchTerm?.length > 2) {
         getSearchResults(searchTerm);
+      } else if (searchTerm === "") {
+        setAutoSuggestData([]);
       }
     }, [searchTerm]);
 
@@ -240,60 +242,73 @@ const TextInput = forwardRef(
               {autoSuggestData?.length &&
               hasAutoSuggest &&
               !hasSelectedSuggestion ? (
-                <View
-                  style={{
-                    marginHorizontal: 2,
-                    elevation: 3,
-                    shadowColor: dark[500],
-                    backgroundColor: white[500],
-                    shadowOffset: { width: 0, height: 1 },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 2,
-                    borderRadius: 8,
-                    marginVertical: 8,
-                  }}
-                >
-                  {autoSuggestData?.length &&
-                    autoSuggestData.map((item: any, index) => (
-                      <Pressable
-                        key={item.uid}
-                        style={{
-                          padding: 16,
-                          position: "relative",
-                          gap: 4,
-                        }}
-                        onPress={() => {
-                          onAutoSuggestResultClicked(item);
-                          setHasSelectedSuggestion(true);
-                          setAutoSuggestData([]);
-                        }}
-                      >
-                        <View
+                <>
+                  <View
+                    style={{
+                      marginHorizontal: 2,
+                      elevation: 3,
+                      shadowColor: dark[500],
+                      backgroundColor: white[500],
+                      shadowOffset: { width: 0, height: 1 },
+                      shadowOpacity: 0.2,
+                      shadowRadius: 2,
+                      borderRadius: 8,
+                      marginVertical: 8,
+                    }}
+                  >
+                    {autoSuggestData?.length &&
+                      autoSuggestData.map((item: any, index) => (
+                        <Pressable
+                          key={index}
                           style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
+                            padding: 16,
+                            position: "relative",
+                            gap: 4,
+                          }}
+                          onPress={() => {
+                            onAutoSuggestResultClicked(item.value);
+                            setHasSelectedSuggestion(true);
+                            setAutoSuggestData([]);
                           }}
                         >
-                          <Body1>{item.text1}</Body1>
-                          <Body2>{item.text2}</Body2>
-                        </View>
-                        <Caption>{item.text3}</Caption>
-                        {autoSuggestData?.length - 1 !== index && (
                           <View
                             style={{
-                              position: "absolute",
-                              bottom: 0,
-                              left: 16,
-                              right: 16,
-                              height: 1,
-                              backgroundColor: gray[80],
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              alignItems: "center",
                             }}
-                          />
-                        )}
-                      </Pressable>
-                    ))}
-                </View>
+                          >
+                            <Body1>{item.text1}</Body1>
+                            <Body2>{item.text2}</Body2>
+                          </View>
+                          <Caption>{item.text3}</Caption>
+                          {autoSuggestData?.length - 1 !== index && (
+                            <View
+                              style={{
+                                position: "absolute",
+                                bottom: 0,
+                                left: 16,
+                                right: 16,
+                                height: 1,
+                                backgroundColor: gray[80],
+                              }}
+                            />
+                          )}
+                        </Pressable>
+                      ))}
+                  </View>
+                  <GiantButton
+                    type="outline"
+                    title={i18next.t("form:closeSuggestions")}
+                    style={{
+                      borderColor: dark[500],
+                      marginTop: 8,
+                    }}
+                    onPress={() => {
+                      setSearchTerm("");
+                    }}
+                  />
+                </>
               ) : null}
               {error?.message ? (
                 <Label style={styles.label}>{error?.message}</Label>
