@@ -26,7 +26,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: primary[500],
         tabBarInactiveTintColor: Colors[colorScheme ?? "light"].tabIconStroke,
         headerShown: useClientOnlyValue(false, true),
-        tabBarStyle: { height: 60 },
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tabs.Screen
@@ -35,10 +35,11 @@ export default function TabLayout() {
           title: "",
           headerShown: false,
           tabBarIcon: ({ color }) => <IconConfig.Home fill={color} />,
-          tabBarStyle: {
-            height: 60,
-            display: segment[2] === "createPackage" ? "none" : "flex",
-          },
+          // tabBarStyle: {
+          //   // height: segment[2] === "createPackage" ? 0 : 60,
+          //   // opacity: segment[2] === "createPackage" ? 0 : 1,
+          //   // // display: segment[2] === "createPackage" ? "hidden" : "flex",
+          // },
         }}
       />
       <Tabs.Screen

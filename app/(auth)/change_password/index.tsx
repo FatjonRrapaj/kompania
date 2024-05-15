@@ -1,9 +1,7 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Control, SubmitHandler, useForm } from "react-hook-form";
-import { FontAwesome } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import { router } from "expo-router";
 
 import { View } from "@/components/Themed";
 import globalStyles from "@/components/globalStyles";
