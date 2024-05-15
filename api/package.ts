@@ -24,6 +24,7 @@ import { CompanyUserProfile } from "./auth";
 import generateCustomError from "@/utils/customError";
 import PackageModel from "@/watermelon/models/Package";
 import { checkForExistingCustomer } from "@/watermelon/operations/customer/getCustomer";
+import CustomerModel from "@/watermelon/models/Customer";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -245,9 +246,6 @@ export async function callCreatePackage(
     },
   };
 
-  //TODO: customer creation...
-  //Check for exising customer with the same phone number
-
   try {
     const packageToUpload: Package = {
       scanId: packageData.packageId,
@@ -317,12 +315,17 @@ export async function callCreatePackage(
     );
     const logsRef = doc(collection(db, Collections.logs));
 
-    const existingCustomer = await checkForExistingCustomer(
-      receiver.phoneNumber
-    );
+    const existingCustomer: CustomerModel | undefined =
+      await checkForExistingCustomer(receiver.phoneNumber);
+
+    console.log("existingCustomer: ", existingCustomer);
 
     if (!existingCustomer) {
-      batch.set(newCustomerForInsideCompany, receiver);
+      console.log("ENTERS HERE.... CUSTOMER DOES NOT EXIST...");
+      batch.set(newCustomerForInsideCompany, {
+        ...receiver,
+        createdAtDate: nowTimestamp,
+      });
     }
 
     const packageRefForAvailablePackages = doc(

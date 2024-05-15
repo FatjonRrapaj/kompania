@@ -11,6 +11,7 @@ import {
 import { showToastFromError } from "@/utils/toast";
 import useAuthStore from "./auth";
 import { createCustomerFromFirebaseCustomer } from "@/watermelon/operations/customer/createCustomer";
+import { findCustomer } from "@/watermelon/operations/customer/getCustomer";
 
 type CompanyState = {
   loadingGetCompany: boolean;
@@ -33,7 +34,10 @@ const initialState: CompanyState = {
 
 const syncNewCustomersWithDB = async (newCustomers: Customer[]) => {
   newCustomers.forEach(async (customer) => {
-    await createCustomerFromFirebaseCustomer(customer);
+    const existingCustomerInDb = await findCustomer(customer.uid!);
+    if (!existingCustomerInDb) {
+      await createCustomerFromFirebaseCustomer(customer);
+    }
   });
 };
 
