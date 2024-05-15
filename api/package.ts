@@ -8,6 +8,7 @@ import {
   where,
   writeBatch,
   getDoc,
+  GeoPoint,
 } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 import { db } from "@/utils/firebase";
@@ -102,10 +103,10 @@ export interface Package {
   packageName?: string;
   scanId: string;
   receiver: Customer;
-  estimatedDeliveryTimeInSeconds: number;
-  estimatedDeliveryDistanceInMeters: number;
-  googleNamingStandardOriginAddress: string;
-  googleNamingStandardDestinationAddress: string;
+  estimatedDeliveryTimeInSeconds?: number;
+  estimatedDeliveryDistanceInMeters?: number;
+  googleNamingStandardOriginAddress?: string;
+  googleNamingStandardDestinationAddress?: string;
   packageDetails: {
     weight?: number;
     length?: number;
@@ -234,7 +235,7 @@ export async function callCreatePackage(
 
   const receiver: Customer = {
     name: packageData.receiverName,
-    profileUrl: packageData.profileLink,
+    profileLink: packageData.profileLink,
     phoneNumber: packageData.phoneNumber,
     notes: packageData.notesForReceiver,
     receiverLocation: {
@@ -386,11 +387,15 @@ export async function callEditPackage(
       packageName: editingPackageData.packageName,
       receiver: {
         name: editingPackageData.receiverName,
-        profileUrl: editingPackageData.profileLink,
+        profileLink: editingPackageData.profileLink,
         phoneNumber: editingPackageData.phoneNumber,
         notes: editingPackageData.notesForReceiver,
         receiverLocation: {
-          description: editingPackageData.address,
+          description: editingPackageData.address.description,
+          coordinates: new GeoPoint(
+            editingPackageData.address.coordinates?.latitude!,
+            editingPackageData.address.coordinates?.longitude!
+          ),
         },
       },
       packageDetails: {
@@ -418,7 +423,7 @@ export async function callEditPackage(
       timeline: {
         ...oldPackageData.timeline,
         updatedAtDate: nowTimestamp,
-      },
+      } as any,
       currency: editingPackageData.currency,
       companyAddress: company!.locations![0] as CompanyAddress,
     };

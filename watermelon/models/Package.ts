@@ -47,7 +47,7 @@ class PackageModel extends Model {
 
   @field("receiverId") receiverId?: string;
   @field("receiverName") receiverName?: string;
-  @field("receiverProfileUrl") receiverProfileUrl?: string;
+  @field("receiverProfileLink") receiverProfileLink?: string;
   @field("receiverAddressDescription") receiverAddressDescription?: string;
   @field("receiverAddressLat") receiverAddressLat?: number;
   @field("receiverAddressLng") receiverAddressLng?: number;

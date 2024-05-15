@@ -8,12 +8,11 @@ class CustomerModel extends Model {
 
   @text("name") name!: string;
   @text("phoneNumber") phoneNumber!: string;
-  @text("lat") lat?: string;
-  @text("lng") lng?: string;
+  @text("lat") lat?: number;
+  @text("lng") lng?: number;
   @text("addressDescription") addressDescription?: string;
-  @text("notes") notes?: string;
   @text("profileLink") profileLink?: string;
-  @text("createdAtDate") createdAtDate!: number;
+  @text("createdAtDate") createdAtDate?: number;
 }
 
 export default CustomerModel;

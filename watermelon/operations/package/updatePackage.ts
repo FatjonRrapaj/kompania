@@ -25,8 +25,8 @@ export const updateExistingPackage = async (
           firebasePackageObject.receiver?.name;
         existingWatermelonPackage.receiverPhoneNumber =
           firebasePackageObject.receiver?.phoneNumber;
-        existingWatermelonPackage.receiverProfileUrl =
-          firebasePackageObject.receiver?.profileUrl;
+        existingWatermelonPackage.receiverProfileLink =
+          firebasePackageObject.receiver?.profileLink;
         existingWatermelonPackage.notesForReceiver =
           firebasePackageObject.receiver?.notes;
         existingWatermelonPackage.receiverAddressLat =

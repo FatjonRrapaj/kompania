@@ -62,7 +62,7 @@ const schema = appSchema({
 
         { name: "receiverId", type: "string", isOptional: true },
         { name: "receiverName", type: "string", isOptional: true },
-        { name: "receiverProfileUrl", type: "string", isOptional: true },
+        { name: "receiverProfileLink", type: "string", isOptional: true },
         {
           name: "receiverAddressDescription",
           type: "string",

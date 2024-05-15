@@ -24,8 +24,8 @@ export const createPackageFromFirebasePackage = async (
         newRecord.receiverName = firebasePackageObject.receiver?.name;
         newRecord.receiverPhoneNumber =
           firebasePackageObject.receiver?.phoneNumber;
-        newRecord.receiverProfileUrl =
-          firebasePackageObject.receiver?.profileUrl;
+        newRecord.receiverProfileLink =
+          firebasePackageObject.receiver?.profileLink;
         newRecord.notesForReceiver = firebasePackageObject.receiver?.notes;
         newRecord.receiverAddressLat =
           firebasePackageObject.receiver?.receiverLocation?.coordinates?.latitude;

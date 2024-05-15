@@ -191,14 +191,14 @@ const PackageInfoComponent = ({ packageObject }: PackageInfoComponentProps) => {
             Linking.openURL(`sms:number?body=TODO://?`);
           }}
         />
-        {packageObject?.receiverProfileUrl && (
+        {packageObject?.receiverProfileLink && (
           <GiantButton
             style={{ marginTop: 16 }}
             icon="Insta"
             type="outline"
             title={translate("visitClientProfile")}
             onPress={() => {
-              Linking.openURL(packageObject?.receiverProfileUrl!);
+              Linking.openURL(packageObject?.receiverProfileLink!);
             }}
           />
         )}

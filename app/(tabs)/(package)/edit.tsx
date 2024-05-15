@@ -17,6 +17,7 @@ import { GiantButton } from "@/components/StyledButton";
 import { useTranslation } from "react-i18next";
 import en from "@/translations/en";
 import { router } from "expo-router";
+import { GeoPoint } from "firebase/firestore";
 
 const EditPackage = () => {
   const { t } = useTranslation();
@@ -32,8 +33,14 @@ const EditPackage = () => {
         uid: editingPackageInDb?.id!,
         receiverName: editingPackageInDb?.receiverName!,
         phoneNumber: editingPackageInDb?.receiverPhoneNumber!,
-        profileLink: editingPackageInDb?.receiverProfileUrl!,
-        address: editingPackageInDb?.receiverAddressDescription!,
+        profileLink: editingPackageInDb?.receiverProfileLink!,
+        address: {
+          description: editingPackageInDb?.receiverAddressDescription!,
+          coordinates: new GeoPoint(
+            editingPackage?.address.coordinates?.latitude!,
+            editingPackage?.address.coordinates?.longitude!
+          ),
+        },
         notesForReceiver: editingPackageInDb?.notesForReceiver!,
         packageId: editingPackageInDb?.packageScanId!,
         packageName: editingPackageInDb?.packageName,

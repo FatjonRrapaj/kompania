@@ -94,15 +94,15 @@ function useCreatePackageFields({
 
   const handleInputAutoSuggestClicked = (autoSuggest: any) => {
     const client = autoSuggest as Customer;
-    const { name, phoneNumber, profileUrl, receiverLocation } = client;
+    const { name, phoneNumber, profileLink, receiverLocation } = client;
 
     setValue("receiverName", name);
     setValue("phoneNumber", phoneNumber.toString());
     if (receiverLocation) {
       setValue("address", receiverLocation);
     }
-    if (profileUrl) {
-      setValue("profileLink", profileUrl);
+    if (profileLink) {
+      setValue("profileLink", profileLink);
     }
   };
 
