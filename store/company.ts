@@ -2,9 +2,15 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { Immutable } from "immer";
 
-import { callGetCompany, Company } from "@/api/company";
+import {
+  callGetCompany,
+  callSyncCustomers,
+  Company,
+  Customer,
+} from "@/api/company";
 import { showToastFromError } from "@/utils/toast";
 import useAuthStore from "./auth";
+import { createCustomerFromFirebaseCustomer } from "@/watermelon/operations/customer/createCustomer";
 
 type CompanyState = {
   loadingGetCompany: boolean;
@@ -14,6 +20,7 @@ type CompanyState = {
 type CompanyActions = {
   getCompany: () => Promise<void>;
   setCompany: (company: Company) => void;
+  syncCustomers: (localLastUpdatedAt: number) => Promise<void>;
 };
 
 type CompanyStore = CompanyState & CompanyActions;
@@ -22,6 +29,12 @@ type ImmutableCompanyStore = Immutable<CompanyStore>;
 const initialState: CompanyState = {
   loadingGetCompany: true,
   company: undefined,
+};
+
+const syncNewCustomersWithDB = async (newCustomers: Customer[]) => {
+  newCustomers.forEach(async (customer) => {
+    await createCustomerFromFirebaseCustomer(customer);
+  });
 };
 
 const useCompanyStore = create<ImmutableCompanyStore>()(
@@ -52,6 +65,18 @@ const useCompanyStore = create<ImmutableCompanyStore>()(
         set((state) => {
           state.loadingGetCompany = false;
         });
+      }
+    },
+    syncCustomers: async (localLastUpdatedAt: number) => {
+      try {
+        const company = useCompanyStore.getState().company as Company;
+        const newCustomers = await callSyncCustomers(
+          localLastUpdatedAt,
+          company.uid!
+        );
+        await syncNewCustomersWithDB(newCustomers);
+      } catch (error) {
+      } finally {
       }
     },
   }))

@@ -7,4 +7,5 @@ export const Collections = {
   aggregator: "aggregator",
   totals: "totals",
   allTotals: "allTotals",
+  customers: "customers",
 };

@@ -4,7 +4,7 @@ import { Q } from "@nozbe/watermelondb";
 
 const customersCollection = watermelonDB.get<CustomerModel>("customers");
 
-export const getLocalLastUpdatedAt = async () => {
+export const getCustomerLocalLastCreatedAt = async () => {
   const latestCusomters: CustomerModel[] = await customersCollection
     .query(Q.sortBy("createdAtDate", Q.desc), Q.take(1))
     .fetch();
@@ -22,12 +22,16 @@ export const observeAndFilterCustomers = (searchTerm: string) =>
     )
     .observe();
 
-export const filterCustomers = async (searchTerm: string) => {
-  const latestCustomers: CustomerModel[] = await customersCollection
-    .query(
-      Q.where("phoneNumber", Q.like(`${Q.sanitizeLikeString(searchTerm)}%`)),
-      Q.sortBy("createdAtDate", Q.desc)
-    )
-    .fetch();
-  return latestCustomers?.[0];
+export const checkForExistingCustomer = async (searchTerm: string) => {
+  try {
+    const latestCustomers: CustomerModel[] = await customersCollection
+      .query(
+        Q.where("phoneNumber", Q.like(`${Q.sanitizeLikeString(searchTerm)}%`)),
+        Q.sortBy("createdAtDate", Q.desc)
+      )
+      .fetch();
+    return latestCustomers?.[0];
+  } catch {
+    return undefined;
+  }
 };

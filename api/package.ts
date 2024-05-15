@@ -23,6 +23,7 @@ import {
 import { CompanyUserProfile } from "./auth";
 import generateCustomError from "@/utils/customError";
 import PackageModel from "@/watermelon/models/Package";
+import { checkForExistingCustomer } from "@/watermelon/operations/customer/getCustomer";
 
 export type CurrencyShortValue = "ALL" | "EUR";
 
@@ -311,7 +312,18 @@ export async function callCreatePackage(
     const newPackageForInsideCompany = doc(
       collection(db, Collections.companies, company.uid!, Collections.packages)
     );
+    const newCustomerForInsideCompany = doc(
+      collection(db, Collections.companies, company.uid!, Collections.customers)
+    );
     const logsRef = doc(collection(db, Collections.logs));
+
+    const existingCustomer = await checkForExistingCustomer(
+      receiver.phoneNumber
+    );
+
+    if (!existingCustomer) {
+      batch.set(newCustomerForInsideCompany, receiver);
+    }
 
     const packageRefForAvailablePackages = doc(
       db,
@@ -329,6 +341,7 @@ export async function callCreatePackage(
       companyRef,
       {
         lastUpdatedAt: nowTimestamp,
+        ...(!existingCustomer && { lastCustomerCreatedAt: nowTimestamp }),
         totals: {
           all: {
             pending: increment(1),
@@ -376,9 +389,8 @@ export async function callEditPackage(
     }
 
     //the package is inside the available packages packages...
-    //TODO: it can also be inside the picked packages... but can we edit it at that point???
-    //TODO: it can also be inside the delivered packages, etc.
-    //TODO: customers api...
+    //TODO: it can also be inside the picked packages... but can we edit it at that point??? NO
+    //TODO: it can also be inside the delivered packages, etc. NO
 
     const oldPackageData = packageDocument.data() as Package;
 

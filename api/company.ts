@@ -1,4 +1,11 @@
-import { doc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { GeoPoint } from "firebase/firestore";
 import { Collections } from "@/constants/Firestore";
 import { db } from "@/utils/firebase";
@@ -33,6 +40,7 @@ export interface Company {
   totals: CompanyTotals;
   locations: CompanyAddress[];
   lastUpdatedAt: number;
+  lastCustomerCreatedAt?: number;
 }
 
 export interface Customer {
@@ -66,3 +74,25 @@ export const callGetCompany = async ({
     throw error;
   }
 };
+
+export async function callSyncCustomers(
+  localLastCreatedAt: number,
+  companyId: string
+): Promise<Customer[]> {
+  try {
+    const companyRef = getCompanyRef(companyId);
+    const packagesRef = collection(companyRef, Collections.customers);
+    const q = query(
+      packagesRef,
+      where("createdAtDate", ">", localLastCreatedAt)
+    );
+    const querySnapshot = await getDocs(q);
+    const docs: Customer[] = [];
+    querySnapshot.forEach((doc) => {
+      docs.push({ uid: doc.id, ...doc.data() } as Customer);
+    });
+    return docs;
+  } catch (error) {
+    throw error;
+  }
+}

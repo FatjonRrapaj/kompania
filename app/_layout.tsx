@@ -19,6 +19,7 @@ import Toast from "react-native-toast-message";
 import AuthStateChangeListener from "@/listeners/AuthStateChagesListener";
 import useAuthStore from "@/store/auth";
 import PackagesChangesListener from "@/listeners/PackagesChangesListener";
+import CustomersChangesListener from "@/listeners/CustomersChangesListener";
 
 export const unstable_settings = {
   initialRouteName: "(auth)",
@@ -75,6 +76,7 @@ function RootLayoutNav() {
       <Toast />
       <AuthStateChangeListener />
       <PackagesChangesListener />
+      <CustomersChangesListener />
     </ThemeProvider>
   );
 }
