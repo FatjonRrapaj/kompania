@@ -37,7 +37,6 @@ if (!getApps().length) {
     });
     db = getFirestore(app);
     storage = getStorage(app);
-    // functions = getFunctions(app, "europe-west6");
   } catch (error) {
     console.log("Error initializing app: " + error);
   }
@@ -46,7 +45,6 @@ if (!getApps().length) {
   auth = getAuth(app);
   db = getFirestore(app);
   storage = getStorage(app);
-  // functions = getFunctions(app, "europe-west6");
 }
 
 export { db, auth, storage, app };

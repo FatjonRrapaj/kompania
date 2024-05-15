@@ -48,7 +48,6 @@ export interface Customer {
   name: string;
   phoneNumber: string;
   profileLink?: string;
-  //TODO: never save the notes on the customers location.
   notes?: string;
   receiverLocation?: CustomerAddress;
   createdAtDate?: number;

@@ -21,7 +21,6 @@ const GreetingComponent = () => {
     const currentHour = new Date().getHours();
 
     let greetingIconKey: keyof typeof IconConfig, greeting: string;
-    // Determine the appropriate greeting based on the time
     if (currentHour >= 5 && currentHour < 12) {
       greetingIconKey = "Sunrise";
       greeting = translate("goodMorning");
@@ -37,7 +36,6 @@ const GreetingComponent = () => {
   });
 
   const GreetingIcon = IconConfig[greetingIconKey];
-  //TODO: link user name here
 
   return (
     <View style={styles.container}>
