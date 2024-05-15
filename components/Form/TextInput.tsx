@@ -1,4 +1,4 @@
-import React, { useState, Ref, forwardRef } from "react";
+import React, { useState, Ref, forwardRef, useEffect } from "react";
 import {
   TextInput as DefaultTextInput,
   StyleSheet,
@@ -52,32 +52,13 @@ interface TextInputProps<T = any, FormInfoType extends FieldValues = any>
   onAutoSuggestResultClicked?: (result?: T) => void;
   autoSuggestionApiFunction?: () => Promise<T[]>;
   onClearAutoSuggest?: () => void;
+  autoSuggestFn: (searchTerm: string) => Promise<any[]>;
+  autoSuggestMapper: {
+    text1: string;
+    text2: string;
+    text3: string;
+  };
 }
-
-const clientsMockData = [
-  {
-    uid: "109312o3123",
-    name: "Fatjon Rrapaj",
-    phoneNumber: 99999999999,
-    profileLink: "fatjon.com",
-    address: "Rr Don bosko nrm",
-    notesForClient: "eshte me vonese",
-    text1: "Fatjon Rrapaj",
-    text2: 99999999999,
-    text3: "Rr Don bosko nrm",
-  },
-  {
-    uid: "109312seo3123",
-    name: "Ledjon Dedolli",
-    phoneNumber: 8888888888,
-    profileLink: "ledjon.com",
-    address: "Rr Kavajes sigurisht",
-    notesForClient: "eshte heret",
-    text1: "Ledjon Dedolli",
-    text2: 8888888888,
-    text3: "Rr Kavajes sigurisht",
-  },
-];
 
 const TextInput = forwardRef(
   (
@@ -96,6 +77,8 @@ const TextInput = forwardRef(
       onAutoSuggestResultClicked,
       onClearAutoSuggest,
       autoSuggestionApiFunction,
+      autoSuggestFn,
+      autoSuggestMapper,
       ...rest
     }: TextInputProps,
     ref
@@ -107,6 +90,7 @@ const TextInput = forwardRef(
     const [hasSelectedSuggestion, setHasSelectedSuggestion] = useState(false);
     const [autoSuggestData, setAutoSuggestData] = useState([]);
     const [loadingGetSuggestions, setLoadingGetSuggestions] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const localOnFocus = () => {
       setIsFocused(true);
@@ -163,6 +147,39 @@ const TextInput = forwardRef(
       }
     };
 
+    const getSearchResults = async (searchTerm: string) => {
+      try {
+        const results = await autoSuggestFn(searchTerm);
+        console.log("res: ", results);
+        const autoSuggestResutls = results
+          .map((result) => {
+            console.log("result: ", result);
+            if (
+              !!result[autoSuggestMapper.text1] &&
+              !!result[autoSuggestMapper.text2] &&
+              !!result[autoSuggestMapper.text3]
+            ) {
+              return {
+                text1: result[autoSuggestMapper.text1],
+                text2: result[autoSuggestMapper.text2],
+                text3: result[autoSuggestMapper.text3],
+                value: result,
+              };
+            } else {
+              return undefined;
+            }
+          })
+          .filter((result) => result);
+        setAutoSuggestData(autoSuggestResutls as any);
+      } catch {}
+    };
+
+    useEffect(() => {
+      if (searchTerm?.length > 2) {
+        getSearchResults(searchTerm);
+      }
+    }, [searchTerm]);
+
     return (
       <Controller
         control={control}
@@ -209,7 +226,10 @@ const TextInput = forwardRef(
                     onBlur();
                     localOnBlur();
                   }}
-                  onChangeText={onChange}
+                  onChangeText={(text) => {
+                    onChange(text);
+                    setSearchTerm(text);
+                  }}
                   value={value}
                   placeholder={placeholder}
                   {...rest}

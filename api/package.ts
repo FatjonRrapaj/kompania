@@ -246,6 +246,8 @@ export async function callCreatePackage(
     },
   };
 
+  console.log("receiver: ", receiver);
+
   try {
     const packageToUpload: Package = {
       scanId: packageData.packageId,

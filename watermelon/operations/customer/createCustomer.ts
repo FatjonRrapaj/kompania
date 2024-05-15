@@ -11,8 +11,8 @@ export const createCustomerFromFirebaseCustomer = async (
   try {
     await watermelonDB.write(async () => {
       customersCollection.create((newRecord) => {
-        //identification
         newRecord._raw.id = customerObject.uid!;
+        newRecord.name = customerObject.name;
         newRecord.phoneNumber = customerObject.phoneNumber;
         newRecord.lat = customerObject.receiverLocation?.coordinates?.latitude;
         newRecord.lng = customerObject.receiverLocation?.coordinates?.longitude;

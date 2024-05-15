@@ -7,6 +7,12 @@ import en from "@/translations/en";
 import { UseFormResetField, UseFormSetValue } from "react-hook-form";
 import { Customer } from "@/api/company";
 import { PackageFormData } from "@/api/package";
+import CustomerModel from "@/watermelon/models/Customer";
+import { GeoPoint } from "firebase/firestore";
+import {
+  filterCustomersByName,
+  filterCustomersByPhone,
+} from "@/watermelon/operations/customer/getCustomer";
 
 type FormElementTypes =
   | "sectionLabel"
@@ -93,13 +99,17 @@ function useCreatePackageFields({
   }, [isStandardPackage, resetField]);
 
   const handleInputAutoSuggestClicked = (autoSuggest: any) => {
-    const client = autoSuggest as Customer;
-    const { name, phoneNumber, profileLink, receiverLocation } = client;
+    const client = autoSuggest as CustomerModel;
+    const { name, phoneNumber, profileLink, lat, lng, addressDescription } =
+      client;
 
     setValue("receiverName", name);
     setValue("phoneNumber", phoneNumber.toString());
-    if (receiverLocation) {
-      setValue("address", receiverLocation);
+    if (addressDescription && lat && lng) {
+      setValue("address", {
+        description: addressDescription,
+        coordinates: new GeoPoint(lat!, lng!),
+      });
     }
     if (profileLink) {
       setValue("profileLink", profileLink);
@@ -129,6 +139,12 @@ function useCreatePackageFields({
       rightIcon: "ArrowDown",
       onAutoSuggestResultClicked: handleInputAutoSuggestClicked,
       onClearAutoSuggest: handleAutoSuggestCleared,
+      autoSuggestFn: filterCustomersByName,
+      autoSuggestMapper: {
+        text1: "name",
+        text2: "phoneNumber",
+        text3: "addressDescription",
+      },
       validate: validateField({
         fieldName: translate("receiverName"),
         required: true,
@@ -144,6 +160,14 @@ function useCreatePackageFields({
       elementKey: "phoneNumber",
       keyboardType: "phone-pad",
       placeholder: translate("receiverPhoneNumberPlaceholder"),
+      onAutoSuggestResultClicked: handleInputAutoSuggestClicked,
+      onClearAutoSuggest: handleAutoSuggestCleared,
+      autoSuggestFn: filterCustomersByPhone,
+      autoSuggestMapper: {
+        text1: "name",
+        text2: "phoneNumber",
+        text3: "addressDescription",
+      },
       containerStyle: { marginVertical: 16 },
       rightIcon: "ArrowDown",
       validate: validateField({

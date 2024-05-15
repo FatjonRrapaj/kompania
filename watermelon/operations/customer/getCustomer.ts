@@ -22,16 +22,37 @@ export const getCustomerLocalLastCreatedAt = async () => {
   return latestCusomters[0]?.createdAtDate;
 };
 
-export const observeAndFilterCustomers = (searchTerm: string) =>
-  customersCollection
-    .query(
-      Q.or(
+export const filterCustomersByName = async (
+  searchTerm: string
+): Promise<CustomerModel[] | undefined> => {
+  try {
+    return (await customersCollection
+      .query(
         Q.where("name", Q.like(`${Q.sanitizeLikeString(searchTerm)}%`)),
-        Q.where("phoneNumber", Q.like(`${Q.sanitizeLikeString(searchTerm)}%`))
-      ),
-      Q.sortBy("createdAtDate", Q.desc)
-    )
-    .observe();
+        Q.sortBy("createdAtDate", Q.desc),
+        Q.take(20)
+      )
+      .fetch()) as CustomerModel[];
+  } catch (error) {
+    return undefined;
+  }
+};
+
+export const filterCustomersByPhone = async (
+  searchTerm: string
+): Promise<CustomerModel[] | undefined> => {
+  try {
+    return (await customersCollection
+      .query(
+        Q.where("phoneNumber", Q.like(`${Q.sanitizeLikeString(searchTerm)}%`)),
+        Q.sortBy("createdAtDate", Q.desc),
+        Q.take(20)
+      )
+      .fetch()) as CustomerModel[];
+  } catch (error) {
+    return undefined;
+  }
+};
 
 export const checkForExistingCustomer = async (
   searchTerm: string

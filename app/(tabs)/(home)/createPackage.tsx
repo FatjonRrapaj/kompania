@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
+import { KeyboardAvoidingView, Platform } from "react-native";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -171,7 +171,3 @@ const CreatePackage = () => {
 };
 
 export default CreatePackage;
-
-const styles = StyleSheet.create({
-  container: {},
-});
